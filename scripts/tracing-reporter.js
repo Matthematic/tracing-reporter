@@ -5,9 +5,9 @@ const glob = require('glob');
 class TracingReport {
     constructor(config={}) {
         this.config = {
-            reportPath: './tracing/report.md',
+            reportPath: './report.md',
             wdioGlob: 'tests/wdio/**/*.+(js|jsx)',
-            unitGlob: 'tests/+(components|Helpers)/*.test.+(js|jsx)',
+            unitGlob: 'tests/components/*.test.+(js|jsx)',
             issueHost: 'https://jira2.cerner.com/browse/',
             ...config,
             tags: {

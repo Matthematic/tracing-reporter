@@ -6,6 +6,9 @@
   "bin": {
     "tracing-reporter": "bin/tracing-reporter.js"
   },
+  "publishConfig": {
+    "registry": "https://cernerrepos.net/api/npm/npm-integration-local"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
