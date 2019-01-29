@@ -51,9 +51,10 @@ class TracingReport {
                             '| ---: | :--- | :---: | :---: | :---: |\n';
         this.append(tableHeader);
 
+        const issueStyle = 'style="list-style-type:none;padding-left:0;min-width:100px;margin-bottom:0px;"';
         sortedMap.forEach(test => {
             const issueListItems = test.issues.map(issue => `<li>[${issue}](${this.config.issueHost}${issue})</li>`).join('');
-            const issueListStr = issueListItems.length ? '<ul style="list-style-type:none;padding-left:0;min-width:100px;">' + issueListItems + '</ul>' : '';
+            const issueListStr = issueListItems.length ? `<ul ${issueStyle}>` + issueListItems + '</ul>' : '';
             this.append(`| ${test.id} | <h6>${test.name}</h6> | ${issueListStr} | [${test.shortLink}](${test.link}) | ${test.type} |\n`);
         });
     }
