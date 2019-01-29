@@ -53,7 +53,7 @@ class TracingReport {
 
         sortedMap.forEach(test => {
             const issueListItems = test.issues.map(issue => `<li>[${issue}](${this.config.issueHost}${issue})</li>`).join('');
-            const issueListStr = issueListItems.length ? '<ul>' + issueListItems + '</ul>' : '';
+            const issueListStr = issueListItems.length ? '<ul style="list-style-type:none;padding-left:0;">' + issueListItems + '</ul>' : '';
             this.append(`| ${test.id} | <h6>${test.name}</h6> | ${issueListStr} | [${test.shortLink}](${test.link}) \n`);
         });
     }
