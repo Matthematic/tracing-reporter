@@ -46,22 +46,22 @@ class TracingReport {
         this.buildJest();
         this.buildWebdriver();
         const sortedMap = this.getSortedMap();
-        const tableHeader = `#### Total: ${this.getCount()}\n` +
-                            '| ID | Name | Issue | Source |\n' +
-                            '| --- | --- | --- | --- |\n';
+        const tableHeader = `#### Total: ${this.getCount()} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'GrayBox').length} )\n` +
+                            '| ID | Name | Issue | Link | Type |\n' +
+                            '| ---: | :--- | :---: | :---: | :---: |\n';
         this.append(tableHeader);
 
         sortedMap.forEach(test => {
             const issueListItems = test.issues.map(issue => `<li>[${issue}](${this.config.issueHost}${issue})</li>`).join('');
-            const issueListStr = issueListItems.length ? '<ul style="list-style-type:none;padding-left:0;">' + issueListItems + '</ul>' : '';
-            this.append(`| ${test.id} | <h6>${test.name}</h6> | ${issueListStr} | [${test.shortLink}](${test.link}) \n`);
+            const issueListStr = issueListItems.length ? '<ul style="list-style-type:none;padding-left:0;min-width:100px;">' + issueListItems + '</ul>' : '';
+            this.append(`| ${test.id} | <h6>${test.name}</h6> | ${issueListStr} | [${test.shortLink}](${test.link}) | ${test.type} |\n`);
         });
     }
 
     buildWebdriver() {
         if (this.config.wdioGlob.length) {
             glob.sync(this.config.wdioGlob).forEach(file => {
-                this.parse(file);
+                this.parse(file, 'GrayBox');
             });
         }
     }
@@ -69,7 +69,7 @@ class TracingReport {
     buildJest() {
         if (this.config.unitGlob) {
             glob.sync(this.config.unitGlob).forEach(file => {
-                this.parse(file);
+                this.parse(file, 'Unit');
             });
         }
     }
@@ -84,7 +84,7 @@ class TracingReport {
         );  
     }
 
-    parse(fileName) {
+    parse(fileName, type='') {
         const sourceCode = fs.readFileSync(fileName).toString();
         const parsed = jsdoc.explainSync({ source: sourceCode });
         const testPlanBlock = parsed.filter(commentObj => commentObj.name === this.config.tags.name);
@@ -95,7 +95,6 @@ class TracingReport {
             tracesTags.forEach(test => {
                 const testIdx = block.tags.findIndex(t => t === test);
                 if (block.meta) {
-                    
                     // get the parent issues for this @traces tag
                     let issues;
                     for(let i = 0; i < reversedIssueIndices.length; ++i) {
@@ -105,6 +104,7 @@ class TracingReport {
                         }
                     }
 
+                    // handle comma-separated issues
                     if (issues && issues.length){
                         issues = issues.split(',').map(s => s.trim()); // split into trimmed array
                     }
@@ -112,12 +112,19 @@ class TracingReport {
                         issues = [];
                     }
 
-
-                    const id = test.value.split(' - ')[0];
-                    const name = test.value.split(' - ')[1];
+                    let id = 'N/A';
+                    let name = 'N/A';
+                    // if the test names have "123456 - test name" format
+                    if (/^[0-9]+ - \w+/.test(test.value)) {
+                        id = test.value.split(' - ')[0];
+                        name = test.value.split(' - ')[1].replace(/\n/g, '<br/>'); // replace newlines or they break the markdown table
+                    }
+                    else {
+                        name = test.value;
+                    }
                     const link = '../' + fileName + '#L' + block.meta.lineno;
                     const shortLink = fileName.split('').reverse().join('').split('/')[0].split('').reverse().join('') + '#L' + block.meta.lineno; // yikes
-                    this.tests.push({ id, name, link, issues, shortLink });
+                    this.tests.push({ id, name, link, issues, shortLink, type });
                 }
             });
         });

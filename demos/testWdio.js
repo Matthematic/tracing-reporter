@@ -8,4 +8,12 @@ describe('suite', () => {
     it('test', () => {
         expect(true).toEqual(true);
     });
+
+    /**
+     * @name requirement
+     * @traces plain format should be supported
+     */
+    it('doesnt have a id - name format', () => {
+        expect(true).toEqual(true);
+    })
 })
