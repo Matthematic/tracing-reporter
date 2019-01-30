@@ -53,13 +53,13 @@ class TracingReport {
         this.buildWebdriver();
         const sortedMap = this.getSortedMap();
         const tableHeader = `#### Total: ${this.getCount()} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n` +
-                            '| ID | Name | Issue | Link | Type |\n' +
+                            `| ID | Name | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
                             '| ---: | :--- | :---: | :---: | :---: |\n';
         this.append(tableHeader);
 
         sortedMap.forEach(test => {
             const issueLink = test.issue !== 'N/A' ? `[${test.issue}](${this.config.issueHost}${test.issue})` : test.issue;
-            this.append(`| ${test.id} | <h6>${test.name}</h6> | ${issueLink} | [${test.shortLink}](${test.link}) | ${test.type} |\n`);
+            this.append(`| ${test.id} | <h6>${test.name}</h6> | [${test.shortLink}](${test.link}) | ${issueLink} | ${test.type} |\n`);
         });
     }
 
