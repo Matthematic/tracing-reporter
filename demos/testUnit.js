@@ -2,7 +2,7 @@
 describe('suite', () => {
     /**
      * @name requirement
-     * @jira ABC-123, DEF-456
+     * @jira ABC-123
      * @traces 1317429 - This is a unit test
      * @jira GHI-789
      * @traces 67890 - this is another unit test

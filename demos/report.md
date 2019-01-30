@@ -1,12 +1,13 @@
 # Tracing Report 
-#### Total: 8 (Unit: 8 Graybox: 0 )
+#### Total: 9 (Unit: 7 Graybox: 2 )
 | ID | Name | Issue | Link | Type |
 | ---: | :--- | :---: | :---: | :---: |
-| 1250322 | <h6>Verify the Status View component utilizes the following attributes: Message = "Unable to display encounter level information.", Variant = Not authorized</h6> | <ul><li>[CCDEV-7575](https://jira2.cerner.com/browse/CCDEV-7575)</li></ul> | [testUnit.js#L45](../demos/testUnit.js#L45) | Unit |
-| 1250322 | <h6>Verify the Unable to display encounter level information message is displayed if the patient's encounter information is not available when the MAR is accessed</h6> | <ul><li>[CCDEV-6850](https://jira2.cerner.com/browse/CCDEV-6850)</li></ul> | [testUnit.js#L45](../demos/testUnit.js#L45) | Unit |
-| 1250322 | <h6>Verify the message utilizes the Status View component model</h6> | <ul><li>[CCDEV-6850](https://jira2.cerner.com/browse/CCDEV-6850)</li></ul> | [testUnit.js#L45](../demos/testUnit.js#L45) | Unit |
-| 1250322 | <h6>Verify the heading displays the text "Not Authorized" for the error message</h6> | <ul><li>[CCDEV-6850](https://jira2.cerner.com/browse/CCDEV-6850)</li></ul> | [testUnit.js#L45](../demos/testUnit.js#L45) | Unit |
-| 1258529 | <h6>Verify when the system fails to return medication orders the following message is displayed: "Unable to display medications."</h6> | <ul><li>[CCDEV-6798](https://jira2.cerner.com/browse/CCDEV-6798)</li></ul> | [testUnit.js#L27](../demos/testUnit.js#L27) | Unit |
-| 1258529 | <h6>Verify the Status View component utilizes the following attributes: Message ="Unable to display medications.", Variant = Error</h6> | <ul><li>[CCDEV-7575](https://jira2.cerner.com/browse/CCDEV-7575)</li></ul> | [testUnit.js#L27](../demos/testUnit.js#L27) | Unit |
-| 1258529 | <h6>Verify the message utilizes the Status View component model</h6> | <ul><li>[CCDEV-7575](https://jira2.cerner.com/browse/CCDEV-7575)</li></ul> | [testUnit.js#L27](../demos/testUnit.js#L27) | Unit |
-| 1325110 | <h6>Verify the MAR page utilizes the Loading Overlay component with the following attributes: Message = Loading…, isAnimated = true, isOpen = true, isRelativeToContainer = false</h6> | <ul><li>[CCDEV-7676](https://jira2.cerner.com/browse/CCDEV-7676)</li></ul> | [testUnit.js#L12](../demos/testUnit.js#L12) | Unit |
+| 12345 | <h6>This is a webdriver test</h6> | [ABC-123](https://jira2.cerner.com/browse/ABC-123) | [testWdio.js#L3](../demos/testWdio.js#L3) | Graybox |
+| 67890 | <h6>this is another unit test</h6> | [GHI-789](https://jira2.cerner.com/browse/GHI-789) | [testUnit.js#L3](../demos/testUnit.js#L3) | Unit |
+| 654987 | <h6>this is a sixth unit test</h6> | [ADHDEV-1234](https://jira2.cerner.com/browse/ADHDEV-1234) | [testUnit.js#L22](../demos/testUnit.js#L22) | Unit |
+| 678318 | <h6>cthis is a third unit test</h6> | N/A | [testUnit.js#L14](../demos/testUnit.js#L14) | Unit |
+| 1258529 | <h6>this is a fifth unit test</h6> | [ADHDEV-1234](https://jira2.cerner.com/browse/ADHDEV-1234) | [testUnit.js#L22](../demos/testUnit.js#L22) | Unit |
+| 1317429 | <h6>This is a unit test</h6> | [ABC-123](https://jira2.cerner.com/browse/ABC-123) | [testUnit.js#L3](../demos/testUnit.js#L3) | Unit |
+| 1355898 | <h6>this is a fourth unit test</h6> | [ADHDEV-1234](https://jira2.cerner.com/browse/ADHDEV-1234) | [testUnit.js#L22](../demos/testUnit.js#L22) | Unit |
+| 18346578 | <h6>Verify that this list gets included in the report<br/>  1. Order Ingredients<br/>  2. Clinical Display Line (CDL)<br/>  3. Order Status<br/>  4. Order Indicators with associated label<br/>  5. Order Comments<br/>  6. Product Notes<br/>  7. Special Instructions<br/>  8. Administration Notes</h6> | [ADHDEV-1234](https://jira2.cerner.com/browse/ADHDEV-1234) | [testUnit.js#L33](../demos/testUnit.js#L33) | Unit |
+| N/A | <h6>plain format should be supported</h6> | N/A | [testWdio.js#L12](../demos/testWdio.js#L12) | Graybox |

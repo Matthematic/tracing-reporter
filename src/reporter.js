@@ -33,7 +33,13 @@ class TracingReport {
 
     getSortedMap() {
         return this.tests.sort((x, y) => {
-            return x[this.config.sortKey] - y[this.config.sortKey];
+            if (x[this.config.sortKey] && y[this.config.sortKey]) {
+                return ( 
+                    (x[this.config.sortKey] - y[this.config.sortKey]) || // numbers
+                    (x[this.config.sortKey].toLowerCase() > y[this.config.sortKey].toLowerCase()) // words
+                );
+            }
+            return true;
         });
     }
 
@@ -46,15 +52,14 @@ class TracingReport {
         this.buildJest();
         this.buildWebdriver();
         const sortedMap = this.getSortedMap();
-        const tableHeader = `#### Total: ${this.getCount()} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'GrayBox').length} )\n` +
+        const tableHeader = `#### Total: ${this.getCount()} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n` +
                             '| ID | Name | Issue | Link | Type |\n' +
                             '| ---: | :--- | :---: | :---: | :---: |\n';
         this.append(tableHeader);
 
         sortedMap.forEach(test => {
-            const issueListItems = test.issues.map(issue => `<li>[${issue}](${this.config.issueHost}${issue})</li>`).join('');
-            const issueListStr = issueListItems.length ? `<ul>` + issueListItems + '</ul>' : '';
-            this.append(`| ${test.id} | <h6>${test.name}</h6> | ${issueListStr} | [${test.shortLink}](${test.link}) | ${test.type} |\n`);
+            const issueLink = test.issue !== 'N/A' ? `[${test.issue}](${this.config.issueHost}${test.issue})` : test.issue;
+            this.append(`| ${test.id} | <h6>${test.name}</h6> | ${issueLink} | [${test.shortLink}](${test.link}) | ${test.type} |\n`);
         });
     }
 
@@ -96,20 +101,12 @@ class TracingReport {
                 const testIdx = block.tags.findIndex(t => t === test);
                 if (block.meta) {
                     // get the parent issues for this @traces tag
-                    let issues;
+                    let issue = 'N/A';
                     for(let i = 0; i < reversedIssueIndices.length; ++i) {
                         if (reversedIssueIndices[i] < testIdx) {
-                            issues = block.tags[reversedIssueIndices[i]].value;
+                            issue = block.tags[reversedIssueIndices[i]].value;
                             break;
                         }
-                    }
-
-                    // handle comma-separated issues
-                    if (issues && issues.length){
-                        issues = issues.split(',').map(s => s.trim()); // split into trimmed array
-                    }
-                    else {
-                        issues = [];
                     }
 
                     let id = 'N/A';
@@ -124,7 +121,7 @@ class TracingReport {
                     }
                     const link = '../' + fileName + '#L' + block.meta.lineno;
                     const shortLink = fileName.split('').reverse().join('').split('/')[0].split('').reverse().join('') + '#L' + block.meta.lineno; // yikes
-                    this.tests.push({ id, name, link, issues, shortLink, type });
+                    this.tests.push({ id, name, link, issue, shortLink, type });
                 }
             });
         });
