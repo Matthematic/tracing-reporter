@@ -33,7 +33,7 @@ class TracingReport {
 
     getSortedMap() {
         return this.tests.sort((x, y) => {
-            return x[this.config.sortKey] > y[this.config.sortKey];
+            return x[this.config.sortKey] - y[this.config.sortKey];
         });
     }
 
