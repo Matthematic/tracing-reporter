@@ -3,7 +3,7 @@ describe('suite', () => {
     /**
      * @name requirement
      * @jira ABC-123, DEF-456
-     * @traces 12345 - This is a unit test
+     * @traces 1317429 - This is a unit test
      * @jira GHI-789
      * @traces 67890 - this is another unit test
      */
@@ -22,8 +22,8 @@ describe('suite', () => {
     /**
      * @name requirement
      * @jira ADHDEV-1234
-     * @traces 654987 - this is a fourth unit test
-     * @traces 654987 - this is a fifth unit test
+     * @traces 1355898 - this is a fourth unit test
+     * @traces 1258529 - this is a fifth unit test
      * @traces 654987 - this is a sixth unit test
      */
     it('test', () => {

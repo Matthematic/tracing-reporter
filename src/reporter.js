@@ -51,10 +51,9 @@ class TracingReport {
                             '| ---: | :--- | :---: | :---: | :---: |\n';
         this.append(tableHeader);
 
-        const issueStyle = 'style="list-style-type:none;padding-left:0;min-width:100px;margin-bottom:0px;"';
         sortedMap.forEach(test => {
             const issueListItems = test.issues.map(issue => `<li>[${issue}](${this.config.issueHost}${issue})</li>`).join('');
-            const issueListStr = issueListItems.length ? `<ul ${issueStyle}>` + issueListItems + '</ul>' : '';
+            const issueListStr = issueListItems.length ? `<ul>` + issueListItems + '</ul>' : '';
             this.append(`| ${test.id} | <h6>${test.name}</h6> | ${issueListStr} | [${test.shortLink}](${test.link}) | ${test.type} |\n`);
         });
     }
@@ -62,7 +61,7 @@ class TracingReport {
     buildWebdriver() {
         if (this.config.wdioGlob.length) {
             glob.sync(this.config.wdioGlob).forEach(file => {
-                this.parse(file, 'GrayBox');
+                this.parse(file, 'Graybox');
             });
         }
     }
@@ -117,11 +116,11 @@ class TracingReport {
                     let name = 'N/A';
                     // if the test names have "123456 - test name" format
                     if (/^[0-9]+ - \w+/.test(test.value)) {
-                        id = test.value.split(' - ')[0];
-                        name = test.value.split(' - ')[1].replace(/\n/g, '<br/>'); // replace newlines or they break the markdown table
+                        id = test.value.split(' - ')[0].trim();
+                        name = test.value.split(' - ')[1].replace(/\n/g, '<br/>').trim(); // replace newlines or they break the markdown table
                     }
                     else {
-                        name = test.value;
+                        name = test.value.trim();
                     }
                     const link = '../' + fileName + '#L' + block.meta.lineno;
                     const shortLink = fileName.split('').reverse().join('').split('/')[0].split('').reverse().join('') + '#L' + block.meta.lineno; // yikes
