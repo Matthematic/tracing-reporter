@@ -58,8 +58,19 @@ Takes a config object as a command line argument. Config options are:
 ### The above test would generate the following report:
 
 # Tracing Report 
-#### Total: 2
-| ID | Name | Issue | Source |
-| --- | --- | --- | --- |
-| 1234567 | <h6>Verify true equals true</h6> | [ABC-123](https://jira2.cerner.com/browse/ABC-123) | [Example.test.jsx#L43](../tests/components/Example.test.jsx#L43) 
-| 2345678 | <h6>Verify true does not equal false</h6> | [ABC-123](https://jira2.cerner.com/browse/ABC-123) | [Example.test.jsx#L43](../tests/components/Example.test.jsx#L43) 
+#### Total: 2 (Unit: 2 Graybox: 0 )
+
+
+<h3>1234567</h3>
+
+| Name (1) | Link | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Issue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Type |
+| :--- | :---: | :---: | :---: |
+| <h6>Verify true equals true</h6> | [testWdio.js#L3](../demos/testWdio.js#L3) | [ABC-123](https://jira2.cerner.com/browse/ABC-123) | Graybox |
+<hr/>
+
+<h3>2345678</h3>
+
+| Name (1) | Link | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Issue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Type |
+| :--- | :---: | :---: | :---: |
+| <h6>Verify true does not equal false</h6> | [testWdio.js#L3](../demos/testWdio.js#L3) | [ABC-123](https://jira2.cerner.com/browse/ABC-123) | Graybox |
+<hr/>

@@ -9,7 +9,7 @@ class TracingReport {
             wdioGlob: 'tests/wdio/**/*.+(js|jsx)',
             unitGlob: 'tests/components/*.test.+(js|jsx)',
             issueHost: 'https://jira2.cerner.com/browse/',
-            sortKey:'name',
+            sortKey:'id',
             ...config,
             tags: {
                 name: 'requirement',
@@ -51,16 +51,35 @@ class TracingReport {
         console.log('Generating report with the following config:\n\n', this.config);
         this.buildJest();
         this.buildWebdriver();
-        const sortedMap = this.getSortedMap();
-        const tableHeader = `#### Total: ${this.getCount()} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n` +
-                            `| ID | Name | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
-                            '| ---: | :--- | :---: | :---: | :---: |\n';
-        this.append(tableHeader);
 
+        const reportHeader = `#### Total: ${this.getCount()} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n`;
+
+        // sort the tests
+        const sortedMap = this.getSortedMap();
+
+        // create a data structure for 1 table per ID
+        this.tableMap = {};
+        // prepare tableMap with empty arrays
+        sortedMap.forEach(test => {
+            this.tableMap[test.id] = [];
+        });
+
+
+        // populate tableMap
         sortedMap.forEach(test => {
             const issueLink = test.issue !== 'N/A' ? `[${test.issue}](${this.config.issueHost}${test.issue})` : test.issue;
-            this.append(`| ${test.id} | <h6>${test.name}</h6> | [${test.shortLink}](${test.link}) | ${issueLink} | ${test.type} |\n`);
+            this.tableMap[test.id].push(`| <h6>${test.name}</h6> | [${test.shortLink}](${test.link}) | ${issueLink} | ${test.type} |`);
         });
+
+        // print tableMap to report file
+        let appendStr = reportHeader;
+        Object.keys(this.tableMap).forEach(id => {
+            const tableHeader = `| Name (${this.tableMap[id].length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
+                                '| :--- | :---: | :---: | :---: |\n';
+            const rows = this.tableMap[id].join('\n');
+            appendStr += `\n\n<h3>${id}</h3>\n\n` + tableHeader + rows + '\n<hr/>';
+        });
+        this.append(appendStr);
     }
 
     buildWebdriver() {
@@ -112,7 +131,7 @@ class TracingReport {
                     let id = 'N/A';
                     let name = 'N/A';
                     // if the test names have "123456 - test name" format
-                    if (/^[0-9]+ - \w+/.test(test.value)) {
+                    if (/^[0-9]+ - /.test(test.value)) {
                         id = test.value.split(' - ')[0].trim();
                         name = test.value.split(' - ')[1].replace(/\n/g, '<br/>').trim(); // replace newlines or they break the markdown table
                     }

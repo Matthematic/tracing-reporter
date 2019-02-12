@@ -6,6 +6,7 @@ new TracingReport({
     unitGlob: 'demos/testUnit.js',
     sortKey: 'id',
     tags: {
+        name: 'test',
         issue: 'jira',
     }
 }).build();

@@ -1,7 +1,7 @@
 
 describe('suite', () => {
     /**
-     * @name requirement
+     * @name test
      * @jira ABC-123
      * @traces 1317429 - This is a unit test
      * @jira GHI-789
@@ -12,15 +12,15 @@ describe('suite', () => {
     });
 
     /**
-     * @name requirement
-     * @traces 678318 - cthis is a third unit test
+     * @name test
+     * @traces cthis is a third unit test
      */
     it('test', () => {
         expect(true).toEqual(true);
     });
 
     /**
-     * @name requirement
+     * @name test
      * @jira ADHDEV-1234
      * @traces 1355898 - this is a fourth unit test
      * @traces 1258529 - this is a fifth unit test
@@ -31,7 +31,7 @@ describe('suite', () => {
     });
 
     /**
-     * @name requirement
+     * @name test
      * @jira ADHDEV-1234
      * @traces 18346578 - Verify that this list gets included in the report
      *   1. Order Ingredients
@@ -45,5 +45,16 @@ describe('suite', () => {
      */
     it('has a multi-line test', () => {
         expect(true).toEqual(true);
-    })
+    });
+
+    /**
+     * @name test
+     * @traces 1305930 -  Verify the system provides the order status for the Order Status attribute.
+     * @traces 1355898 - repeat
+     * @traces 1355898 - repeat
+     * @traces 1355898 - repeat
+     */
+    it('', () => {
+
+    });
 })
