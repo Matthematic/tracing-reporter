@@ -1,6 +1,7 @@
 const jsdoc = require('jsdoc-api')
 const fs = require('fs');
 const glob = require('glob');
+const _ = require('underscore');
 
 class TracingReport {
     constructor(config={}) {
@@ -31,18 +32,6 @@ class TracingReport {
         }
     }
 
-    getSortedMap() {
-        return this.tests.sort((x, y) => {
-            if (x[this.config.sortKey] && y[this.config.sortKey]) {
-                return ( 
-                    (x[this.config.sortKey] - y[this.config.sortKey]) || // numbers
-                    (x[this.config.sortKey].toLowerCase() > y[this.config.sortKey].toLowerCase()) // words
-                );
-            }
-            return true;
-        });
-    }
-
     getCount() {
         return this.tests.length;
     }
@@ -53,9 +42,8 @@ class TracingReport {
         this.buildWebdriver();
 
         const reportHeader = `#### Total: ${this.getCount()} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n`;
-
         // sort the tests
-        const sortedMap = this.getSortedMap();
+        const sortedMap =  _.sortBy(this.tests, this.config.sortKey );
 
         // create a data structure for 1 table per ID
         this.tableMap = {};
