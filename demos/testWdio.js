@@ -2,9 +2,14 @@
 describe('suite', () => {
     /**
      * @name test
-     * @jira ABC-123
-     * @traces 1234567 - Verify true equals true
-     * @traces 2345678 - Verify true does not equal false
+     * @jira TRACE-1003
+     * @traces 1000001 - G
+     * @traces 1000001 - H
+     * @traces 1000001 - J
+     * @traces 1000001 - L
+     * @jira TRACE-1002
+     * @traces 1000001 - I
+     * @traces 1000001 - K
      */
     it('test', () => {
         expect(true).toEqual(true);
@@ -12,12 +17,11 @@ describe('suite', () => {
 
     /**
      * @name test
-     * @traces plain format should be supported
+     * @jira TRACE-1002
+     * @traces 1000000 - I
+     * @traces 1000000 - K
      */
-    it('doesnt have a id - name format', () => {
+    it('test', () => {
         expect(true).toEqual(true);
     });
-
-    
-    
 })

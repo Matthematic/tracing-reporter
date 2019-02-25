@@ -11,13 +11,17 @@
   },
   "scripts": {
     "test": "mocha test/**/*.test.js",
-    "demo": "node demos/basic-example.js"
+    "demo": "node demos/demo-runner.js",
+    "release:patch": "fusion-make patch --ec-profile npm --no-pom",
+    "release:minor": "fusion-make minor --ec-profile npm --no-pom",
+    "release:major": "fusion-make major --ec-profile npm --no-pom",
+    "release:auto": "fusion-make --auto --ec-profile npm --no-pom"
   },
   "repository": {
     "type": "git",
     "url": "https://github.cerner.com/medication-record/tracing-reporter.git"
   },
-  "author": "Matthew Carr (MC046006)",
+  "author": "Matthew Carr (Matthew.Carr2@cerner.com)",
   "license": "ISC",
   "dependencies": {
     "fs": "0.0.1-security",
@@ -26,6 +30,7 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
+    "fusion-make": "^1.9.1",
     "mocha": "^5.2.0"
   }
 }

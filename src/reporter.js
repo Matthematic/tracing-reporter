@@ -4,19 +4,23 @@ const glob = require('glob');
 const _ = require('underscore');
 
 class TracingReport {
-    constructor(config={}) {
+    /**
+     * Creates config object and clears report file
+     * @param {Object} customConfig the custom config options to use
+     */
+    constructor(customConfig={}) {
         this.config = {
             reportPath: './report.md',
-            wdioGlob: 'tests/wdio/**/*.+(js|jsx)',
+            grayboxGlob: 'tests/wdio/**/*.+(js|jsx)',
             unitGlob: 'tests/components/*.test.+(js|jsx)',
             issueHost: 'https://jira2.cerner.com/browse/',
             sortKey:'id',
-            ...config,
+            ...customConfig,
             tags: {
                 name: 'requirement',
                 issue: 'issue',
                 traces: 'traces',
-                ...config.tags
+                ...customConfig.tags
             }
         };
     
@@ -24,6 +28,9 @@ class TracingReport {
         this.clear();
     }
 
+    /**
+     * Clears everything out of the report file except the report header
+     */
     clear() {
         try {
             fs.writeFileSync(this.config.reportPath, '# Tracing Report \r\n');
@@ -32,53 +39,73 @@ class TracingReport {
         }
     }
 
-    getCount() {
-        return this.tests.length;
-    }
-  
+    /**
+     * Builds the report.
+     *  1. Parses unit tests
+     *  2. Parses Graybox tests
+     *  3. Creates a Map<String, List> of ID's to test objects
+     *  4. Transforms the Map into a final string to append to the report file
+     */
     build() {
         console.log('Generating report with the following config:\n\n', this.config);
-        this.buildJest();
-        this.buildWebdriver();
+        this.buildUnit();
+        this.buildGraybox();
 
-        const reportHeader = `#### Total: ${this.getCount()} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n`;
-        // sort the tests
-        const sortedMap =  _.sortBy(this.tests, this.config.sortKey );
+        const reportHeader = `#### Total: ${this.tests.length} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n`;
+        // sort the tests by id
+        const sortedMap =  _.sortBy(this.tests, 'id' );
 
         // create a data structure for 1 table per ID
         this.tableMap = {};
+
         // prepare tableMap with empty arrays
         sortedMap.forEach(test => {
             this.tableMap[test.id] = [];
         });
 
-
         // populate tableMap
         sortedMap.forEach(test => {
-            const issueLink = test.issue !== 'N/A' ? `[${test.issue}](${this.config.issueHost}${test.issue})` : test.issue;
-            this.tableMap[test.id].push(`| <h6>${test.name}</h6> | [${test.shortLink}](${test.link}) | ${issueLink} | ${test.type} |`);
+            const { name, link, issue, shortLink, type } = test;
+            this.tableMap[test.id].push({ name, link, issue, shortLink, type });
         });
 
+        // sort the tables
+        Object.keys(this.tableMap).forEach(id => {
+            this.tableMap[id] = _.sortBy(this.tableMap[id], this.config.sortKey ); // sort each table by sortKey
+        });
+        
         // print tableMap to report file
         let appendStr = reportHeader;
-        Object.keys(this.tableMap).forEach(id => {
-            const tableHeader = `| Name (${this.tableMap[id].length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
-                                '| :--- | :---: | :---: | :---: |\n';
-            const rows = this.tableMap[id].join('\n');
+        Object.keys(this.tableMap).forEach(id => { // for each table
+            let testRows = this.tableMap[id].map(test => {
+                const { name, link, issue, shortLink, type } = test;
+                const issueLink = issue !== 'N/A' ? `[${issue}](${this.config.issueHost}${issue})` : issue;
+                return `| <h6>${name}</h6> | [${shortLink}](${link}) | ${issueLink} | ${type} |`;
+            });
+
+            const tableHeader = `| Name (${testRows.length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
+                                    '| :--- | :---: | :---: | :---: |\n';
+            const rows = testRows.join('\n');
             appendStr += `\n\n<h3>${id}</h3>\n\n` + tableHeader + rows + '\n<hr/>';
         });
         this.append(appendStr);
     }
 
-    buildWebdriver() {
-        if (this.config.wdioGlob.length) {
-            glob.sync(this.config.wdioGlob).forEach(file => {
+    /**
+     * Parses every file that matches the graybox glob pattern
+     */
+    buildGraybox() {
+        if (this.config.grayboxGlob.length) {
+            glob.sync(this.config.grayboxGlob).forEach(file => {
                 this.parse(file, 'Graybox');
             });
         }
     }
 
-    buildJest() {
+    /**
+     * Parses every file that matches the unit glob pattern
+     */
+    buildUnit() {
         if (this.config.unitGlob) {
             glob.sync(this.config.unitGlob).forEach(file => {
                 this.parse(file, 'Unit');
@@ -86,6 +113,10 @@ class TracingReport {
         }
     }
 
+    /**
+     * writes a string to the reportPath file
+     * @param {String} str the string to append
+     */
     append(str) {
         fs.appendFileSync(
             this.config.reportPath,
@@ -96,7 +127,13 @@ class TracingReport {
         );  
     }
 
+    /**
+     * Given a file, this parses the jsdoc for tests and pushes them into this.tests
+     * @param {String} fileName the path of the file to parse
+     * @param {String} type the type of tests being parsed. e.g. Unit/Graybox
+     */
     parse(fileName, type='') {
+        const NA = 'N/A';
         const sourceCode = fs.readFileSync(fileName).toString();
         const parsed = jsdoc.explainSync({ source: sourceCode });
         const testPlanBlock = parsed.filter(commentObj => commentObj.name === this.config.tags.name);
@@ -108,7 +145,7 @@ class TracingReport {
                 const testIdx = block.tags.findIndex(t => t === test);
                 if (block.meta) {
                     // get the parent issues for this @traces tag
-                    let issue = 'N/A';
+                    let issue = NA;
                     for(let i = 0; i < reversedIssueIndices.length; ++i) {
                         if (reversedIssueIndices[i] < testIdx) {
                             issue = block.tags[reversedIssueIndices[i]].value;
@@ -116,8 +153,8 @@ class TracingReport {
                         }
                     }
 
-                    let id = 'N/A';
-                    let name = 'N/A';
+                    let id = NA;
+                    let name = NA;
                     // if the test names have "123456 - test name" format
                     if (/^[0-9]+ - /.test(test.value)) {
                         id = test.value.split(' - ')[0].trim();
