@@ -133,6 +133,20 @@ class TracingReport {
      * @param {String} type the type of tests being parsed. e.g. Unit/Graybox
      */
     parse(fileName, type='') {
+        const escapeChars = [
+            [/\n/g, '<br/>'],
+            [ /\*/g, '\\*' ],
+            [ /#/g, '\\#' ],
+            [ /\//g, '\\/' ],
+            [ /\(/g, '\\(' ],
+            [ /\)/g, '\\)' ],
+            [ /\[/g, '\\[' ],
+            [ /\]/g, '\\]' ],
+            [ /\</g, '&lt;' ],
+            [ /\>/g, '&gt;' ],
+            [ /_/g, '\\_' ]
+        ];
+
         const NA = 'N/A';
         const sourceCode = fs.readFileSync(fileName).toString();
         const parsed = jsdoc.explainSync({ source: sourceCode });
@@ -158,7 +172,11 @@ class TracingReport {
                     // if the test names have "123456 - test name" format
                     if (/^[0-9]+ - /.test(test.value)) {
                         id = test.value.split(' - ')[0].trim();
-                        name = test.value.split(' - ')[1].replace(/\n/g, '<br/>').trim(); // replace newlines or they break the markdown table
+                        name = test.value.split(' - ')[1];
+                        escapeChars.forEach(char => {
+                            name = name.replace(char[0], char[1]);
+                        });
+                        name = name.trim();
                     }
                     else {
                         name = test.value.trim();
