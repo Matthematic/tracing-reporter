@@ -25,7 +25,24 @@ class TracingReport {
         };
     
         this.tests = [];
-        this.clear();
+        this.setup();
+    }
+
+    setup() {
+        let fileIdx = [...this.config.reportPath].reverse().indexOf('/');
+        if (fileIdx != -1) {
+            const dirPath = [...this.config.reportPath].reverse().slice(fileIdx, this.config.reportPath.length).reverse().join('');
+
+            if (!fs.existsSync(dirPath)){
+                fs.mkdirSync(dirPath);
+            }
+            else {
+                this.clear();
+            }
+        }
+        else {
+            throw "Report Path does not contain a valid directory path (must contain './' if meant to be current directory)";
+        }
     }
 
     /**
@@ -65,8 +82,8 @@ class TracingReport {
 
         // populate tableMap
         sortedMap.forEach(test => {
-            const { name, link, issue, shortLink, type } = test;
-            this.tableMap[test.id].push({ name, link, issue, shortLink, type });
+            const { name, link, issues, shortLink, type } = test;
+            this.tableMap[test.id].push({ name, link, issues, shortLink, type });
         });
 
         // sort the tables
@@ -78,9 +95,11 @@ class TracingReport {
         let appendStr = reportHeader;
         Object.keys(this.tableMap).forEach(id => { // for each table
             let testRows = this.tableMap[id].map(test => {
-                const { name, link, issue, shortLink, type } = test;
-                const issueLink = issue !== 'N/A' ? `[${issue}](${this.config.issueHost}${issue})` : issue;
-                return `| <h6>${name}</h6> | [${shortLink}](${link}) | ${issueLink} | ${type} |`;
+                const { name, link, issues, shortLink, type } = test;
+
+                const issueLinks = issues.split(',').map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${this.config.issueHost}${issue})` : issue);
+
+                return `| <h6>${name}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
             });
 
             const tableHeader = `| Name (${testRows.length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
@@ -134,7 +153,6 @@ class TracingReport {
      */
     parse(fileName, type='') {
         const escapeChars = [
-            [/\n/g, '<br/>'],
             [ /\*/g, '\\*' ],
             [ /#/g, '\\#' ],
             [ /\//g, '\\/' ],
@@ -144,7 +162,8 @@ class TracingReport {
             [ /\]/g, '\\]' ],
             [ /\</g, '&lt;' ],
             [ /\>/g, '&gt;' ],
-            [ /_/g, '\\_' ]
+            [ /_/g, '\\_' ],
+            [/\n/g, '<br>'] // MAKE SURE THIS IS LAST - THE < AND > HERE SHOULD NOT BE ESCAPED OR PRE TAG WILL FAIL
         ];
 
         const NA = 'N/A';
@@ -159,10 +178,10 @@ class TracingReport {
                 const testIdx = block.tags.findIndex(t => t === test);
                 if (block.meta) {
                     // get the parent issues for this @traces tag
-                    let issue = NA;
+                    let issues = NA;
                     for(let i = 0; i < reversedIssueIndices.length; ++i) {
                         if (reversedIssueIndices[i] < testIdx) {
-                            issue = block.tags[reversedIssueIndices[i]].value;
+                            issues = block.tags[reversedIssueIndices[i]].value;
                             break;
                         }
                     }
@@ -179,11 +198,16 @@ class TracingReport {
                         name = name.trim();
                     }
                     else {
-                        name = test.value.trim();
+                        name = test.value;
+                        escapeChars.forEach(char => {
+                            name = name.replace(char[0], char[1]);
+                        });
+                        name = name.trim();
                     }
+                    name = `<pre>${name}</pre>`;
                     const link = '../' + fileName + '#L' + block.meta.lineno;
                     const shortLink = fileName.split('').reverse().join('').split('/')[0].split('').reverse().join('') + '#L' + block.meta.lineno; // yikes
-                    this.tests.push({ id, name, link, issue, shortLink, type });
+                    this.tests.push({ id, name, link, issues, shortLink, type });
                 }
             });
         });
