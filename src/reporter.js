@@ -97,9 +97,14 @@ class TracingReport {
             let testRows = this.tableMap[id].map(test => {
                 const { name, link, issues, shortLink, type } = test;
 
+                // Generate the display for the issue links
                 const issueLinks = issues.split(',').map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${this.config.issueHost}${issue})` : issue);
 
-                return `| <h6>${name}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
+                // Generate the display for the test name.
+                let formattedName = new String(name);
+                formattedName = formattedName.replace(/ {4}/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // At this point, only sequences of 4 spaces are considered as a supported indention
+
+                return `| <h6>${formattedName}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
             });
 
             const tableHeader = `| Name (${testRows.length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
@@ -160,8 +165,8 @@ class TracingReport {
             [ /\)/g, '\\)' ],
             [ /\[/g, '\\[' ],
             [ /\]/g, '\\]' ],
-            [ /\</g, '&lt;' ],
-            [ /\>/g, '&gt;' ],
+            [ /</g, '&lt;' ],
+            [ />/g, '&gt;' ],
             [ /_/g, '\\_' ],
             [/\n/g, '<br>'] // MAKE SURE THIS IS LAST - THE < AND > HERE SHOULD NOT BE ESCAPED OR PRE TAG WILL FAIL
         ];
@@ -186,6 +191,21 @@ class TracingReport {
                         }
                     }
 
+                    // filter by issue
+                    if (this.config.filters) {
+                        if (Array.isArray(this.config.filters.issue)) {
+                            const issueArray = issues.split(',').map(i => i.trim());
+                            if (!_.intersection(this.config.filters.issue, issueArray).length) {
+                                return;
+                            }
+                        }
+                        else if (typeof this.config.filters.issue === "string") {
+                            if (!issues.includes(this.config.filters.issue)) {
+                                return;
+                            }
+                        }
+                    }
+
                     let id = NA;
                     let name = NA;
                     // if the test names have "123456 - test name" format
@@ -204,9 +224,9 @@ class TracingReport {
                         });
                         name = name.trim();
                     }
-                    name = `<pre>${name}</pre>`;
+                    name = `*${name}*`;
                     const link = '../' + fileName + '#L' + block.meta.lineno;
-                    const shortLink = fileName.split('').reverse().join('').split('/')[0].split('').reverse().join('') + '#L' + block.meta.lineno; // yikes
+                    const shortLink = fileName.split('').reverse().join('').split('/')[0].split('').reverse().join(''); // yikes
                     this.tests.push({ id, name, link, issues, shortLink, type });
                 }
             });

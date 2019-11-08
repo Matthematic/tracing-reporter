@@ -12,3 +12,15 @@ const TracingReport = require('../src/reporter');
         }
     }).build()
 );
+
+new TracingReport({
+    reportPath: `demos/filter_by_issue.md`,
+    grayboxGlob: 'demos/testWdio.js',
+    unitGlob: 'demos/testUnit.js',
+    sortKey: 'issue',
+    filters: { issue: ['TRACE-1001'] },
+    tags: {
+        name: 'test',
+        issue: 'jira',
+    }
+}).build()

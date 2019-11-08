@@ -2,7 +2,7 @@
   "name": "tracing-reporter",
   "version": "1.0.0",
   "description": "Builds a tracing report from JsDoc-annotated tests",
-  "main": "tracer.js",
+  "main": "src/reporter.js",
   "bin": {
     "tracing-reporter": "bin/tracing-reporter.js"
   },
@@ -10,6 +10,7 @@
     "registry": "https://cernerrepos.net/api/npm/npm-integration-local"
   },
   "scripts": {
+    "lint": "eslint --ext .js src",
     "test": "mocha test/**/*.test.js",
     "demo": "node demos/demo-runner.js",
     "release:patch": "fusion-make patch --ec-profile npm --no-pom",
@@ -30,6 +31,7 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
+    "eslint": "6.5.0",
     "fusion-make": "^1.9.1",
     "mocha": "^5.2.0"
   }
