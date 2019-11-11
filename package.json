@@ -1,6 +1,6 @@
 {
   "name": "tracing-reporter",
-  "version": "1.0.1-alpha.0",
+  "version": "1.0.1-alpha.1",
   "description": "Builds a tracing report from JsDoc-annotated tests",
   "main": "src/reporter.js",
   "bin": {
