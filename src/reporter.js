@@ -110,9 +110,10 @@ class TracingReport {
             const tableHeader = `| Name (${testRows.length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
                                     '| :--- | :---: | :---: | :---: |\n';
             const rows = testRows.join('\n');
-            appendStr += `\n\n<h3>${id}</h3>\n\n` + tableHeader + rows + '\n<hr/>';
+            appendStr += `\n\n### ${id}\n\n` + tableHeader + rows + '\n\n<hr/>';
         });
         this.append(appendStr);
+        return appendStr;
     }
 
     /**
@@ -142,13 +143,15 @@ class TracingReport {
      * @param {String} str the string to append
      */
     append(str) {
-        fs.appendFileSync(
-            this.config.reportPath,
-            str,
-            function (err) {
-                if (err) throw err;
-            }
-        );  
+        if (this.config && this.config.reportPath) {
+            fs.appendFileSync(
+                this.config.reportPath,
+                str,
+                function (err) {
+                    if (err) throw err;
+                }
+            );  
+        }
     }
 
     /**
