@@ -1,4 +1,4 @@
-const jsdoc = require('jsdoc-api')
+const jsdoc = require('jsdoc-api');
 const fs = require('fs');
 const glob = require('glob');
 const _ = require('underscore');
@@ -9,6 +9,7 @@ class TracingReport {
      * @param {Object} customConfig the custom config options to use
      */
     constructor(customConfig={}) {
+        this.log = () => {};
         this.config = {
             reportPath: './report.md',
             grayboxGlob: 'tests/wdio/**/*.+(js|jsx)',
@@ -23,14 +24,22 @@ class TracingReport {
                 ...customConfig.tags
             }
         };
-    
         this.tests = [];
         this.setup();
+
+        process.argv.splice(2).forEach((val) => {
+            switch(val) {
+                case '-v':
+                case '--verbose':
+                    this.log = (msg) => { console.log(msg) };
+                    this.log('VERBOSE LOGGING');
+            }
+        });
     }
 
     setup() {
         let fileIdx = [...this.config.reportPath].reverse().indexOf('/');
-        if (fileIdx != -1) {
+        if (fileIdx !== -1) {
             const dirPath = [...this.config.reportPath].reverse().slice(fileIdx, this.config.reportPath.length).reverse().join('');
 
             if (!fs.existsSync(dirPath)){
@@ -122,6 +131,7 @@ class TracingReport {
     buildGraybox() {
         if (this.config.grayboxGlob.length) {
             glob.sync(this.config.grayboxGlob).forEach(file => {
+                this.log(`parsing Greybox Test: ${file}`);
                 this.parse(file, 'Graybox');
             });
         }
@@ -133,6 +143,7 @@ class TracingReport {
     buildUnit() {
         if (this.config.unitGlob) {
             glob.sync(this.config.unitGlob).forEach(file => {
+                this.log(`parsing Unit Test: ${file}`);
                 this.parse(file, 'Unit');
             });
         }
@@ -177,14 +188,21 @@ class TracingReport {
         const NA = 'N/A';
         const sourceCode = fs.readFileSync(fileName).toString();
         const parsed = jsdoc.explainSync({ source: sourceCode });
-        const testPlanBlock = parsed.filter(commentObj => commentObj.name === this.config.tags.name);
+        const testPlanBlock = parsed
+          .filter(commentObj => commentObj.name === this.config.tags.name)
+          .filter(block => !!block.tags);
+
         testPlanBlock.forEach(block => {
             // we are going to search through these in reverse order
-            const reversedIssueIndices = block.tags.filter(tag => tag.title === this.config.tags.issue).map(b => block.tags.findIndex(t => t === b)).reverse();
-            const tracesTags = block.tags.filter(tag => tag.title === this.config.tags.traces);
-            tracesTags.forEach(test => {
-                const testIdx = block.tags.findIndex(t => t === test);
-                if (block.meta) {
+            const reversedIssueIndices = block.tags
+              .filter(tag => tag.title === this.config.tags.issue)
+              .map(b => block.tags.findIndex(t => t === b))
+              .reverse();
+
+            block.tags.filter(tag => tag.title === this.config.tags.traces)
+                .filter(() => !!block.meta)
+                .forEach(test => {
+                    const testIdx = block.tags.findIndex(t => t === test);
                     // get the parent issues for this @traces tag
                     let issues = NA;
                     for(let i = 0; i < reversedIssueIndices.length; ++i) {
@@ -212,27 +230,22 @@ class TracingReport {
                     let id = NA;
                     let name = NA;
                     // if the test names have "123456 - test name" format
-                    if (/^[0-9]+ - /.test(test.value)) {
-                        id = test.value.split(' - ')[0].trim();
-                        name = test.value.split(' - ')[1];
-                        escapeChars.forEach(char => {
-                            name = name.replace(char[0], char[1]);
-                        });
-                        name = name.trim();
+                    if (/^[0-9]+\s*-\s*/.test(test.value)) {
+                        id = test.value.split('-')[0].trim();
+                        name = test.value.split('-')[1].trim();
                     }
                     else {
                         name = test.value;
-                        escapeChars.forEach(char => {
-                            name = name.replace(char[0], char[1]);
-                        });
-                        name = name.trim();
                     }
-                    name = `*${name}*`;
+                    escapeChars.forEach(char => {
+                        name = name.replace(char[0], char[1]);
+                    });
+                    name = `*${name.trim()}*`;
                     const link = '../' + fileName + '#L' + block.meta.lineno;
-                    const shortLink = fileName.split('').reverse().join('').split('/')[0].split('').reverse().join(''); // yikes
+                    const shortLink = fileName.split('/').pop();
+                    this.log(`writing ${name}`);
                     this.tests.push({ id, name, link, issues, shortLink, type });
-                }
-            });
+                    });
         });
     }
 }

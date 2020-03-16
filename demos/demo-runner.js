@@ -23,4 +23,4 @@ new TracingReport({
         name: 'test',
         issue: 'jira',
     }
-}).build()
+}).build();
