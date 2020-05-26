@@ -3,6 +3,7 @@ const TracingReport = require('../src/reporter');
 ['id', 'name', 'issue', 'link', 'type'].forEach(sortKey => 
     new TracingReport({
         reportPath: `demos/sort_by_${sortKey}.md`,
+        dataPath: `demos/data_sort_by_${sortKey}.json`,
         grayboxGlob: 'demos/testWdio.js',
         unitGlob: 'demos/testUnit.js',
         sortKey,
@@ -15,6 +16,7 @@ const TracingReport = require('../src/reporter');
 
 new TracingReport({
     reportPath: `demos/filter_by_issue.md`,
+    dataPath: `demos/data_filter_by_issue.json`,
     grayboxGlob: 'demos/testWdio.js',
     unitGlob: 'demos/testUnit.js',
     sortKey: 'issue',

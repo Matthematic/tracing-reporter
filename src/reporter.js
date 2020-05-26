@@ -27,17 +27,14 @@ class TracingReport {
         };
         this.tests = [];
         this.setup();
-
-        process.argv.splice(2).forEach((val) => {
-            switch(val) {
-                case '-v':
-                case '--verbose':
-                    this.log = (msg) => { console.log(msg) };
-                    this.log('VERBOSE LOGGING');
-            }
-        });
+        this.processArgs();
     }
 
+    /**
+     * Performs prerequisite steps:
+     * 1. Checks that the target directory exists, and creates if it it does not
+     * 2. Clears the report if one already exists
+     */
     setup() {
         let fileIdx = [...this.config.reportPath].reverse().indexOf('/');
         if (fileIdx !== -1) {
@@ -51,8 +48,22 @@ class TracingReport {
             }
         }
         else {
-            throw "Report Path does not contain a valid directory path (must contain './' if meant to be current directory)";
+            throw new Error("Report Path does not contain a valid directory path (must contain './' if meant to be current directory)");
         }
+    }
+
+    /**
+     * Process command line arguments
+     */
+    processArgs() {
+        process.argv.splice(2).forEach((val) => {
+            switch(val) {
+                case '-v':
+                case '--verbose':
+                    this.log = (msg) => { console.log(msg) };
+                    this.log('VERBOSE LOGGING');
+            }
+        });
     }
 
     /**
@@ -63,6 +74,12 @@ class TracingReport {
             fs.writeFileSync(this.config.reportPath, '# Tracing Report \r\n');
         } catch (e) {
             console.log('Could not clear the reportPath', e);
+        }
+
+        try {
+            fs.writeFileSync(this.config.dataPath, '');
+        } catch (e) {
+            console.log('Could not clear the dataPath', e);
         }
     }
 
@@ -100,6 +117,8 @@ class TracingReport {
         Object.keys(this.tableMap).forEach(id => {
             this.tableMap[id] = _.sortBy(this.tableMap[id], this.config.sortKey ); // sort each table by sortKey
         });
+
+        this.append(this.config && this.config.dataPath, JSON.stringify(this.tableMap, null, 2));
         
         // print tableMap to report file
         let appendStr = reportHeader;
@@ -122,7 +141,7 @@ class TracingReport {
             const rows = testRows.join('\n');
             appendStr += `\n\n### ${id}\n\n` + tableHeader + rows + '\n\n<hr/>';
         });
-        this.append(appendStr);
+        this.append(this.config && this.config.reportPath, appendStr);
         return appendStr;
     }
 
@@ -154,11 +173,11 @@ class TracingReport {
      * writes a string to the reportPath file
      * @param {String} str the string to append
      */
-    append(str) {
-        if (this.config && this.config.reportPath) {
+    append(location, payload) {
+        if (location) {
             fs.appendFileSync(
-                this.config.reportPath,
-                str,
+                location,
+                payload,
                 function (err) {
                     if (err) throw err;
                 }
@@ -232,8 +251,8 @@ class TracingReport {
                     let name = NA;
                     // if the test names have "123456 - test name" format
                     if (/^[0-9]+\s*-\s*/.test(test.value)) {
-                        id = test.value.split('-')[0].trim();
-                        name = test.value.split('-')[1].trim();
+                        id = test.value.slice(0, test.value.indexOf('-')).trim();
+                        name = test.value.slice(test.value.indexOf('-') + 1).trim();
                     }
                     else {
                         name = test.value;
