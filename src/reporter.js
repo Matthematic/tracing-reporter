@@ -2,6 +2,7 @@
 const jsdoc = require('jsdoc-api');
 const fs = require('fs');
 const glob = require('glob');
+const jsdoc2md = require('jsdoc-to-markdown');
 const _ = require('underscore');
 
 class TracingReport {
@@ -23,7 +24,8 @@ class TracingReport {
                 issue: 'issue',
                 traces: 'traces',
                 ...customConfig.tags
-            }
+            },
+            interactive: true,
         };
         this.tests = [];
         this.setup();
@@ -83,19 +85,10 @@ class TracingReport {
         }
     }
 
-    /**
-     * Builds the report.
-     *  1. Parses unit tests
-     *  2. Parses Graybox tests
-     *  3. Creates a Map<String, List> of ID's to test objects
-     *  4. Transforms the Map into a final string to append to the report file
-     */
-    build() {
-        console.log('Generating report with the following config:\n\n', this.config);
+    createTableMap() {
         this.buildUnit();
         this.buildGraybox();
 
-        const reportHeader = `#### Total: ${this.tests.length} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n`;
         // sort the tests by id
         const sortedMap =  _.sortBy(this.tests, 'id' );
 
@@ -118,31 +111,81 @@ class TracingReport {
             this.tableMap[id] = _.sortBy(this.tableMap[id], this.config.sortKey ); // sort each table by sortKey
         });
 
-        this.append(this.config && this.config.dataPath, JSON.stringify(this.tableMap, null, 2));
-        
-        // print tableMap to report file
-        let appendStr = reportHeader;
-        Object.keys(this.tableMap).forEach(id => { // for each table
-            let testRows = this.tableMap[id].map(test => {
-                const { name, link, issues, shortLink, type } = test;
+        console.log(this.tableMap);
+    }
 
-                // Generate the display for the issue links
-                const issueLinks = issues.split(',').map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${this.config.issueHost}${issue})` : issue);
+    createDataFile() {
+        if (this.config && this.config.dataPath) {
+            this.append(this.config.dataPath, JSON.stringify(this.tableMap, null, 2));
+        }
+    }
 
-                // Generate the display for the test name.
-                let formattedName = new String(name);
-                formattedName = formattedName.replace(/ {4}/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // At this point, only sequences of 4 spaces are considered as a supported indention
+    createMarkdownFile() {
+        const escapeChars = [
+            [ /\*/g, '\\*' ],
+            [ /#/g, '\\#' ],
+            [ /\//g, '\\/' ],
+            [ /\(/g, '\\(' ],
+            [ /\)/g, '\\)' ],
+            [ /\[/g, '\\[' ],
+            [ /\]/g, '\\]' ],
+            [ /</g, '&lt;' ],
+            [ />/g, '&gt;' ],
+            [ /_/g, '\\_' ],
+            [/\n/g, '<br/>'] // MAKE SURE THIS IS LAST - THE < AND > HERE SHOULD NOT BE ESCAPED OR PRE TAG WILL FAIL
+        ];
 
-                return `| <h6>${formattedName}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
+        if (this.config && this.config.reportPath) {
+            const reportHeader = `#### Total: ${this.tests.length} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n`;
+
+            // print tableMap to report file
+            let appendStr = reportHeader;
+            Object.keys(this.tableMap).forEach(id => { // for each table
+                let testRows = this.tableMap[id].map(test => {
+                    let { name, link, issues, shortLink, type } = test;
+
+                    // escape characters for the name since it has to be proper markdown
+                    escapeChars.forEach(char => {
+                        name = name.replace(char[0], char[1]);
+                    });
+                    //name = `*${name.trim()}*`;
+
+                    // Generate the display for the issue links
+                    const issueLinks = issues.map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${this.config.issueHost}${issue})` : issue);
+
+                    // Generate the display for the test name.
+                    let formattedName = new String(name);
+                    formattedName = formattedName.replace(/ {4}/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // At this point, only sequences of 4 spaces are considered as a supported indention
+
+                    return `| <h6>${formattedName}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
+                });
+
+                const tableHeader = `| Name (${testRows.length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
+                                        '| :--- | :---: | :---: | :---: |\n';
+                const rows = testRows.join('\n');
+                appendStr += `\n\n### ${id}\n\n` + tableHeader + rows + '\n\n<hr/>';
             });
+            this.append(this.config.reportPath, appendStr);
+        }
+    }
 
-            const tableHeader = `| Name (${testRows.length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
-                                    '| :--- | :---: | :---: | :---: |\n';
-            const rows = testRows.join('\n');
-            appendStr += `\n\n### ${id}\n\n` + tableHeader + rows + '\n\n<hr/>';
-        });
-        this.append(this.config && this.config.reportPath, appendStr);
-        return appendStr;
+    /**
+     * Builds the report.
+     *  1. Parses unit tests
+     *  2. Parses Graybox tests
+     *  3. Creates a Map<String, List> of ID's to test objects
+     *  4. Transforms the Map into a final string to append to the report file
+     */
+    build() {
+        console.log('Generating report with the following config:\n\n', this.config);
+
+        // populate the this.tableMap property 
+        this.createTableMap();
+
+        // print the files
+        this.createDataFile();
+        this.createMarkdownFile();
+        
     }
 
     /**
@@ -191,19 +234,6 @@ class TracingReport {
      * @param {String} type the type of tests being parsed. e.g. Unit/Graybox
      */
     parse(fileName, type='') {
-        const escapeChars = [
-            [ /\*/g, '\\*' ],
-            [ /#/g, '\\#' ],
-            [ /\//g, '\\/' ],
-            [ /\(/g, '\\(' ],
-            [ /\)/g, '\\)' ],
-            [ /\[/g, '\\[' ],
-            [ /\]/g, '\\]' ],
-            [ /</g, '&lt;' ],
-            [ />/g, '&gt;' ],
-            [ /_/g, '\\_' ],
-            [/\n/g, '<br>'] // MAKE SURE THIS IS LAST - THE < AND > HERE SHOULD NOT BE ESCAPED OR PRE TAG WILL FAIL
-        ];
 
         const NA = 'N/A';
         const sourceCode = fs.readFileSync(fileName).toString();
@@ -257,14 +287,13 @@ class TracingReport {
                     else {
                         name = test.value;
                     }
-                    escapeChars.forEach(char => {
-                        name = name.replace(char[0], char[1]);
-                    });
-                    name = `*${name.trim()}*`;
+                    
+                    name = name.trim();
                     const link = '../' + fileName + '#L' + block.meta.lineno;
                     const shortLink = fileName.split('/').pop();
                     this.log(`writing ${name}`);
-                    this.tests.push({ id, name, link, issues, shortLink, type });
+                    this.tests.push({ id, name, link, issues: issues.split(',').map(i => i.trim()), shortLink, type });
+
                     });
         });
     }
