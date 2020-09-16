@@ -1,4 +1,3 @@
-
 library "ion-jenkins"
 
 ionNPM {
