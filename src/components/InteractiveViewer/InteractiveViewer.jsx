@@ -1,53 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Markdown from 'terra-markdown';
-import { useTable, useGroupBy, useExpanded, useFilters, useGlobalFilter, useAsyncDebounce, useSortBy, useResizeColumns } from 'react-table';
 import smoothscroll from 'smoothscroll-polyfill';
-import TableHead from './TableHead';
-import TableBody from './TableBody';
+import RequirementTable from './RequirementTable';
 import '../../styles/MarkdownViewerStyles.scss';
 
 smoothscroll.polyfill();
 
-const propTypes = {
+export const propTypes = {
+  /** the url that is prepended to all hyperlinks in the report. */
   baseUrl: PropTypes.string.isRequired,
+  /** the raw data of the report's data file. */
   data: PropTypes.array.isRequired,
 };
 
-const RequirementTable = ({ reqId, columns, data }) => {
-  const defaultColumn = React.useMemo(
-    () => ({
-      minWidth: 50,
-      width: 150,
-      maxWidth: 400,
-    }),
-    []
-  )
-
-  const tableInstance = useTable({ columns, data, defaultColumn }, useFilters, useGlobalFilter, useGroupBy, useSortBy, useExpanded, useResizeColumns)
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    visibleColumns,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-    state: { groupBy, expanded, globalFilter },
-  } = tableInstance
-
-  return (
-    <React.Fragment>
-      <h1>Tracing Report</h1>
-      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
-          <TableHead tableInstance={tableInstance} />
-          <TableBody tableInstance={tableInstance} />
-      </table>
-    </React.Fragment>
-  )
-}
 
 const InteractiveViewer = ({ baseUrl, data }) => {
 
@@ -83,18 +49,11 @@ const InteractiveViewer = ({ baseUrl, data }) => {
     return dataCopy;
   }
 
-  const [tableDataSplitIssues, setTableDataSplitIssues] = React.useState(splitTableIssues(aggregateTableData(data)));
-  const [tableDataAggregated, setTableDataAggregated] = React.useState(aggregateTableData(data));
-  const [tableData, setTableData] = React.useState(tableDataAggregated);
-  const [groupIssues, setGroupIssues] = React.useState(false);
+  const [tableDataSplitIssues] = React.useState(splitTableIssues(aggregateTableData(data)));
+  const [tableDataAggregated] = React.useState(aggregateTableData(data));
+  const [groupIssues] = React.useState(false);
 
-  /**
-   * "name": "*A*",
-      "link": "../demos/testUnit.js#L3",
-      "issues": "TRACE-1001, TRACE-1002",
-      "shortLink": "testUnit.js",
-      "type": "Unit"
-   */
+
   const columns = React.useMemo(
     () => [
       {
@@ -132,7 +91,7 @@ const InteractiveViewer = ({ baseUrl, data }) => {
         accessor: 'shortLink',
         Cell: (props) => {
           if (props.cell.value && props.row.original) {
-            return <div className="markdown-wrapper"><Markdown id="TracingReport" src={`[${props.cell.value}](${props.row.original.link})`} baseUrl={'http://github.cerner.com/Medication-Record/mar-js/tree/master/tracing/report.md'} /></div>
+            return <div className="markdown-wrapper"><Markdown id="TracingReport" src={`[${props.cell.value}](${props.row.original.link})`} baseUrl={baseUrl + '/tree/master/tree/master'} /></div>
           }
           else {
             //console.log(props);

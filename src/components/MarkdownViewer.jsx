@@ -6,8 +6,10 @@ import '../styles/MarkdownViewerStyles.scss';
 
 smoothscroll.polyfill();
 
-const propTypes = {
+export const propTypes = {
+  /** the url that is prepended to all hyperlinks in the report. */
   baseUrl: PropTypes.string.isRequired,
+  /** the raw text of the report's markdown file. MUST be a string, therefore using !raw-loader! is required if using a .mdx file */
   report: PropTypes.string.isRequired,
 };
 
