@@ -1,111 +1,145 @@
 {
   "1000000": [
     {
-      "name": "*A*",
+      "name": "A",
       "link": "../demos/testUnit.js#L3",
-      "issues": "TRACE-1001, TRACE-1002",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
       "shortLink": "testUnit.js",
       "type": "Unit"
     },
     {
-      "name": "*C*",
+      "name": "C",
       "link": "../demos/testUnit.js#L3",
-      "issues": "TRACE-1001, TRACE-1002",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
       "shortLink": "testUnit.js",
       "type": "Unit"
     },
     {
-      "name": "*D*",
+      "name": "D",
       "link": "../demos/testUnit.js#L3",
-      "issues": "TRACE-1001, TRACE-1002",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
       "shortLink": "testUnit.js",
       "type": "Unit"
     },
     {
-      "name": "*F*",
+      "name": "F",
       "link": "../demos/testUnit.js#L3",
-      "issues": "TRACE-1001, TRACE-1002",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
       "shortLink": "testUnit.js",
       "type": "Unit"
     },
     {
-      "name": "*I*",
+      "name": "I",
       "link": "../demos/testWdio.js#L18",
-      "issues": "TRACE-1002",
+      "issues": [
+        "TRACE-1002"
+      ],
       "shortLink": "testWdio.js",
       "type": "Graybox"
     },
     {
-      "name": "*K*",
+      "name": "K",
       "link": "../demos/testWdio.js#L18",
-      "issues": "TRACE-1002",
+      "issues": [
+        "TRACE-1002"
+      ],
       "shortLink": "testWdio.js",
       "type": "Graybox"
     }
   ],
   "1000001": [
     {
-      "name": "*B*",
+      "name": "B",
       "link": "../demos/testUnit.js#L15",
-      "issues": "TRACE-1000",
+      "issues": [
+        "TRACE-1000"
+      ],
       "shortLink": "testUnit.js",
       "type": "Unit"
     },
     {
-      "name": "*E*",
+      "name": "E",
       "link": "../demos/testUnit.js#L15",
-      "issues": "TRACE-1000",
+      "issues": [
+        "TRACE-1000"
+      ],
       "shortLink": "testUnit.js",
       "type": "Unit"
     },
     {
-      "name": "*G*",
+      "name": "G",
       "link": "../demos/testWdio.js#L3",
-      "issues": "TRACE-1003",
+      "issues": [
+        "TRACE-1003"
+      ],
       "shortLink": "testWdio.js",
       "type": "Graybox"
     },
     {
-      "name": "*H*",
+      "name": "H",
       "link": "../demos/testWdio.js#L3",
-      "issues": "TRACE-1003",
+      "issues": [
+        "TRACE-1003"
+      ],
       "shortLink": "testWdio.js",
       "type": "Graybox"
     },
     {
-      "name": "*I*",
+      "name": "I",
       "link": "../demos/testWdio.js#L3",
-      "issues": "TRACE-1002",
+      "issues": [
+        "TRACE-1002"
+      ],
       "shortLink": "testWdio.js",
       "type": "Graybox"
     },
     {
-      "name": "*J*",
+      "name": "J",
       "link": "../demos/testWdio.js#L3",
-      "issues": "TRACE-1003",
+      "issues": [
+        "TRACE-1003"
+      ],
       "shortLink": "testWdio.js",
       "type": "Graybox"
     },
     {
-      "name": "*K*",
+      "name": "K",
       "link": "../demos/testWdio.js#L3",
-      "issues": "TRACE-1002",
+      "issues": [
+        "TRACE-1002"
+      ],
       "shortLink": "testWdio.js",
       "type": "Graybox"
     },
     {
-      "name": "*L*",
+      "name": "L",
       "link": "../demos/testWdio.js#L3",
-      "issues": "TRACE-1003",
+      "issues": [
+        "TRACE-1003"
+      ],
       "shortLink": "testWdio.js",
       "type": "Graybox"
     }
   ],
   "1509100": [
     {
-      "name": "*This is a list<br>     1. thing 1<br>     2. thing 2<br>     3. \\*thing 3\\*<br>         4. thing 4*",
+      "name": "This is a list\n     1. thing 1\n     2. thing 2\n     3. *thing 3*\n         4. thing 4",
       "link": "../demos/testUnit.js#L15",
-      "issues": "TRACE-1000",
+      "issues": [
+        "TRACE-1000"
+      ],
       "shortLink": "testUnit.js",
       "type": "Unit"
     }

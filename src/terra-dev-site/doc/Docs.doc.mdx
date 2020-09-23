@@ -1,0 +1,116 @@
+# tracing-reporter-js
+
+
+[![Build Status](https://jenkins.cerner.com/ion/job/medication-record/job/tracing-reporter-js/job/master/badge/icon)](https://jenkins.cerner.com/ion/job/medication-record/job/mar-js/job/master/)
+
+> This project Builds a viewable tracing report from JsDoc-annotated tests.
+
+
+## Installation
+
+To use this project, run the following command:
+```
+npm install --save tracing-reporter-js
+```
+
+### Usage:
+Takes a config object as a command line argument. After installation, do the following steps to setup the report:
+
+1. Choose a location for your config file. An example is:
+
+    ```javascript
+    module.exports =  {
+        reportPath: './tracing/report.md',
+        grayboxGlob: 'tests/wdio/**/*.+(js|jsx)',
+        unitGlob: 'tests/+(components|Helpers)/*.test.+(js|jsx)',
+        issueHost: 'https://jira2.cerner.com/browse/',
+        tags: {
+            name: 'test',
+            issue: 'jira',
+            traces: 'traces',
+        }
+    };
+    ```
+2. Add an npm script that runs the report using your config
+
+    ```javascript
+    "scripts": {
+        "tracing-report": "tracing-reporter-js --config tracing/config.js",
+    }
+    ```
+
+3. Decide if you want to include a Report Viewer in your dev-site. Your config folder will be populated with a markdown file that can be viewed in github, but 
+    if you want to view this in your terra-dev-site then you need to use either the [MarkdownViewer](./components/markdown-viewer) or [InteractiveViewer](./components/interactive-viewer) component.
+
+### Config options:
+
+##### top-level options
+| option | description | default |
+| --- | --- | --- |
+| reportPath | path to write the report to | './tracing/report.md'
+| grayboxGlob | glob that matches graybox test filenames | 'tests/wdio/**/*.+(js\|jsx)' |
+| unitGlob | glob that matches unit test filenames | 'tests/+(components\|Helpers)/*.test.+(js\|jsx)' |
+| issueHost | hostname for issue links | 'https://jira2.cerner.com/browse/' |
+| sortKey | the name of the column that each individual table should sort by. e.g. 'id', 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
+| filters | lets you filter for certain tests. Currently only supports filtered for the Issue tag. e.g. *filters: { issue: ['TRACE-1001'] }* | undefined
+| tags | lets you specify aliases for tag names e.g. 'jira' instead of 'issue' | see [tags](#tags)
+
+##### tags
+| option | description | default |
+| --- | --- | --- |
+| name | tag for naming the comment block | 'requirement' |
+| issue | tag for mapping an issue key | 'issue' |
+| traces | tag for mapping a test plan | 'traces |
+
+
+### Tests will need to be annotated with the tags from the config:
+
+```javascript
+    /**
+     * @name test
+     * @jira ABC-123
+     * @traces 1234567 - Verify true equals true
+     * @traces 2345678 - Verify true does not equal false
+     */
+     it('i am a test', () => {
+       expect(true).toEqual(true);
+       expect(true).not.toEqual(false);
+     });
+```
+
+### Advanced Usage
+The issue tag (or your alias) is applied to every test under it until it detects another issue tag. This lets you group multiple tests in the same block to different issues.
+
+#### example:
+```javascript
+    /**
+     * @name test
+     * @jira ABC-123
+     * @traces 1234567 - Verify true equals true
+     * @traces 2345678 - Verify true does not equal false
+     * @jira ABC-234
+     * @traces 3456789 - Verify 2+2 = 4
+     * @traces 4567890 - Verify 4-2 = 2
+     */
+    it('i am a test', () => {
+
+    });
+```
+
+### Indention
+Github's markdown spec only supports a minimal amount of html tags, and all styling is stripped. This makes it difficult to keep the exact whitespace of the test plan as it is typed in the code while also supporting wrapping. Currently the tracing reporter supports indented lists, and the definition of an "indention" is a sequence of 4 spaces. These are replaced with &nbsp; entities in the report. 
+
+#### example:
+```javascript
+    /**
+     * @name test
+     * @jira ABC-123
+     * @traces 1234567 - Verify this list is formatted
+     *     \- I should be singly indented
+     *         \- I should be doubly indented
+     *     \- I should be singly indented
+     */
+    it('i am a test', () => {
+
+    });
+```

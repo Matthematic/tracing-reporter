@@ -12,7 +12,6 @@ class TracingReport {
     constructor(customConfig={}) {
         this.log = () => {};
         this.config = {
-            reportPath: './report.md',
             grayboxGlob: 'tests/wdio/**/*.+(js|jsx)',
             unitGlob: 'tests/components/*.test.+(js|jsx)',
             issueHost: 'https://jira2.cerner.com/browse/',
@@ -23,11 +22,27 @@ class TracingReport {
                 issue: 'issue',
                 traces: 'traces',
                 ...customConfig.tags
-            }
+            },
         };
         this.tests = [];
         this.setup();
         this.processArgs();
+    }
+
+    checkDir(path = '') {
+        let fileIdx = [...path].reverse().indexOf('/');
+        if (fileIdx !== -1) {
+            const dirPath = [...path].reverse().slice(fileIdx, path.length).reverse().join('');
+
+            if (!fs.existsSync(dirPath)){
+                fs.mkdirSync(dirPath);
+            }
+            else {
+                this.clear();
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -36,19 +51,26 @@ class TracingReport {
      * 2. Clears the report if one already exists
      */
     setup() {
-        let fileIdx = [...this.config.reportPath].reverse().indexOf('/');
-        if (fileIdx !== -1) {
-            const dirPath = [...this.config.reportPath].reverse().slice(fileIdx, this.config.reportPath.length).reverse().join('');
-
-            if (!fs.existsSync(dirPath)){
-                fs.mkdirSync(dirPath);
-            }
-            else {
-                this.clear();
-            }
+        let reportPathValid = true;
+        let dataPathValid = true;
+        
+        if (this.config.reportPath) {
+            reportPathValid = this.checkDir(this.config.reportPath)
         }
-        else {
+
+        if (this.config.dataPath) {
+            dataPathValid = this.checkDir(this.config.dataPath);
+        }
+
+
+        if (!this.config.reportPath && !this.config.dataPath) {
+            throw new Error("You must supply either a dataPath param or a reportPath param");
+        }
+        if (reportPathValid == false) {
             throw new Error("Report Path does not contain a valid directory path (must contain './' if meant to be current directory)");
+        }
+        if (dataPathValid == false) {
+            throw new Error("Data Path does not contain a valid directory path (must contain './' if meant to be current directory)");
         }
     }
 
@@ -70,32 +92,27 @@ class TracingReport {
      * Clears everything out of the report file except the report header
      */
     clear() {
-        try {
-            fs.writeFileSync(this.config.reportPath, '# Tracing Report \r\n');
-        } catch (e) {
-            console.log('Could not clear the reportPath', e);
+        if (this.config.reportPath) {
+            try {
+                fs.writeFileSync(this.config.reportPath, '# Tracing Report \r\n');
+            } catch (e) {
+                console.log('Could not clear the reportPath', e);
+            }
         }
 
-        try {
-            fs.writeFileSync(this.config.dataPath, '');
-        } catch (e) {
-            console.log('Could not clear the dataPath', e);
+        if (this.config.dataPath) {
+            try {
+                fs.writeFileSync(this.config.dataPath, '');
+            } catch (e) {
+                console.log('Could not clear the dataPath', e);
+            }
         }
     }
 
-    /**
-     * Builds the report.
-     *  1. Parses unit tests
-     *  2. Parses Graybox tests
-     *  3. Creates a Map<String, List> of ID's to test objects
-     *  4. Transforms the Map into a final string to append to the report file
-     */
-    build() {
-        console.log('Generating report with the following config:\n\n', this.config);
+    createTableMap() {
         this.buildUnit();
         this.buildGraybox();
 
-        const reportHeader = `#### Total: ${this.tests.length} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n`;
         // sort the tests by id
         const sortedMap =  _.sortBy(this.tests, 'id' );
 
@@ -113,36 +130,98 @@ class TracingReport {
             this.tableMap[test.id].push({ name, link, issues, shortLink, type });
         });
 
+        //console.log("tableMap before sorting", this.tableMap)
+
         // sort the tables
         Object.keys(this.tableMap).forEach(id => {
-            this.tableMap[id] = _.sortBy(this.tableMap[id], this.config.sortKey ); // sort each table by sortKey
+            if (this.config.sortKey === 'issue'){
+                if (this.tableMap[id].issues == undefined) {
+                    console.log(this.tableMap[id])
+                }
+                this.tableMap[id] = _.sortBy(this.tableMap[id], (test) => {
+                    return test.issues.toString();
+                } ); // sort by the issue string
+            }
+            else {
+                this.tableMap[id] = _.sortBy(this.tableMap[id], this.config.sortKey ); // sort each table by sortKey
+            }
         });
 
-        this.append(this.config && this.config.dataPath, JSON.stringify(this.tableMap, null, 2));
-        
-        // print tableMap to report file
-        let appendStr = reportHeader;
-        Object.keys(this.tableMap).forEach(id => { // for each table
-            let testRows = this.tableMap[id].map(test => {
-                const { name, link, issues, shortLink, type } = test;
+        //console.log("tableMap after sorting", this.tableMap)
+    }
 
-                // Generate the display for the issue links
-                const issueLinks = issues.split(',').map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${this.config.issueHost}${issue})` : issue);
+    createDataFile() {
+        if (this.config && this.config.dataPath) {
+            this.append(this.config.dataPath, JSON.stringify(this.tableMap, null, 2));
+        }
+    }
 
-                // Generate the display for the test name.
-                let formattedName = new String(name);
-                formattedName = formattedName.replace(/ {4}/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // At this point, only sequences of 4 spaces are considered as a supported indention
+    createMarkdownFile() {
+        const escapeChars = [
+            [ /\*/g, '\\*' ],
+            [ /#/g, '\\#' ],
+            [ /\//g, '\\/' ],
+            [ /\(/g, '\\(' ],
+            [ /\)/g, '\\)' ],
+            [ /\[/g, '\\[' ],
+            [ /\]/g, '\\]' ],
+            [ /</g, '&lt;' ],
+            [ />/g, '&gt;' ],
+            [ /_/g, '\\_' ],
+            [/\n/g, '<br/>'] // MAKE SURE THIS IS LAST - THE < AND > HERE SHOULD NOT BE ESCAPED OR PRE TAG WILL FAIL
+        ];
 
-                return `| <h6>${formattedName}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
+        if (this.config && this.config.reportPath) {
+            const reportHeader = `#### Total: ${this.tests.length} (Unit: ${this.tests.filter(t => t.type === 'Unit').length} Graybox: ${this.tests.filter(t => t.type === 'Graybox').length} )\n`;
+
+            // print tableMap to report file
+            let appendStr = reportHeader;
+            Object.keys(this.tableMap).forEach(id => { // for each table
+                let testRows = this.tableMap[id].map(test => {
+                    let { name, link, issues, shortLink, type } = test;
+
+                    // escape characters for the name since it has to be proper markdown
+                    escapeChars.forEach(char => {
+                        name = name.replace(char[0], char[1]);
+                    });
+                    //name = `*${name.trim()}*`;
+
+                    // Generate the display for the issue links
+                    const issueLinks = issues.map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${this.config.issueHost}${issue})` : issue);
+
+                    // Generate the display for the test name.
+                    let formattedName = new String(name);
+                    formattedName = formattedName.replace(/ {4}/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // At this point, only sequences of 4 spaces are considered as a supported indention
+
+                    return `| <h6>${formattedName}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
+                });
+
+                const tableHeader = `| Name (${testRows.length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
+                                        '| :--- | :---: | :---: | :---: |\n';
+                const rows = testRows.join('\n');
+                appendStr += `\n\n### ${id}\n\n` + tableHeader + rows + '\n\n<hr/>';
             });
+            this.append(this.config.reportPath, appendStr);
+        }
+    }
 
-            const tableHeader = `| Name (${testRows.length}) | Link | ${'&nbsp;'.repeat(7)}Issue${'&nbsp;'.repeat(7)} | Type |\n` +
-                                    '| :--- | :---: | :---: | :---: |\n';
-            const rows = testRows.join('\n');
-            appendStr += `\n\n### ${id}\n\n` + tableHeader + rows + '\n\n<hr/>';
-        });
-        this.append(this.config && this.config.reportPath, appendStr);
-        return appendStr;
+    /**
+     * Builds the report.
+     *  1. Parses unit tests
+     *  2. Parses Graybox tests
+     *  3. Creates a Map<String, List> of ID's to test objects
+     *  4. Transforms the Map into a final string to append to the report file
+     */
+    build() {
+        console.log('Generating report with the following config:\n\n', this.config);
+
+        // populate the this.tableMap property 
+        this.createTableMap();
+
+        // print the files
+        this.createDataFile();
+        this.createMarkdownFile();
+        
     }
 
     /**
@@ -191,19 +270,6 @@ class TracingReport {
      * @param {String} type the type of tests being parsed. e.g. Unit/Graybox
      */
     parse(fileName, type='') {
-        const escapeChars = [
-            [ /\*/g, '\\*' ],
-            [ /#/g, '\\#' ],
-            [ /\//g, '\\/' ],
-            [ /\(/g, '\\(' ],
-            [ /\)/g, '\\)' ],
-            [ /\[/g, '\\[' ],
-            [ /\]/g, '\\]' ],
-            [ /</g, '&lt;' ],
-            [ />/g, '&gt;' ],
-            [ /_/g, '\\_' ],
-            [/\n/g, '<br>'] // MAKE SURE THIS IS LAST - THE < AND > HERE SHOULD NOT BE ESCAPED OR PRE TAG WILL FAIL
-        ];
 
         const NA = 'N/A';
         const sourceCode = fs.readFileSync(fileName).toString();
@@ -257,14 +323,13 @@ class TracingReport {
                     else {
                         name = test.value;
                     }
-                    escapeChars.forEach(char => {
-                        name = name.replace(char[0], char[1]);
-                    });
-                    name = `*${name.trim()}*`;
+                    
+                    name = name.trim();
                     const link = '../' + fileName + '#L' + block.meta.lineno;
                     const shortLink = fileName.split('/').pop();
                     this.log(`writing ${name}`);
-                    this.tests.push({ id, name, link, issues, shortLink, type });
+                    this.tests.push({ id, name, link, issues: issues.split(',').map(i => i.trim()), shortLink, type });
+
                     });
         });
     }

@@ -1,1 +1,4 @@
 node_modules
+lib
+aggregated-translations
+dev-site-config/build
