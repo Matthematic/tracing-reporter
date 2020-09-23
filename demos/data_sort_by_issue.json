@@ -79,6 +79,24 @@
       "type": "Unit"
     },
     {
+      "name": "I",
+      "link": "../demos/testWdio.js#L3",
+      "issues": [
+        "TRACE-1002"
+      ],
+      "shortLink": "testWdio.js",
+      "type": "Graybox"
+    },
+    {
+      "name": "K",
+      "link": "../demos/testWdio.js#L3",
+      "issues": [
+        "TRACE-1002"
+      ],
+      "shortLink": "testWdio.js",
+      "type": "Graybox"
+    },
+    {
       "name": "G",
       "link": "../demos/testWdio.js#L3",
       "issues": [
@@ -110,24 +128,6 @@
       "link": "../demos/testWdio.js#L3",
       "issues": [
         "TRACE-1003"
-      ],
-      "shortLink": "testWdio.js",
-      "type": "Graybox"
-    },
-    {
-      "name": "I",
-      "link": "../demos/testWdio.js#L3",
-      "issues": [
-        "TRACE-1002"
-      ],
-      "shortLink": "testWdio.js",
-      "type": "Graybox"
-    },
-    {
-      "name": "K",
-      "link": "../demos/testWdio.js#L3",
-      "issues": [
-        "TRACE-1002"
       ],
       "shortLink": "testWdio.js",
       "type": "Graybox"

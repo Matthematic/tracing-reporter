@@ -21,12 +21,12 @@
 | :--- | :---: | :---: | :---: |
 | <h6>B</h6> | [testUnit.js](../demos/testUnit.js#L15) | [TRACE-1000](https://jira2.cerner.com/browse/TRACE-1000) | Unit |
 | <h6>E</h6> | [testUnit.js](../demos/testUnit.js#L15) | [TRACE-1000](https://jira2.cerner.com/browse/TRACE-1000) | Unit |
+| <h6>I</h6> | [testWdio.js](../demos/testWdio.js#L3) | [TRACE-1002](https://jira2.cerner.com/browse/TRACE-1002) | Graybox |
+| <h6>K</h6> | [testWdio.js](../demos/testWdio.js#L3) | [TRACE-1002](https://jira2.cerner.com/browse/TRACE-1002) | Graybox |
 | <h6>G</h6> | [testWdio.js](../demos/testWdio.js#L3) | [TRACE-1003](https://jira2.cerner.com/browse/TRACE-1003) | Graybox |
 | <h6>H</h6> | [testWdio.js](../demos/testWdio.js#L3) | [TRACE-1003](https://jira2.cerner.com/browse/TRACE-1003) | Graybox |
 | <h6>J</h6> | [testWdio.js](../demos/testWdio.js#L3) | [TRACE-1003](https://jira2.cerner.com/browse/TRACE-1003) | Graybox |
 | <h6>L</h6> | [testWdio.js](../demos/testWdio.js#L3) | [TRACE-1003](https://jira2.cerner.com/browse/TRACE-1003) | Graybox |
-| <h6>I</h6> | [testWdio.js](../demos/testWdio.js#L3) | [TRACE-1002](https://jira2.cerner.com/browse/TRACE-1002) | Graybox |
-| <h6>K</h6> | [testWdio.js](../demos/testWdio.js#L3) | [TRACE-1002](https://jira2.cerner.com/browse/TRACE-1002) | Graybox |
 
 <hr/>
 

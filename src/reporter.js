@@ -2,7 +2,6 @@
 const jsdoc = require('jsdoc-api');
 const fs = require('fs');
 const glob = require('glob');
-const jsdoc2md = require('jsdoc-to-markdown');
 const _ = require('underscore');
 
 class TracingReport {
@@ -13,7 +12,6 @@ class TracingReport {
     constructor(customConfig={}) {
         this.log = () => {};
         this.config = {
-            reportPath: './report.md',
             grayboxGlob: 'tests/wdio/**/*.+(js|jsx)',
             unitGlob: 'tests/components/*.test.+(js|jsx)',
             issueHost: 'https://jira2.cerner.com/browse/',
@@ -25,11 +23,26 @@ class TracingReport {
                 traces: 'traces',
                 ...customConfig.tags
             },
-            interactive: true,
         };
         this.tests = [];
         this.setup();
         this.processArgs();
+    }
+
+    checkDir(path = '') {
+        let fileIdx = [...path].reverse().indexOf('/');
+        if (fileIdx !== -1) {
+            const dirPath = [...path].reverse().slice(fileIdx, path.length).reverse().join('');
+
+            if (!fs.existsSync(dirPath)){
+                fs.mkdirSync(dirPath);
+            }
+            else {
+                this.clear();
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -38,19 +51,26 @@ class TracingReport {
      * 2. Clears the report if one already exists
      */
     setup() {
-        let fileIdx = [...this.config.reportPath].reverse().indexOf('/');
-        if (fileIdx !== -1) {
-            const dirPath = [...this.config.reportPath].reverse().slice(fileIdx, this.config.reportPath.length).reverse().join('');
-
-            if (!fs.existsSync(dirPath)){
-                fs.mkdirSync(dirPath);
-            }
-            else {
-                this.clear();
-            }
+        let reportPathValid = true;
+        let dataPathValid = true;
+        
+        if (this.config.reportPath) {
+            reportPathValid = this.checkDir(this.config.reportPath)
         }
-        else {
+
+        if (this.config.dataPath) {
+            dataPathValid = this.checkDir(this.config.dataPath);
+        }
+
+
+        if (!this.config.reportPath && !this.config.dataPath) {
+            throw new Error("You must supply either a dataPath param or a reportPath param");
+        }
+        if (reportPathValid == false) {
             throw new Error("Report Path does not contain a valid directory path (must contain './' if meant to be current directory)");
+        }
+        if (dataPathValid == false) {
+            throw new Error("Data Path does not contain a valid directory path (must contain './' if meant to be current directory)");
         }
     }
 
@@ -72,16 +92,20 @@ class TracingReport {
      * Clears everything out of the report file except the report header
      */
     clear() {
-        try {
-            fs.writeFileSync(this.config.reportPath, '# Tracing Report \r\n');
-        } catch (e) {
-            console.log('Could not clear the reportPath', e);
+        if (this.config.reportPath) {
+            try {
+                fs.writeFileSync(this.config.reportPath, '# Tracing Report \r\n');
+            } catch (e) {
+                console.log('Could not clear the reportPath', e);
+            }
         }
 
-        try {
-            fs.writeFileSync(this.config.dataPath, '');
-        } catch (e) {
-            console.log('Could not clear the dataPath', e);
+        if (this.config.dataPath) {
+            try {
+                fs.writeFileSync(this.config.dataPath, '');
+            } catch (e) {
+                console.log('Could not clear the dataPath', e);
+            }
         }
     }
 
@@ -106,12 +130,24 @@ class TracingReport {
             this.tableMap[test.id].push({ name, link, issues, shortLink, type });
         });
 
+        //console.log("tableMap before sorting", this.tableMap)
+
         // sort the tables
         Object.keys(this.tableMap).forEach(id => {
-            this.tableMap[id] = _.sortBy(this.tableMap[id], this.config.sortKey ); // sort each table by sortKey
+            if (this.config.sortKey === 'issue'){
+                if (this.tableMap[id].issues == undefined) {
+                    console.log(this.tableMap[id])
+                }
+                this.tableMap[id] = _.sortBy(this.tableMap[id], (test) => {
+                    return test.issues.toString();
+                } ); // sort by the issue string
+            }
+            else {
+                this.tableMap[id] = _.sortBy(this.tableMap[id], this.config.sortKey ); // sort each table by sortKey
+            }
         });
 
-        console.log(this.tableMap);
+        //console.log("tableMap after sorting", this.tableMap)
     }
 
     createDataFile() {
