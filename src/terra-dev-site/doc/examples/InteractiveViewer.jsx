@@ -3,6 +3,6 @@ import InteractiveViewer from '../../../components/InteractiveViewer/Interactive
 import TracingReport from '../../../../demos/data_sort_by_id.json';
 
 
-const TestComp = () => <InteractiveViewer data={TracingReport} baseUrl="http://github.cerner.com/Medication-Record/tracing-reporter" />;
+const TestComp = () => <InteractiveViewer data={TracingReport} baseUrl="http://github.cerner.com/Medication-Record/tracing-reporter-js" />;
 
 export default TestComp;

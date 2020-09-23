@@ -1,15 +1,33 @@
 {
-  "name": "tracing-reporter",
+  "name": "tracing-reporter-js",
   "version": "1.0.1-alpha.3",
   "description": "Builds a tracing report from JsDoc-annotated tests",
   "main": "src/reporter.js",
+  "private": "true",
   "bin": {
-    "tracing-reporter": "bin/tracing-reporter.js"
+    "tracing-reporter-js": "bin/tracing-reporter-js.js"
+  },
+  "keywords": [
+    "Cerner",
+    "tracing-reporter-js",
+    "tracing-reporter",
+    "tracing"
+  ],
+  "rollOut": {
+    "groupId": "com.cerner.nursing.medication.record",
+    "site": {
+      "repositoryId": "cerner-release-main-site",
+      "repositoryUrl": "http://repo.release.cerner.corp/nexus/service/local/repositories/main-site"
+    }
   },
   "publishConfig": {
     "registry": "https://cernerrepos.net/api/npm/npm-integration-local"
   },
+  "bugs": {
+    "url": "http://jira2.cerner.com/browse/CCDEV"
+  },
   "scripts": {
+    "deploy-gh-pages": "npm run pack && gh-pages -d build",
     "lint": "eslint --ext .js src",
     "jest": "mocha test/**/*.test.js",
     "test": "npm run lint && npm run jest && npm run test:widio",
@@ -17,11 +35,8 @@
     "test:lint": "npm run lint",
     "test:wdio": "wdio ./wdio.conf.js",
     "test:wdio:local": "tt-wdio --formFactors ['huge'] --locales ['en-US'] --browsers ['chrome'] --gridUrl='grid314.test.devcernerpowerchart.com'",
+    "pack": "TERRA_DEV_SITE_PUBLIC_PATH='/medication-administration/tracing-reporter-js/' NODE_ENV=production webpack -p",
     "demo": "node demos/demo-runner.js",
-    "release:patch": "fusion-make patch --ec-profile npm --no-pom",
-    "release:minor": "fusion-make minor --ec-profile npm --no-pom",
-    "release:major": "fusion-make major --ec-profile npm --no-pom",
-    "release:auto": "fusion-make --auto --ec-profile npm --no-pom",
     "start": "tt-serve",
     "clean:all": "rimraf ./package-lock.json && rimraf ./node_modules",
     "clean:install": "npm run clean:all && npm install",
@@ -33,7 +48,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.cerner.com/medication-record/tracing-reporter.git"
+    "url": "https://github.cerner.com/medication-record/tracing-reporter-js.git"
   },
   "author": "Matthew Carr (Matthew.Carr2@cerner.com)",
   "license": "ISC",
@@ -71,7 +86,7 @@
     "browserslist-config-terra": "^1.0.0",
     "core-js": "^3.3.2",
     "eslint": "6.5.0",
-    "fusion-make": "^1.10.0",
+    "gh-pages": "^2.2.0",
     "mocha": "^5.2.0",
     "raf": "^3.4.1",
     "snap-shot-it": "^7.9.3",
