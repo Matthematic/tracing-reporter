@@ -5,5 +5,5 @@ ionNPM {
   useSeleniumGrid = true
   locales = ['en-US']
   runIonNPMParallelTests = true
-  runWdio = false
+  runWdio = true
 }
