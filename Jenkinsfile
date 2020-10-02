@@ -1,9 +1,10 @@
 library "ion-jenkins"
 
 ionNPM {
-  dockerImage = 'docker-integration.cernerrepos.net/medication-record/tracing-reporter-js'
+  dockerImage = 'docker-integration.cernerrepos.net/medication-administration/tracing-reporter-js'
   useSeleniumGrid = true
   locales = ['en-US']
   runIonNPMParallelTests = true
+  formFactors = ['small','medium','huge']
   runWdio = true
 }
