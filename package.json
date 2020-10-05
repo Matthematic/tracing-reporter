@@ -3,7 +3,7 @@
   "version": "1.0.1-alpha.3",
   "description": "Builds a tracing report from JsDoc-annotated tests",
   "main": "src/reporter.js",
-  "private": "true",
+  "private": "false",
   "bin": {
     "tracing-reporter-js": "bin/tracing-reporter-js.js"
   },
