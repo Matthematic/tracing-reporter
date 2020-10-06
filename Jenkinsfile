@@ -7,4 +7,5 @@ ionNPM {
   runIonNPMParallelTests = true
   formFactors = ['small','medium','huge']
   runWdio = true
+  releaseWithoutEC = true
 }
