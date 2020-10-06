@@ -1,9 +1,9 @@
 {
   "name": "tracing-reporter-js",
-  "version": "1.0.1-alpha.3",
+  "version": "1.0.0",
   "description": "Builds a tracing report from JsDoc-annotated tests",
   "main": "src/reporter.js",
-  "private": "false",
+  "private": false,
   "bin": {
     "tracing-reporter-js": "bin/tracing-reporter-js.js"
   },
@@ -14,7 +14,7 @@
     "tracing"
   ],
   "rollOut": {
-    "groupId": "com.cerner.nursing.medication.record",
+    "groupId": "com.cerner.nursing.medication",
     "site": {
       "repositoryId": "cerner-release-main-site",
       "repositoryUrl": "http://repo.release.cerner.corp/nexus/service/local/repositories/main-site"
