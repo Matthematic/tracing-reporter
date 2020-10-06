@@ -5,7 +5,7 @@ ionNPM {
   useSeleniumGrid = true
   locales = ['en-US']
   runIonNPMParallelTests = true
-  formFactors = ['small','medium']
-  runWdio = true
+  formFactors = ['huge']
+  runWdio = false
   releaseWithoutEC = true
 }
