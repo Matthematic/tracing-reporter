@@ -145,4 +145,19 @@ describe('Generation', () => {
         getReport(report);
         snapshot(dataResult)
     })
+
+    it('generates a report for typescript files', () => {
+        const report = new TracingReport({
+            dataPath: `./test/jest/artifacts/test.json`,
+            grayboxGlob: './test/jest/artifacts/testWdio.ts',
+            unitGlob: './test/jest/testUnit.ts',
+            tags: {
+                name: 'test',
+                issue: 'jira',
+            }
+        });
+
+        getReport(report);
+        snapshot(dataResult);
+    })
 })

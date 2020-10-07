@@ -1,8 +1,10 @@
 /* global process */
 const jsdoc = require('jsdoc-api');
 const fs = require('fs');
+const path = require('path');
 const glob = require('glob');
 const _ = require('underscore');
+const babel = require('@babel/core');
 
 class TracingReport {
     /**
@@ -273,7 +275,13 @@ class TracingReport {
 
         const NA = 'N/A';
         const sourceCode = fs.readFileSync(fileName).toString();
-        const parsed = jsdoc.explainSync({ source: sourceCode });
+        const fileExt = path.extname(fileName);
+        const isTsFile = !!fileExt.match(/\.tsx?$/);
+        const transpiledSourceCode = isTsFile && babel.transformSync(
+            sourceCode,
+            {filename: fileName, retainLines: true, presets: [['@babel/preset-typescript', { isTSX: !!fileExt.match('.tsx'), allExtensions: true }]]}
+        ).code;
+        const parsed = jsdoc.explainSync({ source: isTsFile ? transpiledSourceCode : sourceCode });
         const testPlanBlock = parsed
           .filter(commentObj => commentObj.name === this.config.tags.name)
           .filter(block => !!block.tags);

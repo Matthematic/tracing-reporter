@@ -656,3 +656,81 @@ exports['Generation filters by issue 1'] = `
   ]
 }
 `
+
+exports['Generation generates a report for typescript files 1'] = `
+{
+  "1000000": [
+    {
+      "name": "A",
+      "link": ".././test/jest/testUnit.ts#L4",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
+      "shortLink": "testUnit.ts",
+      "type": "Unit"
+    },
+    {
+      "name": "D",
+      "link": ".././test/jest/testUnit.ts#L4",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
+      "shortLink": "testUnit.ts",
+      "type": "Unit"
+    },
+    {
+      "name": "C",
+      "link": ".././test/jest/testUnit.ts#L4",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
+      "shortLink": "testUnit.ts",
+      "type": "Unit"
+    },
+    {
+      "name": "F",
+      "link": ".././test/jest/testUnit.ts#L4",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
+      "shortLink": "testUnit.ts",
+      "type": "Unit"
+    }
+  ],
+  "1000001": [
+    {
+      "name": "B",
+      "link": ".././test/jest/testUnit.ts#L16",
+      "issues": [
+        "TRACE-1000"
+      ],
+      "shortLink": "testUnit.ts",
+      "type": "Unit"
+    },
+    {
+      "name": "E",
+      "link": ".././test/jest/testUnit.ts#L16",
+      "issues": [
+        "TRACE-1000"
+      ],
+      "shortLink": "testUnit.ts",
+      "type": "Unit"
+    }
+  ],
+  "1509100": [
+    {
+      "name": "This is a list\\n     1. thing 1\\n     2. thing 2\\n     3. *thing 3*\\n         4. thing 4",
+      "link": ".././test/jest/testUnit.ts#L16",
+      "issues": [
+        "TRACE-1000"
+      ],
+      "shortLink": "testUnit.ts",
+      "type": "Unit"
+    }
+  ]
+}
+`
