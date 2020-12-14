@@ -21,21 +21,14 @@ export default class ReportViewer extends React.Component {
   }
 
   componentDidMount() {
-    const { href } = window.location;
-    if (href) {
-      const anchorId = href.slice(href.indexOf('tracing-report') + 14, href.length);
-      const anchorEl = document.querySelector(`a[href="${anchorId}"]`);
+    const { hash } = window.location;
+    if (hash) {
+      const anchorEl = document.querySelector(`a[href="${hash}"]`);
       if (anchorEl) {
         const tableEl = anchorEl.parentNode.nextSibling;
         tableEl.classList.add('selected');
         this.selectedNode = tableEl;
-        const anchorLocation = document.querySelector(`a[href="${anchorId}"]`).getBoundingClientRect();
-        if (anchorLocation) {
-          this.ref.scrollTo({
-            top: anchorLocation.top - 100,
-            behavior: 'smooth',
-          });
-        }
+        anchorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
