@@ -15,6 +15,7 @@ class TracingReport {
         this.log = () => {};
         this.config = {
             grayboxGlob: 'tests/wdio/**/*.+(js|jsx)',
+            blackboxGlob: 'tests/wdio/blackbox/**/*.+(js|jsx)',
             unitGlob: 'tests/components/*.test.+(js|jsx)',
             issueHost: 'https://jira2.cerner.com/browse/',
             sortKey:'id',
@@ -114,6 +115,7 @@ class TracingReport {
     createTableMap() {
         this.buildUnit();
         this.buildGraybox();
+        this.buildBlackbox();
 
         // sort the tests by id
         const sortedMap =  _.sortBy(this.tests, 'id' );
@@ -227,12 +229,24 @@ class TracingReport {
     }
 
     /**
+     * Parses every file that matches the blackbox glob pattern
+     */
+    buildBlackbox() {
+        if (this.config.blackboxGlob.length) {
+            glob.sync(this.config.blackboxGlob).forEach(file => {
+                this.log(`parsing Blackbox Test: ${file}`);
+                this.parse(file, 'Blackbox');
+            });
+        }
+    }
+
+    /**
      * Parses every file that matches the graybox glob pattern
      */
     buildGraybox() {
         if (this.config.grayboxGlob.length) {
             glob.sync(this.config.grayboxGlob).forEach(file => {
-                this.log(`parsing Greybox Test: ${file}`);
+                this.log(`parsing Graybox Test: ${file}`);
                 this.parse(file, 'Graybox');
             });
         }
