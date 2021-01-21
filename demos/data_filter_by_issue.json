@@ -39,6 +39,46 @@
       ],
       "shortLink": "testUnit.js",
       "type": "Unit"
+    },
+    {
+      "name": "AA",
+      "link": "../demos/testBlackbox.js#L3",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
+      "shortLink": "testBlackbox.js",
+      "type": "Blackbox"
+    },
+    {
+      "name": "DD",
+      "link": "../demos/testBlackbox.js#L3",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
+      "shortLink": "testBlackbox.js",
+      "type": "Blackbox"
+    },
+    {
+      "name": "CC",
+      "link": "../demos/testBlackbox.js#L3",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
+      "shortLink": "testBlackbox.js",
+      "type": "Blackbox"
+    },
+    {
+      "name": "FF",
+      "link": "../demos/testBlackbox.js#L3",
+      "issues": [
+        "TRACE-1001",
+        "TRACE-1002"
+      ],
+      "shortLink": "testBlackbox.js",
+      "type": "Blackbox"
     }
   ]
 }

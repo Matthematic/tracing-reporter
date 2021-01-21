@@ -160,4 +160,18 @@ describe('Generation', () => {
         getReport(report);
         snapshot(dataResult);
     })
+
+    it('generates a report for blackbox globs', () => {
+        const report = new TracingReport({
+            dataPath: `./test/jest/artifacts/test.json`,
+            blackboxGlob: './test/jest/artifacts/testWdio.ts',
+            tags: {
+                name: 'test',
+                issue: 'jira',
+            }
+        });
+
+        getReport(report);
+        snapshot(dataResult);
+    })
 })

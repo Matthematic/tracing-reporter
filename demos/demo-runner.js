@@ -5,6 +5,7 @@ const TracingReport = require('../src/reporter');
         reportPath: `demos/sort_by_${sortKey}.md`,
         dataPath: `demos/data_sort_by_${sortKey}.json`,
         grayboxGlob: 'demos/testWdio.js',
+        blackboxGlob: 'demos/testBlackbox.js',
         unitGlob: 'demos/testUnit.js',
         sortKey,
         tags: {
@@ -18,6 +19,7 @@ new TracingReport({
     reportPath: `demos/filter_by_issue.md`,
     dataPath: `demos/data_filter_by_issue.json`,
     grayboxGlob: 'demos/testWdio.js',
+    blackboxGlob: 'demos/testBlackbox.js',
     unitGlob: 'demos/testUnit.js',
     sortKey: 'issue',
     filters: { issue: ['TRACE-1001'] },
