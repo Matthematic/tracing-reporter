@@ -1,0 +1,963 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add adds multiple tables 1`] = `
+Array [
+  Table {
+    "id": undefined,
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": undefined,
+    "tests": Array [
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+    ],
+  },
+  Table {
+    "id": undefined,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+]
+`;
+
+exports[`add adds multiple tests to existing table 1`] = `
+Array [
+  Table {
+    "id": "1",
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;
+
+exports[`add adds multiple tests to multiple new tables 1`] = `
+Array [
+  Table {
+    "id": "1",
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": "2",
+    "tests": Array [
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+    ],
+  },
+  Table {
+    "id": "3",
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+]
+`;
+
+exports[`add adds multiple tests to new table 1`] = `
+Array [
+  Table {
+    "id": "2",
+    "tests": Array [
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+    ],
+  },
+]
+`;
+
+exports[`add adds single table 1`] = `
+Array [
+  Table {
+    "id": undefined,
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;
+
+exports[`add adds test to existing table 1`] = `
+Array [
+  Table {
+    "id": "1",
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;
+
+exports[`add adds test to new table 1`] = `
+Array [
+  Table {
+    "id": "2",
+    "tests": Array [
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+    ],
+  },
+]
+`;
+
+exports[`constructor constructs from json 1`] = `
+Array [
+  Table {
+    "id": "1000000",
+    "tests": Array [
+      Test {
+        "id": "1000000",
+        "issues": Array [
+          "TEST-1001",
+          "TEST-1002",
+        ],
+        "link": "../testUnit.js#L3",
+        "name": "A",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;
+
+exports[`getTests returns flattened list of tests 1`] = `
+Array [
+  Test {
+    "id": "1",
+    "issues": Array [
+      "TEST-123",
+      "TEST2-123",
+    ],
+    "link": "\\"../testUnit.js#L3\\",",
+    "name": "Unit Test",
+    "shortLink": "testUnit.js",
+    "type": "Unit",
+  },
+  Test {
+    "id": "2",
+    "issues": Array [
+      "TEST-223",
+      "TEST2-223",
+    ],
+    "link": "\\"../testGraybox.js#L3\\",",
+    "name": "Graybox Test",
+    "shortLink": "testGraybox.js",
+    "type": "Graybox",
+  },
+  Test {
+    "id": "3",
+    "issues": Array [
+      "TEST-323",
+      "TEST2-323",
+    ],
+    "link": "\\"../testBlackbox.js#L3\\",",
+    "name": "Blackbox Test",
+    "shortLink": "testBlackbox.js",
+    "type": "Blackbox",
+  },
+]
+`;
+
+exports[`getTestsSplitByIssue splits tests that have combined issues into separate tests 1`] = `
+Array [
+  Test {
+    "id": "1",
+    "issues": "TEST-123",
+    "link": "\\"../testUnit.js#L3\\",",
+    "name": "Unit Test",
+    "shortLink": "testUnit.js",
+    "type": "Unit",
+  },
+  Test {
+    "id": "1",
+    "issues": "TEST2-123",
+    "link": "\\"../testUnit.js#L3\\",",
+    "name": "Unit Test",
+    "shortLink": "testUnit.js",
+    "type": "Unit",
+  },
+  Test {
+    "id": "2",
+    "issues": "TEST-223",
+    "link": "\\"../testGraybox.js#L3\\",",
+    "name": "Graybox Test",
+    "shortLink": "testGraybox.js",
+    "type": "Graybox",
+  },
+  Test {
+    "id": "2",
+    "issues": "TEST2-223",
+    "link": "\\"../testGraybox.js#L3\\",",
+    "name": "Graybox Test",
+    "shortLink": "testGraybox.js",
+    "type": "Graybox",
+  },
+  Test {
+    "id": "3",
+    "issues": "TEST-323",
+    "link": "\\"../testBlackbox.js#L3\\",",
+    "name": "Blackbox Test",
+    "shortLink": "testBlackbox.js",
+    "type": "Blackbox",
+  },
+  Test {
+    "id": "3",
+    "issues": "TEST2-323",
+    "link": "\\"../testBlackbox.js#L3\\",",
+    "name": "Blackbox Test",
+    "shortLink": "testBlackbox.js",
+    "type": "Blackbox",
+  },
+]
+`;
+
+exports[`sort sorts each table by id 1`] = `
+Array [
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+]
+`;
+
+exports[`sort sorts each table by issue 1`] = `
+Array [
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;
+
+exports[`sort sorts each table by link 1`] = `
+Array [
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;
+
+exports[`sort sorts each table by name 1`] = `
+Array [
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;
+
+exports[`sort sorts each table by type 1`] = `
+Array [
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;

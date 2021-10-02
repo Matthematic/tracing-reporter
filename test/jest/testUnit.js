@@ -3,7 +3,7 @@ describe('suite', () => {
     /**
      * @name test
      * @jira TRACE-1001, TRACE-1002
-     * @traces 1000000 - A
+     * @traces 1000000, 1000001, 2000001 - A
      * @traces 1000000 - D
      * @traces 1000000 - C
      * @traces 1000000 - F
@@ -13,8 +13,8 @@ describe('suite', () => {
     });
 
     /**
-     * @name test
-     * @jira TRACE-1000
+     * @name anotherName
+     * @anotherIssue TRACE-1000
      * @traces 1000001 - B
      * @traces 1000001 - E
      * @traces 1509100 - This is a list

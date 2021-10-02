@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`printData prints the data file 1`] = `
+"{
+  \\"tables\\": [
+    {
+      \\"id\\": \\"1000000\\",
+      \\"tests\\": [
+        {
+          \\"id\\": \\"1000000\\",
+          \\"name\\": \\"A\\",
+          \\"link\\": \\"../demos/Unit/testUnit.js#L3\\",
+          \\"issues\\": [
+            \\"TRACE-1001\\",
+            \\"TRACE-1002\\"
+          ],
+          \\"shortLink\\": \\"testUnit.js\\",
+          \\"type\\": \\"Unit\\"
+        },
+        {
+          \\"id\\": \\"1000000\\",
+          \\"name\\": \\"D\\",
+          \\"link\\": \\"../demos/Unit/testUnit.js#L3\\",
+          \\"issues\\": [
+            \\"TRACE-1001\\",
+            \\"TRACE-1002\\"
+          ],
+          \\"shortLink\\": \\"testUnit.js\\",
+          \\"type\\": \\"Unit\\"
+        },
+        {
+          \\"id\\": \\"1000000\\",
+          \\"name\\": \\"C\\",
+          \\"link\\": \\"../demos/Unit/testUnit.js#L3\\",
+          \\"issues\\": [
+            \\"TRACE-1001\\",
+            \\"TRACE-1002\\"
+          ],
+          \\"shortLink\\": \\"testUnit.js\\",
+          \\"type\\": \\"Unit\\"
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`printMarkdown prints the markdown file 1`] = `
+"# Tracing Report
+#### Total: 3 (Unit: 3)
+
+
+### 1000000
+
+| Name (3) | Link | Issue | Type |
+| :--- | :---: | :---: | :---: |
+| <h6>A</h6> | [testUnit.js](../demos/Unit/testUnit.js#L3) | [TRACE-1001](https://jira2.cerner.com/browse/TRACE-1001)<br/>[TRACE-1002](https://jira2.cerner.com/browse/TRACE-1002) | Unit |
+| <h6>D</h6> | [testUnit.js](../demos/Unit/testUnit.js#L3) | [TRACE-1001](https://jira2.cerner.com/browse/TRACE-1001)<br/>[TRACE-1002](https://jira2.cerner.com/browse/TRACE-1002) | Unit |
+| <h6>C</h6> | [testUnit.js](../demos/Unit/testUnit.js#L3) | [TRACE-1001](https://jira2.cerner.com/browse/TRACE-1001)<br/>[TRACE-1002](https://jira2.cerner.com/browse/TRACE-1002) | Unit |
+
+<hr/>"
+`;

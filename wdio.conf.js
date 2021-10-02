@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const wdioConf = require('./node_modules/terra-toolkit/config/wdio/wdio.conf.js');
+require("@babel/register");
+const wdioConf = require('@cerner/terra-functional-testing/lib/config/wdio.conf.js');
 const webpackConfig = require('./webpack.config');
 
 const config = {
@@ -11,9 +12,8 @@ const config = {
     compilers: ['js:@babel/register'],
     timeout: 25000,
   },
-  reporters: ['dot', 'spec'],
-  terra: {
-    selector: '#root', // Global selector required for Terra.it.matchesScreenshot()
+  serviceOptions: {
+    selector: '#root', // Global selector for Terra
   },
 };
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const defaultWebpackConfig = require('terra-dev-site/config/webpack/webpack.config');
 
 const appWebpackConfig = () => ({

@@ -28,14 +28,13 @@ export default class ReportViewer extends React.Component {
         const tableEl = anchorEl.parentNode.nextSibling;
         tableEl.classList.add('selected');
         this.selectedNode = tableEl;
-        anchorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => anchorEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 500)
       }
     }
 
     const that = this;
     this.ref.addEventListener('click', (event) => {
       if (event.target) {
-        console.log("INSIDE CLICK LISTENER")
         let anchorEl;
         // based on where you click on the icon, you could be clicking three different elements
         switch (event.target.tagName) {
@@ -56,10 +55,8 @@ export default class ReportViewer extends React.Component {
         const tableEl = anchorEl && anchorEl.parentNode.nextSibling;
         if (tableEl) {
           if (that.selectedNode) {
-            console.log("REMOVING CLASS", that.selectedNode)
             that.selectedNode.classList.remove('selected');
           }
-          console.log("ADDING CLASS", tableEl)
           tableEl.classList.add('selected');
           that.selectedNode = tableEl;
         }
@@ -72,7 +69,6 @@ export default class ReportViewer extends React.Component {
   }
 
   render() {
-    console.log("RENDER")
     const { baseUrl, report } = this.props;
     return (
       <div

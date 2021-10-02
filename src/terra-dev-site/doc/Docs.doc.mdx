@@ -1,7 +1,7 @@
 # tracing-reporter-js
 
 
-[![Build Status](https://jenkins.cerner.com/ion/job/medication-record/job/tracing-reporter-js/job/master/badge/icon)](https://jenkins.cerner.com/ion/job/medication-record/job/mar-js/job/master/)
+[![Build Status](https://jenkins.cerner.com/ion/buildStatus/icon?job=Medication Administration/tracing-reporter-js/master)](https://jenkins.cerner.com/ion/job/Medication%20Administration/job/tracing-reporter-js/job/master/)
 
 > This project Builds a viewable tracing report from JsDoc-annotated tests.
 
@@ -10,19 +10,21 @@
 
 To use this project, run the following command:
 ```
-npm install --save tracing-reporter-js
+npm install --save-dev tracing-reporter-js
 ```
 
 ### Usage:
-Takes a config object as a command line argument. After installation, do the following steps to setup the report:
+The report will automatically look for a tracing.config.js file in your project. Optionally it can take a config as a command line argument. After installation, do the following steps to setup the report:
 
-1. Choose a location for your config file. An example is:
+1. Populate tracing.config.js. An example is:
 
     ```javascript
     module.exports =  {
         reportPath: './tracing/report.md',
-        grayboxGlob: 'tests/wdio/**/*.+(js|jsx)',
-        unitGlob: 'tests/+(components|Helpers)/*.test.+(js|jsx)',
+        types: {
+            'Graybox': 'tests/wdio/**/*.+(js|jsx)',
+            'Unit': 'tests/jest/+(components|helpers)/**/*.test.+(js|jsx)'
+        },
         issueHost: 'https://jira2.cerner.com/browse/',
         tags: {
             name: 'test',
@@ -31,15 +33,15 @@ Takes a config object as a command line argument. After installation, do the fol
         }
     };
     ```
-2. Add an npm script that runs the report using your config
+2. Add an npm script that runs the cli command
 
     ```javascript
     "scripts": {
-        "tracing-report": "tracing-reporter --config tracing/config.js",
+        "tracing-report": "tracing-reporter",
     }
     ```
 
-3. Decide if you want to include a Report Viewer in your dev-site. Your config folder will be populated with a markdown file that can be viewed in github, but 
+3. Decide if you want to include a Report Viewer in your dev-site. Thee generated markdown file can be viewed in github, but 
     if you want to view this in your terra-dev-site then you need to use either the [MarkdownViewer](./components/markdown-viewer) or [InteractiveViewer](./components/interactive-viewer) component.
 
 ### Config options:
@@ -47,13 +49,17 @@ Takes a config object as a command line argument. After installation, do the fol
 ##### top-level options
 | option | description | default |
 | --- | --- | --- |
-| reportPath | path to write the report to | './tracing/report.md'
-| grayboxGlob | glob that matches graybox test filenames | 'tests/wdio/**/*.+(js\|jsx)' |
-| unitGlob | glob that matches unit test filenames | 'tests/+(components\|Helpers)/*.test.+(js\|jsx)' |
-| issueHost | hostname for issue links | 'https://jira2.cerner.com/browse/' |
-| sortKey | the name of the column that each individual table should sort by. e.g. 'id', 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
-| filters | lets you filter for certain tests. Currently only supports filtered for the Issue tag. e.g. *filters: { issue: ['TRACE-1001'] }* | undefined
+| reportPath | path to write the report to | 
+| types | a key, value object where the key is the name of a "test type" and the value is the glob that matches those test files | 
+| matcher | the matching function for parsing the format of tests. Must return the shape { id: Array[String], name: String }.| matches "1000[, 2000] - test name" format
+| issueHost | hostname for issue links | 'https://jira2.cerner.com/browse/'
+| sortKey | the name of the column that each individual table should sort by. e.g. 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
+| sortDirection | the direction the sortKey option should follow. One of ['ascending', 'descending'] | 'ascending'
+| filters | the filtering function all tests are ran through. Return falsy to reject a test. | `() => true`
 | tags | lets you specify aliases for tag names e.g. 'jira' instead of 'issue' | see [tags](#tags)
+| verbose | outputs verbose logs
+| silent | silences all console output
+
 
 ##### tags
 | option | description | default |
@@ -114,3 +120,7 @@ Github's markdown spec only supports a minimal amount of html tags, and all styl
 
     });
 ```
+
+### Notes:
+1. The reason the *@name* tag is necessary is because JsDoc by default only parses documentation when it detects definitions of new objects. In the case of mocha and jest tests, a test is not a definition, but actually a function call: *it()*. This means we need to use the @name tag to notify the parser to parse this block when it normally wouldn't.
+2. Some real-world examples of this report being used can be found [here](https://github.cerner.com/medication-record/mar-js/blob/master/tracing/report.md) and [here](https://github.cerner.com/medication-record/mar-gantt-js/blob/master/tracing/report.md).

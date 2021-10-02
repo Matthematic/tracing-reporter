@@ -4,9 +4,7 @@ module.exports = (api) => {
 
   const presets = [
     '@babel/preset-env',
-    ["@babel/preset-react", {
-      pragma: "React.createElement",
-    }],
+    '@babel/preset-react'
   ];
   const plugins = [
     '@babel/plugin-transform-object-assign',
@@ -14,9 +12,14 @@ module.exports = (api) => {
     '@babel/plugin-transform-regenerator',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-export-default-from',
+    ["@babel/plugin-transform-runtime",
+    {
+      "regenerator": true,
+    }]
   ];
 
   return {
+    "sourceMaps": "inline",
     presets,
     plugins,
   };

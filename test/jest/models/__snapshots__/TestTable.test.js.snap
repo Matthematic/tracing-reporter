@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sort sorts by issues 1`] = `
+Array [
+  Test {
+    "id": "1",
+    "issues": Array [
+      "TEST-123",
+    ],
+    "link": "\\"../testUnit.js#L3\\",",
+    "name": "Unit Test",
+    "shortLink": "testUnit.js",
+    "type": "Unit",
+  },
+  Test {
+    "id": "2",
+    "issues": Array [
+      "TEST-223",
+    ],
+    "link": "\\"../testGraybox.js#L3\\",",
+    "name": "Graybox Test",
+    "shortLink": "testGraybox.js",
+    "type": "Graybox",
+  },
+  Test {
+    "id": "3",
+    "issues": Array [
+      "TEST-323",
+    ],
+    "link": "\\"../testBlackbox.js#L3\\",",
+    "name": "Blackbox Test",
+    "shortLink": "testBlackbox.js",
+    "type": "Blackbox",
+  },
+]
+`;
+
+exports[`sort sorts by link 1`] = `
+Array [
+  Test {
+    "id": "3",
+    "issues": Array [
+      "TEST-323",
+    ],
+    "link": "\\"../testBlackbox.js#L3\\",",
+    "name": "Blackbox Test",
+    "shortLink": "testBlackbox.js",
+    "type": "Blackbox",
+  },
+  Test {
+    "id": "2",
+    "issues": Array [
+      "TEST-223",
+    ],
+    "link": "\\"../testGraybox.js#L3\\",",
+    "name": "Graybox Test",
+    "shortLink": "testGraybox.js",
+    "type": "Graybox",
+  },
+  Test {
+    "id": "1",
+    "issues": Array [
+      "TEST-123",
+    ],
+    "link": "\\"../testUnit.js#L3\\",",
+    "name": "Unit Test",
+    "shortLink": "testUnit.js",
+    "type": "Unit",
+  },
+]
+`;
+
+exports[`sort sorts by name 1`] = `
+Array [
+  Test {
+    "id": "3",
+    "issues": Array [
+      "TEST-323",
+    ],
+    "link": "\\"../testBlackbox.js#L3\\",",
+    "name": "Blackbox Test",
+    "shortLink": "testBlackbox.js",
+    "type": "Blackbox",
+  },
+  Test {
+    "id": "2",
+    "issues": Array [
+      "TEST-223",
+    ],
+    "link": "\\"../testGraybox.js#L3\\",",
+    "name": "Graybox Test",
+    "shortLink": "testGraybox.js",
+    "type": "Graybox",
+  },
+  Test {
+    "id": "1",
+    "issues": Array [
+      "TEST-123",
+    ],
+    "link": "\\"../testUnit.js#L3\\",",
+    "name": "Unit Test",
+    "shortLink": "testUnit.js",
+    "type": "Unit",
+  },
+]
+`;
+
+exports[`sort sorts by type 1`] = `
+Array [
+  Test {
+    "id": "3",
+    "issues": Array [
+      "TEST-323",
+    ],
+    "link": "\\"../testBlackbox.js#L3\\",",
+    "name": "Blackbox Test",
+    "shortLink": "testBlackbox.js",
+    "type": "Blackbox",
+  },
+  Test {
+    "id": "2",
+    "issues": Array [
+      "TEST-223",
+    ],
+    "link": "\\"../testGraybox.js#L3\\",",
+    "name": "Graybox Test",
+    "shortLink": "testGraybox.js",
+    "type": "Graybox",
+  },
+  Test {
+    "id": "1",
+    "issues": Array [
+      "TEST-123",
+    ],
+    "link": "\\"../testUnit.js#L3\\",",
+    "name": "Unit Test",
+    "shortLink": "testUnit.js",
+    "type": "Unit",
+  },
+]
+`;
