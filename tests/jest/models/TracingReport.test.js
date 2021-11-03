@@ -1,16 +1,15 @@
 import TracingReport from "../../../src/models/TracingReport";
-import { promises } from 'fs';
-import cuid from 'cuid';
-const { readFile } = promises;
+import fs from 'fs';
+const { readFile } = fs.promises;
 
 async function getReport(config = {}) {
     const fileName = 'test-report';
     return new TracingReport({
-        reportPath: `test/jest/artifacts/${fileName}.md`,
+        reportPath: `tests/jest/artifacts/${fileName}.md`,
         types: {
-            'Graybox': 'test/jest/testWdio.js',
-            'Blackbox': 'test/jest/testBlackbox.js',
-            'Unit': 'test/jest/testUnit.js',
+            'Graybox': 'tests/jest/testWdio.js',
+            'Blackbox': 'tests/jest/testBlackbox.js',
+            'Unit': 'tests/jest/testUnit.js',
         },
         ...config,
         tags: {
@@ -21,17 +20,17 @@ async function getReport(config = {}) {
         silent: true,
     })
     .build()
-    .then(() => readFile(`test/jest/artifacts/${fileName}.md`, { encoding: 'utf-8' }))
+    .then(() => readFile(`tests/jest/artifacts/${fileName}.md`, { encoding: 'utf-8' }))
 }
 
 async function getData(config = {}) {
     const fileName = 'test-report';
     return new TracingReport({
-        dataPath: `test/jest/artifacts/${fileName}.json`,
+        dataPath: `tests/jest/artifacts/${fileName}.json`,
         types: {
-            'Graybox': 'test/jest/testWdio.js',
-            'Blackbox': 'test/jest/testBlackbox.js',
-            'Unit': 'test/jest/testUnit.js',
+            'Graybox': 'tests/jest/testWdio.js',
+            'Blackbox': 'tests/jest/testBlackbox.js',
+            'Unit': 'tests/jest/testUnit.js',
         },
         ...config,
         tags: {
@@ -42,10 +41,15 @@ async function getData(config = {}) {
         silent: true,
     })
     .build()
-    .then(() => readFile(`test/jest/artifacts/${fileName}.json`, { encoding: 'utf-8' }))
+    .then(() => readFile(`tests/jest/artifacts/${fileName}.json`, { encoding: 'utf-8' }))
 }
 
 describe('TracingReport', () => {
+    afterAll(() => {
+        if (fs.existsSync('tests/jest/artifacts/')) {
+            fs.rmdirSync('tests/jest/artifacts/', {recursive: true})
+        }
+    })
     it('builds report for JS files', () => {
         return getReport().then(report => {
             expect(report).toMatchSnapshot();
@@ -61,9 +65,9 @@ describe('TracingReport', () => {
     it('builds report for TS files', () => {
         return getReport({
             types: {
-                'Graybox': 'test/jest/testWdio.ts',
-                'Blackbox': 'test/jest/testBlackbox.ts',
-                'Unit': 'test/jest/testUnit.ts',
+                'Graybox': 'tests/jest/testWdio.ts',
+                'Blackbox': 'tests/jest/testBlackbox.ts',
+                'Unit': 'tests/jest/testUnit.ts',
             },
         }).then(report => {
             expect(report).toMatchSnapshot();
@@ -73,9 +77,9 @@ describe('TracingReport', () => {
     it('builds data file for TS files', () => {
         return getData({
             types: {
-                'Graybox': 'test/jest/testWdio.ts',
-                'Blackbox': 'test/jest/testBlackbox.ts',
-                'Unit': 'test/jest/testUnit.ts',
+                'Graybox': 'tests/jest/testWdio.ts',
+                'Blackbox': 'tests/jest/testBlackbox.ts',
+                'Unit': 'tests/jest/testUnit.ts',
             },
         }).then(report => {
             expect(report).toMatchSnapshot();
@@ -155,7 +159,7 @@ describe('TracingReport', () => {
     it('splits multiple IDs into separate tests', async () => {
         return getReport({ 
             types: {
-                'Unit': 'test/jest/testUnit.js',
+                'Unit': 'tests/jest/testUnit.js',
             },
         }).then(report => {
             expect(report).toMatchSnapshot();

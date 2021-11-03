@@ -41,25 +41,32 @@ The report will automatically look for a tracing.config.js file in your project.
     }
     ```
 
-3. Decide if you want to include a Report Viewer in your dev-site. Thee generated markdown file can be viewed in github, but 
+3. Decide if you want to include a Report Viewer in your dev-site. The generated markdown file can be viewed in github, but 
     if you want to view this in your terra-dev-site then you need to use either the [MarkdownViewer](./components/markdown-viewer) or [InteractiveViewer](./components/interactive-viewer) component.
 
 ### Config options:
 
 ##### top-level options
-| option | description | default |
-| --- | --- | --- |
-| reportPath | path to write the report to | 
-| types | a key, value object where the key is the name of a "test type" and the value is the glob that matches those test files | 
-| matcher | the matching function for parsing the format of tests. Must return the shape { id: Array[String], name: String }.| matches "1000[, 2000] - test name" format
-| issueHost | hostname for issue links | 'https://jira2.cerner.com/browse/'
-| sortKey | the name of the column that each individual table should sort by. e.g. 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
-| sortDirection | the direction the sortKey option should follow. One of ['ascending', 'descending'] | 'ascending'
-| filters | the filtering function all tests are ran through. Return falsy to reject a test. | `() => true`
-| tags | lets you specify aliases for tag names e.g. 'jira' instead of 'issue' | see [tags](#tags)
-| verbose | outputs verbose logs
-| silent | silences all console output
+| option | required | description | default |
+| --- | --- | --- | --- |
+| reportPath | **true** | path to write the report to |
+| types | **true** | a key, value object where the key is the name of a "test type" and the value is the glob that matches those test files |
+| matcher | false | *use with caution* the matching function for parsing the format of tests. Must return the shape { id: Array[String], name: String }.| matches "1000[, 2000] - test name" format by default
+| issueHost | false | hostname for issue links | 'https://jira2.cerner.com/browse/'
+| sortKey | false | the name of the column that each individual table should sort by. e.g. 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
+| sortDirection | false | the direction the sortKey option should follow. One of ['ascending', 'descending'] | 'ascending'
+| filter | false | the filtering function all tests are ran through. | see [filter](#filter)
+| tags | false | lets you specify aliases for tag names e.g. 'jira' instead of 'issue' | see [tags](#tags)
+| verbose | false | outputs verbose logs
+| silent | false | silences all console output
 
+
+##### filter
+the filter option should be a function which takes an object with the following properties: { id, name, link, issues, shortLink, type } and returns truthy if the test should be included. The default filter is `() => true`
+For example: 
+```javascript
+filter: ({ id, name }) => name.includes('scheduled medication') || id == '12345'
+```
 
 ##### tags
 | option | description | default |
@@ -85,15 +92,47 @@ The report will automatically look for a tracing.config.js file in your project.
 ```
 
 ### Advanced Usage
+#### Repeated Tests
+The default matcher for test names supports multiple ID's. This can be useful if your requirements are branched in such a way that you will otherwise end up with multiple of the same tests but each reference a different requirement ID.
+
+###### example:
+```javascript
+
+    // These two tests are equivalent
+
+    /**
+     * @name test
+     * @jira ABC-123
+     * @traces 1000 - Verify true equals true
+     * @traces 1001 - Verify true equals true
+     * @traces 1002 - Verify true equals true
+     * @traces 1003 - Verify true equals true
+     */
+    it('i am a test', () => {
+
+    });
+
+    /**
+     * @name test
+     * @jira ABC-123
+     * @traces 1000, 1001, 1002, 1003 - Verify true equals true
+     */
+    it('i am a test', () => {
+
+    });
+```
+
+#### Issue Grouping
 The issue tag (or your alias) is applied to every test under it until it detects another issue tag. This lets you group multiple tests in the same block to different issues.
 
-#### example:
+##### example:
 ```javascript
     /**
      * @name test
      * @jira ABC-123
      * @traces 1234567 - Verify true equals true
      * @traces 2345678 - Verify true does not equal false
+     *
      * @jira ABC-234
      * @traces 3456789 - Verify 2+2 = 4
      * @traces 4567890 - Verify 4-2 = 2
@@ -103,10 +142,10 @@ The issue tag (or your alias) is applied to every test under it until it detects
     });
 ```
 
-### Indention
+#### Indention
 Github's markdown spec only supports a minimal amount of html tags, and all styling is stripped. This makes it difficult to keep the exact whitespace of the test plan as it is typed in the code while also supporting wrapping. Currently the tracing reporter supports indented lists, and the definition of an "indention" is a sequence of 4 spaces. These are replaced with &nbsp; entities in the report. 
 
-#### example:
+##### example:
 ```javascript
     /**
      * @name test

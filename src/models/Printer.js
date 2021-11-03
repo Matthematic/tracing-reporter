@@ -83,55 +83,60 @@ class Printer {
      * @param {Object} tableMap 
      */
     static printMarkdown(config, tableMap) {
-        const escapeChars = [
-            [ /\*/g, '\\*' ],
-            [ /#/g, '\\#' ],
-            [ /\//g, '\\/' ],
-            [ /\(/g, '\\(' ],
-            [ /\)/g, '\\)' ],
-            [ /\[/g, '\\[' ],
-            [ /\]/g, '\\]' ],
-            [ /</g, '&lt;' ],
-            [ />/g, '&gt;' ],
-            [ /_/g, '\\_' ],
-            [/\n/g, '<br/>'] // MAKE SURE THIS IS LAST - THE < AND > HERE SHOULD NOT BE ESCAPED OR PRE TAG WILL FAIL
-        ];
+        try {
+            const escapeChars = [
+                [ /\*/g, '\\*' ],
+                [ /#/g, '\\#' ],
+                [ /\//g, '\\/' ],
+                [ /\(/g, '\\(' ],
+                [ /\)/g, '\\)' ],
+                [ /\[/g, '\\[' ],
+                [ /\]/g, '\\]' ],
+                [ /</g, '&lt;' ],
+                [ />/g, '&gt;' ],
+                [ /_/g, '\\_' ],
+                [/\n/g, '<br/>'] // MAKE SURE THIS IS LAST - THE < AND > HERE SHOULD NOT BE ESCAPED OR PRE TAG WILL FAIL
+            ];
 
-        const tests = tableMap.getTests()
+            const tests = tableMap.getTests()
 
-        const stats = _.countBy(tests, 'type');
-        const statString = Object.keys(stats).map((key) => `${key}: ${stats[key]}`).join(', ')
+            const stats = _.countBy(tests, 'type');
+            const statString = Object.keys(stats).map((key) => `${key}: ${stats[key]}`).join(', ')
 
-        if (config.reportPath) {
-            const reportHeader = `# Tracing Report\n#### Total: ${tests.length} (${statString})\n`
+            if (config.reportPath) {
+                const reportHeader = `# Tracing Report\n#### Total: ${tests.length} (${statString})\n`
 
-            // print tableMap to report file
-            let appendStr = reportHeader;
-            tableMap.tables.forEach(table => { // for each table
-                let testRows = table.tests.map(test => {
-                    let { name, link, issues, shortLink, type } = test;
+                // print tableMap to report file
+                let appendStr = reportHeader;
+                tableMap.tables.forEach(table => { // for each table
+                    let testRows = table.tests.map(test => {
+                        let { name, link, issues, shortLink, type } = test;
 
-                    // escape characters for the name since it has to be proper markdown
-                    escapeChars.forEach(char => {
-                        name = name.replace(char[0], char[1]);
+                        // escape characters for the name since it has to be proper markdown
+                        escapeChars.forEach(char => {
+                            name = name.replace(char[0], char[1]);
+                        });
+
+                        // Generate the display for the issue links
+                        const issueLinks = issues.map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${config.issueHost}${issue})` : issue);
+
+                        // Generate the display for the test name.
+                        let formattedName = new String(name);
+                        formattedName = formattedName.replace(/ {4}/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // At this point, only sequences of 4 spaces are considered as a supported indention
+                        return `| <h6>${formattedName}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
                     });
 
-                    // Generate the display for the issue links
-                    const issueLinks = issues.map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${config.issueHost}${issue})` : issue);
-
-                    // Generate the display for the test name.
-                    let formattedName = new String(name);
-                    formattedName = formattedName.replace(/ {4}/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // At this point, only sequences of 4 spaces are considered as a supported indention
-                    return `| <h6>${formattedName}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
+                    const tableHeader = `| Name (${testRows.length}) | Link | Issue | Type |\n` +
+                                            '| :--- | :---: | :---: | :---: |\n';
+                    const rows = testRows.join('\n');
+                    appendStr += `\n\n### ${table.id}\n\n` + tableHeader + rows + '\n\n<hr/>';
                 });
-
-                const tableHeader = `| Name (${testRows.length}) | Link | Issue | Type |\n` +
-                                        '| :--- | :---: | :---: | :---: |\n';
-                const rows = testRows.join('\n');
-                appendStr += `\n\n### ${table.id}\n\n` + tableHeader + rows + '\n\n<hr/>';
-            });
-            return Printer.append(config.reportPath, appendStr)
-            
+                return Printer.append(config.reportPath, appendStr)
+                
+            }
+        }
+        catch(e) {
+            throw `Could not print report file: ${e}`
         }
     }
 
@@ -141,8 +146,13 @@ class Printer {
      * @param {Object} tableMap 
      */
     static printData(config, tableMap) {
-        if (config.dataPath) {
-            return Printer.append(config.dataPath, JSON.stringify(tableMap, null, 2));
+        try {
+            if (config.dataPath) {
+                return Printer.append(config.dataPath, JSON.stringify(tableMap, null, 2));
+            }
+        }
+        catch(e) {
+            throw `Could not print data file: ${e}`
         }
     }
 }

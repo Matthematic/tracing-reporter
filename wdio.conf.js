@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-require("@babel/register");
+//require("@babel/register");
 const wdioConf = require('@cerner/terra-functional-testing/lib/config/wdio.conf.js');
 const webpackConfig = require('./webpack.config');
 

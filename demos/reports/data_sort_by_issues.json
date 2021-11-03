@@ -114,16 +114,6 @@
       "tests": [
         {
           "id": "1000001",
-          "name": "B",
-          "link": "../demos/Unit/testUnit.js#L16",
-          "issues": [
-            "TRACE-1000"
-          ],
-          "shortLink": "testUnit.js",
-          "type": "Unit"
-        },
-        {
-          "id": "1000001",
           "name": "BB",
           "link": "../demos/Blackbox/testBlackbox.js#L15",
           "issues": [
@@ -151,6 +141,16 @@
           ],
           "shortLink": "testBlackbox.js",
           "type": "Blackbox"
+        },
+        {
+          "id": "1000001",
+          "name": "B",
+          "link": "../demos/Unit/testUnit.js#L16",
+          "issues": [
+            "TRACE-1000"
+          ],
+          "shortLink": "testUnit.js",
+          "type": "Unit"
         },
         {
           "id": "1000001",
@@ -185,17 +185,7 @@
         },
         {
           "id": "1000001",
-          "name": "G",
-          "link": "../demos/Graybox/testWdio.js#L3",
-          "issues": [
-            "TRACE-1003"
-          ],
-          "shortLink": "testWdio.js",
-          "type": "Graybox"
-        },
-        {
-          "id": "1000001",
-          "name": "H",
+          "name": "L",
           "link": "../demos/Graybox/testWdio.js#L3",
           "issues": [
             "TRACE-1003"
@@ -215,7 +205,17 @@
         },
         {
           "id": "1000001",
-          "name": "L",
+          "name": "H",
+          "link": "../demos/Graybox/testWdio.js#L3",
+          "issues": [
+            "TRACE-1003"
+          ],
+          "shortLink": "testWdio.js",
+          "type": "Graybox"
+        },
+        {
+          "id": "1000001",
+          "name": "G",
           "link": "../demos/Graybox/testWdio.js#L3",
           "issues": [
             "TRACE-1003"

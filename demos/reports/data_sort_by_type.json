@@ -144,36 +144,6 @@
         },
         {
           "id": "1000001",
-          "name": "H",
-          "link": "../demos/Graybox/testWdio.js#L3",
-          "issues": [
-            "TRACE-1003"
-          ],
-          "shortLink": "testWdio.js",
-          "type": "Graybox"
-        },
-        {
-          "id": "1000001",
-          "name": "I",
-          "link": "../demos/Graybox/testWdio.js#L3",
-          "issues": [
-            "TRACE-1002"
-          ],
-          "shortLink": "testWdio.js",
-          "type": "Graybox"
-        },
-        {
-          "id": "1000001",
-          "name": "J",
-          "link": "../demos/Graybox/testWdio.js#L3",
-          "issues": [
-            "TRACE-1003"
-          ],
-          "shortLink": "testWdio.js",
-          "type": "Graybox"
-        },
-        {
-          "id": "1000001",
           "name": "K",
           "link": "../demos/Graybox/testWdio.js#L3",
           "issues": [
@@ -194,14 +164,33 @@
         },
         {
           "id": "1000001",
-          "name": "A",
-          "link": "../demos/Unit/testUnit.js#L3",
+          "name": "J",
+          "link": "../demos/Graybox/testWdio.js#L3",
           "issues": [
-            "TRACE-1001",
+            "TRACE-1003"
+          ],
+          "shortLink": "testWdio.js",
+          "type": "Graybox"
+        },
+        {
+          "id": "1000001",
+          "name": "H",
+          "link": "../demos/Graybox/testWdio.js#L3",
+          "issues": [
+            "TRACE-1003"
+          ],
+          "shortLink": "testWdio.js",
+          "type": "Graybox"
+        },
+        {
+          "id": "1000001",
+          "name": "I",
+          "link": "../demos/Graybox/testWdio.js#L3",
+          "issues": [
             "TRACE-1002"
           ],
-          "shortLink": "testUnit.js",
-          "type": "Unit"
+          "shortLink": "testWdio.js",
+          "type": "Graybox"
         },
         {
           "id": "1000001",
@@ -219,6 +208,17 @@
           "link": "../demos/Unit/testUnit.js#L16",
           "issues": [
             "TRACE-1000"
+          ],
+          "shortLink": "testUnit.js",
+          "type": "Unit"
+        },
+        {
+          "id": "1000001",
+          "name": "A",
+          "link": "../demos/Unit/testUnit.js#L3",
+          "issues": [
+            "TRACE-1001",
+            "TRACE-1002"
           ],
           "shortLink": "testUnit.js",
           "type": "Unit"

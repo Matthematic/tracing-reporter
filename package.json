@@ -7,6 +7,9 @@
   "bin": {
     "tracing-reporter": "bin/tracing-reporter.js"
   },
+  "engines": {
+    "node": "<12"
+  },
   "keywords": [
     "Cerner",
     "tracing-reporter-js",
@@ -35,7 +38,7 @@
     "posttest:jest": "jest-it-up",
     "test:lint": "npm run lint",
     "test:wdio": "terra wdio",
-    "test:wdio:local": "terra wdio --formFactors ['huge'] --locales ['en-US'] --browsers ['chrome'] --gridUrl='grid314.test.devcernerpowerchart.com'",
+    "test:wdio:local": "terra wdio --locales en --formFactors huge --browsers chrome --gridUrl 'grid314.test.devcernerpowerchart.com'",
     "pack": "TERRA_DEV_SITE_PUBLIC_PATH='/medication-administration/tracing-reporter-js/' NODE_ENV=production webpack -p",
     "prepare": "npm run compile",
     "demo": "npm run compile && node demos/demo-runner.js",
@@ -58,8 +61,8 @@
     "framer-motion": "^2.6.5",
     "fs": "0.0.1-security",
     "glob": "^7.1.3",
-    "jsdoc-api": "^7.0.1",
-    "ow": "^0.28.0",
+    "jsdoc-api": "^5.0.1",
+    "ow": "~0.23.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

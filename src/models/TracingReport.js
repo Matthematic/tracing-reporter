@@ -1,3 +1,4 @@
+/* global process */
 import jsdoc from 'jsdoc-api';
 import glob from 'glob';
 import { promises } from 'fs';
@@ -9,7 +10,6 @@ import Printer from './Printer';
 import Test from './Test';
 import Config from './Config';
 import Spinnies from 'spinnies';
-
 const { readFile } = promises;
 
 class TracingReport {
@@ -18,7 +18,13 @@ class TracingReport {
      * @param {Object} customConfig the custom config options to use
      */
     constructor(customConfig = {}) {
-        this.config = new Config(customConfig).validate().get();
+        try {
+            this.config = new Config(customConfig).validate().get();
+        }
+        catch(e) {
+            console.error(`There is a problem with the config: ${e}`)
+            process.exit(1);
+        }
         this.log = {
             verbose: (msg) => {
                 if (!this.config.silent && this.config.verbose) {
@@ -43,21 +49,23 @@ class TracingReport {
      * 2. Clears the report if one already exists
      */
     setup() {
-        if (!this.config.reportPath && !this.config.dataPath) {
-            throw new Error("You must supply either a dataPath param or a reportPath param");
-        }
-        
-        if (this.config.reportPath) {
-            Printer.checkDir(this.config.reportPath)
-        }
+        try {
+            if (this.config.reportPath) {
+                Printer.checkDir(this.config.reportPath)
+            }
 
-        if (this.config.dataPath) {
-            Printer.checkDir(this.config.dataPath);
+            if (this.config.dataPath) {
+                Printer.checkDir(this.config.dataPath);
+            }
+
+            this.progressCap = 0;
+
+            this.spinnies = new Spinnies();
         }
-
-        this.progressCap = 0;
-
-        this.spinnies = new Spinnies();
+        catch(e) {
+            console.error(`There is a problem setting up the files: ${e}`)
+            process.exit(1);
+        }
     }
 
     /**
@@ -68,7 +76,6 @@ class TracingReport {
      *  4. Transforms the Map into a final string to append to the report file
      */
     async build() {
-        this.log.info('Tracing...');
         const prom = Promise.all( // Process glob patterns and read jsdoc from the files
             Object.keys(this.config.types).map(key => this.buildType(key, this.config.types[key]))
         )
@@ -97,6 +104,10 @@ class TracingReport {
                 }),
             ])
         })
+        .catch(e => {
+            console.error(`Error: ${e}`)
+            process.exitCode = 1;
+        })
         return prom;
     }
 
@@ -116,6 +127,7 @@ class TracingReport {
                     resolve(files)
                 })
             }).then(async files => {
+                this.log.verbose(`Process files: ${files}`);
                 const tests = await Promise.all(
                     files.map(file => {
                         return this.parseFile(file, name)
@@ -151,7 +163,8 @@ class TracingReport {
                     .then(result => this.parseExplanations(result, fileName, type));
             })
             .catch(e => {
-                throw new Error(`Error parsing ${fileName} ${e.message}`);
+                process.exitCode = 1;
+                throw new Error(`Error parsing ${fileName} ${e}`);
             });
     }
 

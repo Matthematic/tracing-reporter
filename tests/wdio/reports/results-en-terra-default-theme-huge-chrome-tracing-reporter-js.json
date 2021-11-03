@@ -1,0 +1,181 @@
+{
+  "packageName": "tracing-reporter-js",
+  "theme": "terra-default-theme",
+  "locale": "en",
+  "formFactor": "huge",
+  "capabilities": {
+    "browserName": "chrome",
+    "platform": "Linux",
+    "version": "69.0.3497.100"
+  },
+  "specs": [
+    {
+      "spec": "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/interactive-report-spec.js",
+      "start": "2021-11-03T20:59:18.264Z",
+      "end": "2021-11-03T20:59:36.244Z",
+      "suites": [
+        {
+          "title": "Interactive",
+          "fullTitle": "Interactive",
+          "duration": 17871,
+          "start": "2021-11-03T20:59:18.270Z",
+          "end": "2021-11-03T20:59:36.141Z",
+          "tests": [
+            {
+              "title": "filter-by-issues matches screenshot",
+              "fullTitle": "Interactive filter-by-issues matches screenshot",
+              "duration": 4045,
+              "start": "2021-11-03T20:59:18.270Z",
+              "end": "2021-11-03T20:59:22.315Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/filter-by-issues.png"
+              ]
+            },
+            {
+              "title": "sort-by-id matches screenshot",
+              "fullTitle": "Interactive sort-by-id matches screenshot",
+              "duration": 2543,
+              "start": "2021-11-03T20:59:22.318Z",
+              "end": "2021-11-03T20:59:24.861Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-id.png"
+              ]
+            },
+            {
+              "title": "sort-by-issues matches screenshot",
+              "fullTitle": "Interactive sort-by-issues matches screenshot",
+              "duration": 2810,
+              "start": "2021-11-03T20:59:24.865Z",
+              "end": "2021-11-03T20:59:27.675Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-issues.png"
+              ]
+            },
+            {
+              "title": "sort-by-link matches screenshot",
+              "fullTitle": "Interactive sort-by-link matches screenshot",
+              "duration": 2710,
+              "start": "2021-11-03T20:59:27.677Z",
+              "end": "2021-11-03T20:59:30.387Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-link.png"
+              ]
+            },
+            {
+              "title": "sort-by-name matches screenshot",
+              "fullTitle": "Interactive sort-by-name matches screenshot",
+              "duration": 2724,
+              "start": "2021-11-03T20:59:30.388Z",
+              "end": "2021-11-03T20:59:33.112Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-name.png"
+              ]
+            },
+            {
+              "title": "sort-by-type matches screenshot",
+              "fullTitle": "Interactive sort-by-type matches screenshot",
+              "duration": 3021,
+              "start": "2021-11-03T20:59:33.113Z",
+              "end": "2021-11-03T20:59:36.134Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-type.png"
+              ]
+            }
+          ],
+          "suites": []
+        }
+      ],
+      "tests": []
+    },
+    {
+      "spec": "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/markdown-report-spec.js",
+      "start": "2021-11-03T20:59:40.921Z",
+      "end": "2021-11-03T21:00:21.996Z",
+      "suites": [
+        {
+          "title": "Markdown",
+          "fullTitle": "Markdown",
+          "duration": 40944,
+          "start": "2021-11-03T20:59:40.927Z",
+          "end": "2021-11-03T21:00:21.871Z",
+          "tests": [
+            {
+              "title": "filter-by-issues matches screenshot",
+              "fullTitle": "Markdown filter-by-issues matches screenshot",
+              "duration": 3264,
+              "start": "2021-11-03T20:59:40.928Z",
+              "end": "2021-11-03T20:59:44.192Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/filter-by-issues.png"
+              ]
+            },
+            {
+              "title": "sort-by-id matches screenshot",
+              "fullTitle": "Markdown sort-by-id matches screenshot",
+              "duration": 2518,
+              "start": "2021-11-03T20:59:44.195Z",
+              "end": "2021-11-03T20:59:46.713Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-id.png"
+              ]
+            },
+            {
+              "title": "sort-by-issues matches screenshot",
+              "fullTitle": "Markdown sort-by-issues matches screenshot",
+              "duration": 2498,
+              "start": "2021-11-03T20:59:46.713Z",
+              "end": "2021-11-03T20:59:49.211Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-issues.png"
+              ]
+            },
+            {
+              "title": "sort-by-link matches screenshot",
+              "fullTitle": "Markdown sort-by-link matches screenshot",
+              "duration": 10318,
+              "start": "2021-11-03T20:59:49.215Z",
+              "end": "2021-11-03T20:59:59.533Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-link.png"
+              ]
+            },
+            {
+              "title": "sort-by-name matches screenshot",
+              "fullTitle": "Markdown sort-by-name matches screenshot",
+              "duration": 16889,
+              "start": "2021-11-03T20:59:59.535Z",
+              "end": "2021-11-03T21:00:16.424Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-name.png"
+              ]
+            },
+            {
+              "title": "sort-by-type matches screenshot",
+              "fullTitle": "Markdown sort-by-type matches screenshot",
+              "duration": 5445,
+              "start": "2021-11-03T21:00:16.426Z",
+              "end": "2021-11-03T21:00:21.871Z",
+              "state": "passed",
+              "screenshots": [
+                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-type.png"
+              ]
+            }
+          ],
+          "suites": []
+        }
+      ],
+      "tests": []
+    }
+  ]
+}

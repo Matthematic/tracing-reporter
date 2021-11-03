@@ -1,0 +1,10 @@
+{
+  "startDate": "11/3/2021, 3:59:18 PM",
+  "locale": "en",
+  "theme": "terra-default-theme",
+  "formFactor": "huge",
+  "output": [
+    "------------------------------------------------------------------\n[chrome 69.0.3497.100 Linux #0-0] Spec: /Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/interactive-report-spec.js\n[chrome 69.0.3497.100 Linux #0-0] Running: chrome (v69.0.3497.100) on Linux\n[chrome 69.0.3497.100 Linux #0-0] Session ID: e48dfdbd19796acee57b6e7d1729b19b\n[chrome 69.0.3497.100 Linux #0-0]\n[chrome 69.0.3497.100 Linux #0-0] Interactive\n[chrome 69.0.3497.100 Linux #0-0]    ✓ filter-by-issues matches screenshot\n[chrome 69.0.3497.100 Linux #0-0]    ✓ sort-by-id matches screenshot\n[chrome 69.0.3497.100 Linux #0-0]    ✓ sort-by-issues matches screenshot\n[chrome 69.0.3497.100 Linux #0-0]    ✓ sort-by-link matches screenshot\n[chrome 69.0.3497.100 Linux #0-0]    ✓ sort-by-name matches screenshot\n[chrome 69.0.3497.100 Linux #0-0]    ✓ sort-by-type matches screenshot\n[chrome 69.0.3497.100 Linux #0-0]\n"
+  ],
+  "endDate": "11/3/2021, 3:59:36 PM"
+}
