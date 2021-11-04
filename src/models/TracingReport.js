@@ -1,9 +1,9 @@
 /* global process */
 import jsdoc from 'jsdoc-api';
 import glob from 'glob';
-import { promises } from 'fs';
+import { existsSync, promises } from 'fs';
 import path from 'path';
-import _ from 'underscore';
+import _ from 'lodash';
 import * as babel from '@babel/core';
 import TableMap from './TableMap';
 import Printer from './Printer';
@@ -76,10 +76,13 @@ class TracingReport {
      *  4. Transforms the Map into a final string to append to the report file
      */
     async build() {
-        const prom = Promise.all( // Process glob patterns and read jsdoc from the files
-            Object.keys(this.config.types).map(key => this.buildType(key, this.config.types[key]))
-        )
+        const prom = Promise.all([ // Process glob patterns and read jsdoc from the files
+            ...Object.keys(this.config.types).map(key => this.buildType(key, this.config.types[key])),
+            this.buildDataFiles(),
+        ])
         .then(async (results) => { // Aggregate all the resulting tests and populate the table map struct
+            console.log('Aggregating');
+            console.log(results);
             this.log.verbose('Aggregating results');
             const tableMap = new TableMap().add(_.flatten(results).filter(Boolean)).sort(this.config.tableSortKey, this.config.tableSortDirection, this.config.sortDirection)
 
@@ -110,6 +113,33 @@ class TracingReport {
         })
         return prom;
     }
+
+    async buildDataFiles() {
+        return Promise.all(
+            this.config.dataFiles.map(fileName => {
+                if (existsSync(fileName)) {
+                    return readFile(fileName, 'utf-8')
+                    .then(JSON.parse)
+                    .catch(e => {
+                        process.exitCode = 1;
+                        throw `Error parsing ${fileName} ${e}`;
+                    });
+                }
+                console.log(`Warning - file doesn't exist: ${fileName}`);
+                return Promise.resolve();
+            })
+        )
+        .then(data => {
+            const tableMap = new TableMap(_.merge(...data.filter(Boolean)))
+            console.log(tableMap.getTests());
+            return tableMap.getTests();
+        })
+        .catch(e => {
+            throw `Error building data files: ${e}`
+        });
+    }
+
+
 
     /**
      * Parses every file that matches the glob pattern
@@ -145,7 +175,8 @@ class TracingReport {
      * @returns {Promise}
      */
     async parseFile(fileName, type = '') {
-        return readFile(fileName)
+        console.log(fileName)
+        return readFile(fileName, 'utf-8')
             .then(async code => {
                 const fileExt = path.extname(fileName);
                 const isTsFile = !!fileExt.match(/\.tsx?$/);

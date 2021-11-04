@@ -10,7 +10,7 @@ class Config {
         this.config = {
             reportPath: undefined,
             dataPath: undefined,
-            types: undefined,
+            types: {},
             matcher: (test) => {
                 if (/^[0-9]+(,\s*[0-9]+)*\s*-\s*/.test(test)) { // matches the "1000[, 2000] - test name" format
                     const id = test.slice(0, test.indexOf('-')).trim().split(',').map(x => x.trim()); // return a list of id's
@@ -26,6 +26,7 @@ class Config {
             tableSortDirection: CONSTANTS.ASCENDING,
             verbose: false,
             silent: false,
+            dataFiles: [],
             ...options,
             tags: {
                 name: 'requirement',
@@ -44,7 +45,7 @@ class Config {
         ow(this.config, ow.object.exactShape({
             reportPath: ow.optional.string.not.empty,
             dataPath: ow.optional.string.not.empty,
-            types: ow.object.not.empty,
+            types: ow.optional.object,
             matcher: ow.function,
             filter: ow.function,
             issueHost: ow.optional.string.not.empty,
@@ -65,6 +66,7 @@ class Config {
                 ow.number.is(x => x === CONSTANTS.DESCENDING),
             ),
             silent: ow.optional.boolean,
+            dataFiles: ow.optional.array,
             tags: ow.object.exactShape({
                 name: ow.optional.string.not.empty,
                 issue: ow.optional.string.not.empty,
