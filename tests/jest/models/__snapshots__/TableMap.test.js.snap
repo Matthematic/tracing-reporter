@@ -1160,7 +1160,7 @@ Array [
     ],
   },
   Table {
-    "id": undefined,
+    "id": 1,
     "tests": Array [
       Test {
         "id": "1",

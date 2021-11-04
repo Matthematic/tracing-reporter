@@ -74,7 +74,11 @@ class TableMap {
 
     sort(key = 'id', tableSortDirection = CONSTANTS.ASCENDING, sortDirection = CONSTANTS.ASCENDING) {
       this.tables.forEach(t => t.sort(key, tableSortDirection)); // Sort each table
-      this.tables = this.tables.sort((t1, t2) => Number(t1.id) < Number(t2.id) ? -sortDirection : sortDirection);
+
+      const descSort = (t1, t2) => Number(t1.id) < Number(t2.id) ? 1 : -1
+      const ascSort = (t1, t2) => Number(t2.id) < Number(t1.id) ? 1 : -1
+
+      this.tables = sortDirection === CONSTANTS.ASCENDING ? this.tables.sort(ascSort) : this.tables.sort(descSort);
       return this;
     }
 
