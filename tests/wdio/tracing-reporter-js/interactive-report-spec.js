@@ -3,7 +3,6 @@
 describe('Interactive', () => {
     [
         'filter-by-issues',
-        'sort-by-id',
         'sort-by-issues',
         'sort-by-link',
         'sort-by-name',
