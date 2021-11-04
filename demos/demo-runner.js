@@ -1,15 +1,15 @@
 const TracingReport = require('../lib/models/TracingReport');
 
-['name', 'issues', 'link', 'type'].forEach(sortKey => 
+['name', 'issues', 'link', 'type'].forEach(tableSortKey => 
     new TracingReport({
-        reportPath: `demos/reports/sort_by_${sortKey}.md`,
-        dataPath: `demos/reports/data_sort_by_${sortKey}.json`,
+        reportPath: `demos/reports/sort_by_${tableSortKey}.md`,
+        dataPath: `demos/reports/data_sort_by_${tableSortKey}.json`,
         types: {
             Graybox: 'demos/Graybox/**/*.js',
             Blackbox: 'demos/Blackbox/**/*.js',
             Unit: 'demos/Unit/**/*.js',
         },
-        sortKey,
+        tableSortKey,
         tags: {
             name: 'test',
             issue: 'jira',
@@ -25,7 +25,7 @@ new TracingReport({
         Blackbox: 'demos/Blackbox/**/*.js',
         Unit: 'demos/Unit/**/*.js',
     },
-    sortKey: 'name',
+    tableSortKey: 'name',
     filter: ({ issues }) => issues.includes('TRACE-1001'),
     tags: {
         name: 'test',

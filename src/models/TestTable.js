@@ -1,3 +1,5 @@
+import { CONSTANTS } from './Config';
+
 /**
  * Represents a single table of tests mapped to a requirement ID
  * 
@@ -21,6 +23,13 @@ class Table {
       this.tests = [];
     }
 
+    // intended for testing
+    clone(table) {
+      this.id = table.id;
+      this.tests = JSON.parse(JSON.stringify(table.tests));
+      return this;
+    }
+
     getTests() {
       return this.tests;
     }
@@ -40,7 +49,7 @@ class Table {
       return this;
     }
 
-    sort(key = 'id', direction = 'ascending') {
+    sort(key = 'id', direction = CONSTANTS.ASCENDING) {
       this.tests.sort((a, b) => (b.name === a.name) ? 0 : (b.name < a.name) ? 1 : -1) // sort by name first
       this.tests.sort((a, b) => {
           let x = a[key];
@@ -55,7 +64,7 @@ class Table {
             return 0;
           }
 
-          const compare = direction === 'descending' ? (y > x) : (y < x);
+          const compare = direction === CONSTANTS.DESCENDING ? (y > x) : (y < x);
           return compare ? 1 : -1
         });
       return this;

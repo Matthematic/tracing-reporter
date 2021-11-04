@@ -1,6 +1,7 @@
 import Test from './Test';
 import Table from './TestTable';
 import TestTable from './TestTable';
+import { CONSTANTS } from './Config';
 const _ = require('underscore');
 
 
@@ -71,9 +72,9 @@ class TableMap {
       return this.tables;
     }
 
-    sort(key = 'id', direction = 'ascending') {
-      this.tables.forEach(t => t.sort(key, direction)); // Sort each table
-      this.tables = this.tables.sort((t1, t2) => Number(t1.id) < Number(t2.id) ? 1 : -1) // sort the list of tables in DESCENDING ID order
+    sort(key = 'id', tableSortDirection = CONSTANTS.ASCENDING, sortDirection = CONSTANTS.ASCENDING) {
+      this.tables.forEach(t => t.sort(key, tableSortDirection)); // Sort each table
+      this.tables = this.tables.sort((t1, t2) => Number(t1.id) < Number(t2.id) ? -sortDirection : sortDirection);
       return this;
     }
 

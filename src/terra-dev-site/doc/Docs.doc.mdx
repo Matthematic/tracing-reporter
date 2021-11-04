@@ -49,12 +49,14 @@ The report will automatically look for a tracing.config.js file in your project.
 ##### top-level options
 | option | required | description | default |
 | --- | --- | --- | --- |
-| reportPath | **true** | path to write the report to |
-| types | **true** | a key, value object where the key is the name of a "test type" and the value is the glob that matches those test files |
+| **reportPath** | **true** | path to write the report to |
+| dataPath | false | path to write the data object to. This is required if you plan on using the [InteractiveViewer](./components/interactive-viewer) |
+| **types** | **true** | a key, value object where the key is the name of a "test type" and the value is the glob that matches those test files |
 | matcher | false | *use with caution* the matching function for parsing the format of tests. Must return the shape { id: Array[String], name: String }.| matches "1000[, 2000] - test name" format by default
 | issueHost | false | hostname for issue links | 'https://jira2.cerner.com/browse/'
-| sortKey | false | the name of the column that each individual table should sort by. e.g. 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
-| sortDirection | false | the direction the sortKey option should follow. One of ['ascending', 'descending'] | 'ascending'
+| sortDirection | false | the direction that the tables are listed in the report. -1 for descending, 1 for ascending | 1
+| tableSortKey | false | the name of the column that each individual table should sort by. e.g. 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
+| tableSortDirection | false | the direction that the tests in a single table will be sorted. -1 for descending, 1 for ascending | 1
 | filter | false | the filtering function all tests are ran through. | see [filter](#filter)
 | tags | false | lets you specify aliases for tag names e.g. 'jira' instead of 'issue' | see [tags](#tags)
 | verbose | false | outputs verbose logs

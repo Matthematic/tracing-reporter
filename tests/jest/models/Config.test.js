@@ -11,8 +11,9 @@ describe("get", function () {
         "matcher": [Function],
         "reportPath": undefined,
         "silent": false,
-        "sortDirection": "ascending",
-        "sortKey": "name",
+        "sortDirection": 1,
+        "tableSortDirection": 1,
+        "tableSortKey": "name",
         "tags": Object {
           "issue": "issue",
           "name": "requirement",
@@ -34,7 +35,7 @@ describe("get", function () {
         Unit: "custom",
       },
       issueHost: "custom",
-      sortKey: "custom",
+      tableSortKey: "custom",
       tags: {
         name: "custom",
         issue: "custom",
@@ -49,8 +50,9 @@ describe("get", function () {
         "matcher": [Function],
         "reportPath": "custom",
         "silent": false,
-        "sortDirection": "ascending",
-        "sortKey": "custom",
+        "sortDirection": 1,
+        "tableSortDirection": 1,
+        "tableSortKey": "custom",
         "tags": Object {
           "issue": "custom",
           "name": "custom",

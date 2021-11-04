@@ -126,10 +126,10 @@ describe('TracingReport', () => {
         });
     });
     
-    ['name', 'issues', 'link', 'type'].forEach(sortKey => {
-        it(`sorts by ${sortKey}`, async () => {
+    ['name', 'issues', 'link', 'type'].forEach(tableSortKey => {
+        it(`sorts by ${tableSortKey}`, async () => {
             return getReport({ 
-                sortKey
+                tableSortKey
             }).then(report => {
                 expect(report).toMatchSnapshot();
             });

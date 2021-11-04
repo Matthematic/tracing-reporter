@@ -1,4 +1,10 @@
 import ow from 'ow';
+
+export const CONSTANTS = Object.freeze({
+    DESCENDING: -1,
+    ASCENDING: 1,
+});
+
 class Config {
     constructor(options = { tags: { } }) {
         this.config = {
@@ -15,8 +21,9 @@ class Config {
             },
             filter: () => true,
             issueHost: 'https://jira2.cerner.com/browse/',
-            sortKey: 'name',
-            sortDirection: 'ascending',
+            sortDirection: CONSTANTS.ASCENDING,
+            tableSortKey: 'name',
+            tableSortDirection: CONSTANTS.ASCENDING,
             verbose: false,
             silent: false,
             ...options,
@@ -41,7 +48,7 @@ class Config {
             matcher: ow.function,
             filter: ow.function,
             issueHost: ow.optional.string.not.empty,
-            sortKey: ow.optional.any(
+            tableSortKey: ow.optional.any(
                 ow.string.equals('id'),
                 ow.string.equals('issues'),
                 ow.string.equals('link'),
@@ -49,9 +56,13 @@ class Config {
                 ow.string.equals('type'),
                 ow.string.equals('shortLink')
             ),
+            tableSortDirection: ow.optional.any(
+                ow.number.is(x => x === CONSTANTS.ASCENDING),
+                ow.number.is(x => x === CONSTANTS.DESCENDING),
+            ),
             sortDirection: ow.optional.any(
-                ow.string.equals('ascending'),
-                ow.string.equals('descending'),
+                ow.number.is(x => x === CONSTANTS.ASCENDING),
+                ow.number.is(x => x === CONSTANTS.DESCENDING),
             ),
             silent: ow.optional.boolean,
             tags: ow.object.exactShape({

@@ -81,7 +81,7 @@ class TracingReport {
         )
         .then(async (results) => { // Aggregate all the resulting tests and populate the table map struct
             this.log.verbose('Aggregating results');
-            const tableMap = new TableMap().add(_.flatten(results).filter(Boolean)).sort(this.config.sortKey, this.config.sortDirection)
+            const tableMap = new TableMap().add(_.flatten(results).filter(Boolean)).sort(this.config.tableSortKey, this.config.tableSortDirection, this.config.sortDirection)
 
             return Promise.all([
                 new Promise((resolve) => {

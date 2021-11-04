@@ -370,7 +370,7 @@ Array [
 exports[`sort sorts each table by id 1`] = `
 Array [
   Table {
-    "id": 3,
+    "id": 1,
     "tests": Array [
       Test {
         "id": "1",
@@ -408,9 +408,9 @@ Array [
     ],
   },
   Table {
-    "id": 3,
+    "id": 2,
     "tests": Array [
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -421,7 +421,7 @@ Array [
         "shortLink": "testUnit.js",
         "type": "Unit",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -432,7 +432,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -448,7 +448,7 @@ Array [
   Table {
     "id": 3,
     "tests": Array [
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -459,7 +459,7 @@ Array [
         "shortLink": "testUnit.js",
         "type": "Unit",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -470,7 +470,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -489,7 +489,7 @@ Array [
 exports[`sort sorts each table by issue 1`] = `
 Array [
   Table {
-    "id": 3,
+    "id": 1,
     "tests": Array [
       Test {
         "id": "3",
@@ -527,9 +527,9 @@ Array [
     ],
   },
   Table {
-    "id": 3,
+    "id": 2,
     "tests": Array [
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -540,7 +540,7 @@ Array [
         "shortLink": "testBlackbox.js",
         "type": "Blackbox",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -551,7 +551,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -567,7 +567,7 @@ Array [
   Table {
     "id": 3,
     "tests": Array [
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -578,7 +578,7 @@ Array [
         "shortLink": "testBlackbox.js",
         "type": "Blackbox",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -589,7 +589,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -608,7 +608,7 @@ Array [
 exports[`sort sorts each table by link 1`] = `
 Array [
   Table {
-    "id": 3,
+    "id": 1,
     "tests": Array [
       Test {
         "id": "3",
@@ -646,9 +646,9 @@ Array [
     ],
   },
   Table {
-    "id": 3,
+    "id": 2,
     "tests": Array [
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -659,7 +659,7 @@ Array [
         "shortLink": "testBlackbox.js",
         "type": "Blackbox",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -670,7 +670,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -686,7 +686,7 @@ Array [
   Table {
     "id": 3,
     "tests": Array [
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -697,7 +697,7 @@ Array [
         "shortLink": "testBlackbox.js",
         "type": "Blackbox",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -708,7 +708,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -727,7 +727,7 @@ Array [
 exports[`sort sorts each table by name 1`] = `
 Array [
   Table {
-    "id": 3,
+    "id": 1,
     "tests": Array [
       Test {
         "id": "3",
@@ -765,9 +765,9 @@ Array [
     ],
   },
   Table {
-    "id": 3,
+    "id": 2,
     "tests": Array [
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -778,7 +778,7 @@ Array [
         "shortLink": "testBlackbox.js",
         "type": "Blackbox",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -789,7 +789,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -805,7 +805,7 @@ Array [
   Table {
     "id": 3,
     "tests": Array [
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -816,7 +816,7 @@ Array [
         "shortLink": "testBlackbox.js",
         "type": "Blackbox",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -827,7 +827,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -846,7 +846,7 @@ Array [
 exports[`sort sorts each table by type 1`] = `
 Array [
   Table {
-    "id": 3,
+    "id": 1,
     "tests": Array [
       Test {
         "id": "3",
@@ -884,9 +884,9 @@ Array [
     ],
   },
   Table {
-    "id": 3,
+    "id": 2,
     "tests": Array [
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -897,7 +897,7 @@ Array [
         "shortLink": "testBlackbox.js",
         "type": "Blackbox",
       },
-      Test {
+      Object {
         "id": "2",
         "issues": Array [
           "TEST-223",
@@ -908,7 +908,7 @@ Array [
         "shortLink": "testGraybox.js",
         "type": "Graybox",
       },
-      Test {
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -924,7 +924,7 @@ Array [
   Table {
     "id": 3,
     "tests": Array [
-      Test {
+      Object {
         "id": "3",
         "issues": Array [
           "TEST-323",
@@ -934,6 +934,49 @@ Array [
         "name": "Blackbox Test",
         "shortLink": "testBlackbox.js",
         "type": "Blackbox",
+      },
+      Object {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Object {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+    ],
+  },
+]
+`;
+
+exports[`sort sorts list of tables in ascending id order 1`] = `
+Array [
+  Table {
+    "id": 1,
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
       },
       Test {
         "id": "2",
@@ -947,6 +990,22 @@ Array [
         "type": "Graybox",
       },
       Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+  Table {
+    "id": 2,
+    "tests": Array [
+      Object {
         "id": "1",
         "issues": Array [
           "TEST-123",
@@ -956,6 +1015,185 @@ Array [
         "name": "Unit Test",
         "shortLink": "testUnit.js",
         "type": "Unit",
+      },
+      Object {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Object {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+  Table {
+    "id": 3,
+    "tests": Array [
+      Object {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Object {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Object {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+]
+`;
+
+exports[`sort sorts list of tables in descending id order 1`] = `
+Array [
+  Table {
+    "id": 3,
+    "tests": Array [
+      Object {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Object {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Object {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+  Table {
+    "id": 2,
+    "tests": Array [
+      Object {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Object {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Object {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
+      },
+    ],
+  },
+  Table {
+    "id": undefined,
+    "tests": Array [
+      Test {
+        "id": "1",
+        "issues": Array [
+          "TEST-123",
+          "TEST2-123",
+        ],
+        "link": "\\"../testUnit.js#L3\\",",
+        "name": "Unit Test",
+        "shortLink": "testUnit.js",
+        "type": "Unit",
+      },
+      Test {
+        "id": "2",
+        "issues": Array [
+          "TEST-223",
+          "TEST2-223",
+        ],
+        "link": "\\"../testGraybox.js#L3\\",",
+        "name": "Graybox Test",
+        "shortLink": "testGraybox.js",
+        "type": "Graybox",
+      },
+      Test {
+        "id": "3",
+        "issues": Array [
+          "TEST-323",
+          "TEST2-323",
+        ],
+        "link": "\\"../testBlackbox.js#L3\\",",
+        "name": "Blackbox Test",
+        "shortLink": "testBlackbox.js",
+        "type": "Blackbox",
       },
     ],
   },

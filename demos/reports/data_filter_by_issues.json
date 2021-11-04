@@ -1,22 +1,6 @@
 {
   "tables": [
     {
-      "id": "1000001",
-      "tests": [
-        {
-          "id": "1000001",
-          "name": "A",
-          "link": "../demos/Unit/testUnit.js#L3",
-          "issues": [
-            "TRACE-1001",
-            "TRACE-1002"
-          ],
-          "shortLink": "testUnit.js",
-          "type": "Unit"
-        }
-      ]
-    },
-    {
       "id": "1000000",
       "tests": [
         {
@@ -106,6 +90,22 @@
           ],
           "shortLink": "testBlackbox.js",
           "type": "Blackbox"
+        }
+      ]
+    },
+    {
+      "id": "1000001",
+      "tests": [
+        {
+          "id": "1000001",
+          "name": "A",
+          "link": "../demos/Unit/testUnit.js#L3",
+          "issues": [
+            "TRACE-1001",
+            "TRACE-1002"
+          ],
+          "shortLink": "testUnit.js",
+          "type": "Unit"
         }
       ]
     }
