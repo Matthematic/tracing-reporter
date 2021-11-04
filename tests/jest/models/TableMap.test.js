@@ -118,7 +118,7 @@ describe('sort', () => {
     });
 
     it('sorts list of tables in descending id order', () => {
-        const table = new TestTable().add([unitTest, grayboxTest, blackboxTest]);
+        const table = new TestTable(1).add([unitTest, grayboxTest, blackboxTest]);
         const map = new TableMap().add([table, new TestTable().clone(table).setId(2), new TestTable().clone(table).setId(3)])
         expect(map.sort(undefined, undefined, -1).tables).toMatchSnapshot();
     });
