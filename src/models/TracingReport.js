@@ -3,7 +3,7 @@ import jsdoc from 'jsdoc-api';
 import glob from 'glob';
 import { promises } from 'fs';
 import path from 'path';
-import _, { reject } from 'underscore';
+import _ from 'underscore';
 import * as babel from '@babel/core';
 import TableMap from './TableMap';
 import Printer from './Printer';
@@ -84,7 +84,7 @@ class TracingReport {
             const tableMap = new TableMap().add(_.flatten(results).filter(Boolean)).sort(this.config.tableSortKey, this.config.tableSortDirection, this.config.sortDirection)
 
             return Promise.all([
-                new Promise((resolve) => {
+                new Promise((resolve, reject) => {
                     if (!this.config.dataPath) resolve();
                     const result = Printer.printData(this.config, tableMap)
                     if (result) {
@@ -93,7 +93,7 @@ class TracingReport {
                     }
                     reject()
                 }),
-                new Promise((resolve) => {
+                new Promise((resolve, reject) => {
                     if (!this.config.reportPath) resolve();
                     const result = Printer.printMarkdown(this.config, tableMap)
                     if (result) {
