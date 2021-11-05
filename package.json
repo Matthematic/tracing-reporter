@@ -1,6 +1,6 @@
 {
   "name": "tracing-reporter-js",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Builds a tracing report from JsDoc-annotated tests",
   "main": "lib/index.js",
   "private": false,
