@@ -37,7 +37,9 @@ new TracingReport({
     reportPath: `demos/reports/long_report.md`,
     dataPath: `demos/reports/data_long_report.json`,
     types: {
-        Unit: 'demos/Unit/testUnitLong.ts',
+        Unit: [
+            'demos/Unit/testUnitLong.ts',
+        ]
     },
     tags: {
         name: 'test',

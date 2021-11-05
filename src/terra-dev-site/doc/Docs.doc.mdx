@@ -23,7 +23,10 @@ The report will automatically look for a tracing.config.js file in your project.
         reportPath: './tracing/report.md',
         types: {
             'Graybox': 'tests/wdio/**/*.+(js|jsx)',
-            'Unit': 'tests/jest/+(components|helpers)/**/*.test.+(js|jsx)'
+            'Unit': 'tests/jest/+(components|helpers)/**/*.test.+(js|jsx)',
+            'Special': [
+                'tests/wdio/edgecases/.+(js|jsx)',
+            ]
         },
         issueHost: 'https://jira2.cerner.com/browse/',
         tags: {
@@ -51,7 +54,7 @@ The report will automatically look for a tracing.config.js file in your project.
 | --- | --- | --- | --- |
 | **reportPath** | **true** | path to write the report to |
 | dataPath | false | path to write the data object to. This is required if you plan on using the [InteractiveViewer](./components/interactive-viewer) |
-| **types** | **true** | a key, value object where the key is the name of a "test type" and the value is the glob that matches those test files |
+| **types** | **true** | a key, value object where the key is the name of a "test type" and the value is the glob that matches those test files. Also supports an array of globs. |
 | matcher | false | *use with caution* the matching function for parsing the format of tests. Must return the shape { id: Array[String], name: String }.| matches "1000[, 2000] - test name" format by default
 | issueHost | false | hostname for issue links | 'https://jira2.cerner.com/browse/'
 | sortDirection | false | the direction that the tables are listed in the report. -1 for descending, 1 for ascending | 1

@@ -165,4 +165,18 @@ describe('TracingReport', () => {
             expect(report).toMatchSnapshot();
         });
     });
+
+    it('supports an array of globs per type', async () => {
+        return getReport({ 
+            types: {
+                'Foo': [
+                    'tests/jest/testUnit.js',
+                    'tests/jest/testUnit.ts',
+                    'tests/jest/testWdio.js'
+                ],
+            },
+        }).then(report => {
+            expect(report).toMatchSnapshot();
+        });
+    })
 });

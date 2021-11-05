@@ -119,17 +119,28 @@ class TracingReport {
             if (!this.config.silent) this.spinnies.add(name, { text: name });
             this.log.verbose(`Parsing ${name}`);
 
-            return new Promise((resolve, reject) => {
-                glob(globPattern, {}, function (er, files) {
-                    if (er) {
-                        reject(er);
-                    }
-                    resolve(files)
-                })
-            }).then(async files => {
-                this.log.verbose(`Process files: ${files}`);
+            let globs = []
+            if (Array.isArray(globPattern)) {
+                globs = [...globPattern]
+            }
+            else {
+                globs.push(globPattern);
+            }
+
+            return Promise.all(
+                globs.map(pattern => new Promise((resolve, reject) => {
+                    glob(pattern, {}, function (er, files) {
+                        if (er) {
+                            reject(er);
+                        }
+                        resolve(files)
+                    })
+                }))
+            ).then(async files => {
+                const flattenedFiles = _.flatten(files);
+                this.log.verbose(`Process files: ${flattenedFiles}`);
                 const tests = await Promise.all(
-                    files.map(file => {
+                    flattenedFiles.map(file => {
                         return this.parseFile(file, name)
                     })
                 );
