@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Markdown from 'terra-markdown';
 import smoothscroll from 'smoothscroll-polyfill';
 import RequirementTable from './RequirementTable';
+import TableMap from '../../models/TableMap';
 import '../../styles/MarkdownViewerStyles.scss';
 
 smoothscroll.polyfill();
@@ -16,41 +17,10 @@ export const propTypes = {
 
 
 const InteractiveViewer = ({ baseUrl, data }) => {
+  const tableMap = new TableMap(data);
 
-  const aggregateTableData = (data) => {
-    // we need to add requirement ID to each row and flatten all tests into a single array
-    let dataCopy = [];
-    Object.keys(data).forEach((key) => {
-      dataCopy.push(data[key].map(chunk => ({ requirement: key, ...chunk })))
-    })
-    return dataCopy.flat();
-  }
-
-  /**
-   * Splits rows that have combined issues into separate rows e.g. [TRACE-1000, TRACE-1001] becomes [TRACE-1000] [TRACE-1001]
-   * @param {array} data 
-   */
-  const splitTableIssues = (data) => {
-    let dataCopy = [];
-    
-    data.forEach(row => {
-      if (row.issues.length < 2) {
-        dataCopy.push(row);
-      }
-      else {
-        for (let i = 0; i < row.issues.length; ++i) {
-          const rowCopy = Object.assign({}, row);
-          rowCopy.issues = row.issues[i]; 
-          dataCopy.push(rowCopy);
-        }
-      }
-    });
-
-    return dataCopy;
-  }
-
-  const [tableDataSplitIssues] = React.useState(splitTableIssues(aggregateTableData(data)));
-  const [tableDataAggregated] = React.useState(aggregateTableData(data));
+  const [tableDataSplitIssues] = React.useState(tableMap.getTestsSplitByIssue());
+  const [tableDataAggregated] = React.useState(tableMap.getTests());
   const [groupIssues] = React.useState(false);
 
 
@@ -58,7 +28,7 @@ const InteractiveViewer = ({ baseUrl, data }) => {
     () => [
       {
         Header: 'ID',
-        accessor: 'requirement', // accessor is the "key" in the rowData
+        accessor: 'id', // accessor is the "key" in the rowData
         Cell: ({ cell: { value }}) => {
           if (value) {
             return <div className="markdown-wrapper"><Markdown id="TracingReport" src={value} /></div>
@@ -77,16 +47,6 @@ const InteractiveViewer = ({ baseUrl, data }) => {
         },
       },
       {
-        Header: 'Issues',
-        accessor: 'issues',
-        Cell: (props) => {
-          if (Array.isArray(props.cell.value)) {
-            return <div className="markdown-wrapper"><Markdown id="TracingReport" src={props.cell.value.map(issue => `[${issue}](https://jira2.cerner.com/browse/${issue})`).join('\r\n')} /></div>
-          }
-          return null;
-        },
-      },
-      {
         Header: 'Location',
         accessor: 'shortLink',
         Cell: (props) => {
@@ -95,6 +55,16 @@ const InteractiveViewer = ({ baseUrl, data }) => {
           }
           else {
             //console.log(props);
+          }
+          return null;
+        },
+      },
+      {
+        Header: 'Issues',
+        accessor: 'issues',
+        Cell: (props) => {
+          if (Array.isArray(props.cell.value)) {
+            return <div className="markdown-wrapper"><Markdown id="TracingReport" src={props.cell.value.map(issue => `[${issue}](https://jira2.cerner.com/browse/${issue})`).join('\n')} /></div>
           }
           return null;
         },

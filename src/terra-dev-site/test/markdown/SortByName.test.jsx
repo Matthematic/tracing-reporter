@@ -1,6 +1,6 @@
 import React from 'react';
 import MarkdownViewer from '../../../components/MarkdownViewer';
-import TracingReportMarkdown from '!raw-loader!../../../../demos/sort_by_name.md';
+import TracingReportMarkdown from '!raw-loader!../../../../demos/reports/sort_by_name.md';
 
 
 const testComp = () => (

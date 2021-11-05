@@ -1,7 +1,7 @@
 # tracing-reporter-js
 
 
-[![Build Status](https://jenkins.cerner.com/ion/job/medication-record/job/tracing-reporter-js/job/master/badge/icon)](https://jenkins.cerner.com/ion/job/medication-record/job/mar-js/job/master/)
+[![Build Status](https://jenkins.cerner.com/ion/buildStatus/icon?job=Medication Administration/tracing-reporter-js/master)](https://jenkins.cerner.com/ion/job/Medication%20Administration/job/tracing-reporter-js/job/master/)
 
 > This project Builds a viewable tracing report from JsDoc-annotated tests.
 
@@ -10,19 +10,21 @@
 
 To use this project, run the following command:
 ```
-npm install --save tracing-reporter-js
+npm install --save-dev tracing-reporter-js
 ```
 
 ### Usage:
-Takes a config object as a command line argument. After installation, do the following steps to setup the report:
+The report will automatically look for a tracing.config.js file in your project. Optionally it can take a config as a command line argument. After installation, do the following steps to setup the report:
 
-1. Choose a location for your config file. An example is:
+1. Populate tracing.config.js. An example is:
 
     ```javascript
     module.exports =  {
         reportPath: './tracing/report.md',
-        grayboxGlob: 'tests/wdio/**/*.+(js|jsx)',
-        unitGlob: 'tests/+(components|Helpers)/*.test.+(js|jsx)',
+        types: {
+            'Graybox': 'tests/wdio/**/*.+(js|jsx)',
+            'Unit': 'tests/jest/+(components|helpers)/**/*.test.+(js|jsx)'
+        },
         issueHost: 'https://jira2.cerner.com/browse/',
         tags: {
             name: 'test',
@@ -31,29 +33,42 @@ Takes a config object as a command line argument. After installation, do the fol
         }
     };
     ```
-2. Add an npm script that runs the report using your config
+2. Add an npm script that runs the cli command
 
     ```javascript
     "scripts": {
-        "tracing-report": "tracing-reporter --config tracing/config.js",
+        "tracing-report": "tracing-reporter",
     }
     ```
 
-3. Decide if you want to include a Report Viewer in your dev-site. Your config folder will be populated with a markdown file that can be viewed in github, but 
+3. Decide if you want to include a Report Viewer in your dev-site. The generated markdown file can be viewed in github, but 
     if you want to view this in your terra-dev-site then you need to use either the [MarkdownViewer](./components/markdown-viewer) or [InteractiveViewer](./components/interactive-viewer) component.
 
 ### Config options:
 
 ##### top-level options
-| option | description | default |
-| --- | --- | --- |
-| reportPath | path to write the report to | './tracing/report.md'
-| grayboxGlob | glob that matches graybox test filenames | 'tests/wdio/**/*.+(js\|jsx)' |
-| unitGlob | glob that matches unit test filenames | 'tests/+(components\|Helpers)/*.test.+(js\|jsx)' |
-| issueHost | hostname for issue links | 'https://jira2.cerner.com/browse/' |
-| sortKey | the name of the column that each individual table should sort by. e.g. 'id', 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
-| filters | lets you filter for certain tests. Currently only supports filtered for the Issue tag. e.g. *filters: { issue: ['TRACE-1001'] }* | undefined
-| tags | lets you specify aliases for tag names e.g. 'jira' instead of 'issue' | see [tags](#tags)
+| option | required | description | default |
+| --- | --- | --- | --- |
+| **reportPath** | **true** | path to write the report to |
+| dataPath | false | path to write the data object to. This is required if you plan on using the [InteractiveViewer](./components/interactive-viewer) |
+| **types** | **true** | a key, value object where the key is the name of a "test type" and the value is the glob that matches those test files |
+| matcher | false | *use with caution* the matching function for parsing the format of tests. Must return the shape { id: Array[String], name: String }.| matches "1000[, 2000] - test name" format by default
+| issueHost | false | hostname for issue links | 'https://jira2.cerner.com/browse/'
+| sortDirection | false | the direction that the tables are listed in the report. -1 for descending, 1 for ascending | 1
+| tableSortKey | false | the name of the column that each individual table should sort by. e.g. 'name', 'issue', 'link', 'type'. (sorting tables by 'id' is, effectively, choosing not to sort them and thus they will sort in the order they appear in the code) | 'id' |
+| tableSortDirection | false | the direction that the tests in a single table will be sorted. -1 for descending, 1 for ascending | 1
+| filter | false | the filtering function all tests are ran through. | see [filter](#filter)
+| tags | false | lets you specify aliases for tag names e.g. 'jira' instead of 'issue' | see [tags](#tags)
+| verbose | false | outputs verbose logs
+| silent | false | silences all console output
+
+
+##### filter
+the filter option should be a function which takes an object with the following properties: { id, name, link, issues, shortLink, type } and returns truthy if the test should be included. The default filter is `() => true`
+For example: 
+```javascript
+filter: ({ id, name }) => name.includes('scheduled medication') || id == '12345'
+```
 
 ##### tags
 | option | description | default |
@@ -79,15 +94,47 @@ Takes a config object as a command line argument. After installation, do the fol
 ```
 
 ### Advanced Usage
+#### Repeated Tests
+The default matcher for test names supports multiple ID's. This can be useful if your requirements are branched in such a way that you will otherwise end up with multiple of the same tests but each reference a different requirement ID.
+
+###### example:
+```javascript
+
+    // These two tests are equivalent
+
+    /**
+     * @name test
+     * @jira ABC-123
+     * @traces 1000 - Verify true equals true
+     * @traces 1001 - Verify true equals true
+     * @traces 1002 - Verify true equals true
+     * @traces 1003 - Verify true equals true
+     */
+    it('i am a test', () => {
+
+    });
+
+    /**
+     * @name test
+     * @jira ABC-123
+     * @traces 1000, 1001, 1002, 1003 - Verify true equals true
+     */
+    it('i am a test', () => {
+
+    });
+```
+
+#### Issue Grouping
 The issue tag (or your alias) is applied to every test under it until it detects another issue tag. This lets you group multiple tests in the same block to different issues.
 
-#### example:
+##### example:
 ```javascript
     /**
      * @name test
      * @jira ABC-123
      * @traces 1234567 - Verify true equals true
      * @traces 2345678 - Verify true does not equal false
+     *
      * @jira ABC-234
      * @traces 3456789 - Verify 2+2 = 4
      * @traces 4567890 - Verify 4-2 = 2
@@ -97,10 +144,10 @@ The issue tag (or your alias) is applied to every test under it until it detects
     });
 ```
 
-### Indention
+#### Indention
 Github's markdown spec only supports a minimal amount of html tags, and all styling is stripped. This makes it difficult to keep the exact whitespace of the test plan as it is typed in the code while also supporting wrapping. Currently the tracing reporter supports indented lists, and the definition of an "indention" is a sequence of 4 spaces. These are replaced with &nbsp; entities in the report. 
 
-#### example:
+##### example:
 ```javascript
     /**
      * @name test
@@ -114,3 +161,7 @@ Github's markdown spec only supports a minimal amount of html tags, and all styl
 
     });
 ```
+
+### Notes:
+1. The reason the *@name* tag is necessary is because JsDoc by default only parses documentation when it detects definitions of new objects. In the case of mocha and jest tests, a test is not a definition, but actually a function call: *it()*. This means we need to use the @name tag to notify the parser to parse this block when it normally wouldn't.
+2. Some real-world examples of this report being used can be found [here](https://github.cerner.com/medication-record/mar-js/blob/master/tracing/report.md) and [here](https://github.cerner.com/medication-record/mar-gantt-js/blob/master/tracing/report.md).

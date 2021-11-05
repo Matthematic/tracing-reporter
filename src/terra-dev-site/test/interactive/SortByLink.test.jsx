@@ -1,6 +1,6 @@
 import React from 'react';
 import InteractiveViewer from '../../../components/InteractiveViewer/InteractiveViewer';
-import TracingReportData from '../../../../demos/data_sort_by_link.json';
+import TracingReportData from '../../../../demos/reports/data_sort_by_link.json';
 
 
 const testComp = () => (
