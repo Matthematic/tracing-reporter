@@ -1,6 +1,6 @@
 {
   "name": "tracing-reporter-js",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Builds a tracing report from JsDoc-annotated tests",
   "main": "lib/index.js",
   "private": false,
@@ -8,7 +8,7 @@
     "tracing-reporter": "bin/tracing-reporter.js"
   },
   "engines": {
-    "node": "<12"
+    "node": ">=12"
   },
   "keywords": [
     "Cerner",
