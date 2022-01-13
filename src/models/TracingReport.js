@@ -81,8 +81,26 @@ class TracingReport {
         )
         .then(async (results) => { // Aggregate all the resulting tests and populate the table map struct
             this.log.verbose('Aggregating results');
+
             const tableMap = new TableMap().add(_.flatten(results).filter(Boolean)).sort(this.config.tableSortKey, this.config.tableSortDirection, this.config.sortDirection)
 
+            //console.log("Begin")
+            switch(this.config.template) {
+                case 'tableById':
+                    tableMap.tableBy('id');
+                    break;
+                case 'tableByType':
+                    tableMap.tableBy('type');
+                    break;
+                case 'tableByIssue':
+                    tableMap.tableBy('issues');
+                    break;
+                case 'tableByFile':
+                    tableMap.tableBy('shortLink');
+                    break;
+            }
+
+            //console.log(tableMap);
             return Promise.all([
                 new Promise((resolve, reject) => {
                     if (!this.config.dataPath) resolve();
@@ -214,6 +232,8 @@ class TracingReport {
                         }
                     }
 
+                    issues = issues.split(',').map(i => i.trim())
+
                     let id = NA;
                     let name = NA;
                     const link = '../' + fileName + '#L' + block.meta.lineno;
@@ -232,7 +252,7 @@ class TracingReport {
                             name = name.trim();
                             this.log.verbose(`writing ${name}`);
 
-                            const fields = { id: x, name, link, issues: issues.split(',').map(i => i.trim()), shortLink, type };
+                            const fields = { id: x, name, link, issues, shortLink, type };
                             if (this.config.filter(fields)) {
                                 tests.push(new Test(fields));
                             }

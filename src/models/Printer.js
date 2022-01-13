@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import fs from 'fs';
+import { compileTemplate } from '../template';
 
 class Printer {
     /**
@@ -99,39 +100,27 @@ class Printer {
             ];
 
             const tests = tableMap.getTests()
-
             const stats = _.countBy(tests, 'type');
-            const statString = Object.keys(stats).map((key) => `${key}: ${stats[key]}`).join(', ')
 
             if (config.reportPath) {
-                const reportHeader = `# Tracing Report\n#### Total: ${tests.length} (${statString})\n`
-
                 // print tableMap to report file
-                let appendStr = reportHeader;
-                tableMap.tables.forEach(table => { // for each table
-                    let testRows = table.tests.map(test => {
-                        let { name, link, issues, shortLink, type } = test;
-
-                        // escape characters for the name since it has to be proper markdown
-                        escapeChars.forEach(char => {
-                            name = name.replace(char[0], char[1]);
-                        });
-
-                        // Generate the display for the issue links
-                        const issueLinks = issues.map(i => i.trim()).map(issue => issue !== 'N/A' ? `[${issue}](${config.issueHost}${issue})` : issue);
-
-                        // Generate the display for the test name.
-                        let formattedName = new String(name);
-                        formattedName = formattedName.replace(/ {4}/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // At this point, only sequences of 4 spaces are considered as a supported indention
-                        return `| <h6>${formattedName}</h6> | [${shortLink}](${link}) | ${issueLinks.join('<br/>')} | ${type} |`;
+                tableMap.getTests().forEach(test => {
+                    // escape characters for the name since it has to be proper markdown
+                    escapeChars.forEach(char => {
+                        test.name = test.name.replace(char[0], char[1]);
                     });
-
-                    const tableHeader = `| Name (${testRows.length}) | Link | Issue | Type |\n` +
-                                            '| :--- | :---: | :---: | :---: |\n';
-                    const rows = testRows.join('\n');
-                    appendStr += `\n\n### ${table.id}\n\n` + tableHeader + rows + '\n\n<hr/>';
                 });
-                return Printer.append(config.reportPath, appendStr)
+
+                return compileTemplate({
+                    stats: {
+                        total: tests.length,
+                        types: Object.keys(stats).map(type => ({ type, count: stats[type] }))
+                    },
+                    tables: tableMap.tables 
+                }, { template: config.template })
+                .then(res => {
+                    Printer.append(config.reportPath, res)
+                })
                 
             }
         }

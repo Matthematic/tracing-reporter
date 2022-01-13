@@ -1,0 +1,12 @@
+# Tracing Report
+#### Total: {{stats.total}} ({{#each stats.types}}{{type}}: {{count}}{{#unless @last}}, {{/unless}}{{/each}})
+
+{{#each tables}}
+  ### {{id}}
+  | Name ({{count}}) | Link | Issue | Type |
+  | :--- | :---: | :---: | :---: |
+  {{#each tests}}
+    | <h6>{{name}}</h6> | [{{shortLink}}]({{link}}) | {{issues}} | {{type}} |
+  {{/each}}
+  
+{{/each}}

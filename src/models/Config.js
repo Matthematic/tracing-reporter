@@ -26,6 +26,7 @@ class Config {
             tableSortDirection: CONSTANTS.ASCENDING,
             verbose: false,
             silent: false,
+            template: undefined,
             ...options,
             tags: {
                 name: 'requirement',
@@ -65,6 +66,7 @@ class Config {
                 ow.number.is(x => x === CONSTANTS.DESCENDING),
             ),
             silent: ow.optional.boolean,
+            template: ow.optional.string,
             tags: ow.object.exactShape({
                 name: ow.optional.string.not.empty,
                 issue: ow.optional.string.not.empty,

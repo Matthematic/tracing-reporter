@@ -22,24 +22,35 @@ class TableMap {
       }
     }
 
-    add(thing) {
+    add(thing, groupKey = 'id') {
+      //console.log("adding")
       if (thing instanceof Test) {
-        if (!this.tables.find(t => t.id === thing.id)) {
-            this.tables.push(new TestTable(thing.id).add(thing));
+        if (!this.tables.find(t => t.id === thing[groupKey].toString())) {
+            //console.log("ADDING NEW TABLE", new TestTable(thing[groupKey].toString()).add(thing));
+            this.tables.push(new TestTable(thing[groupKey].toString()).add(thing));
         }
         else {
-            this.tables.find(t => t.id === thing.id).add(thing);
+            //console.log("ADDING TO TABLE", thing[groupKey].toString());
+            this.tables.find(t => t.id === thing[groupKey].toString()).add(thing);
         }
       } else if (thing instanceof TestTable) {
         this.tables.push(thing);
       }
       else if (Array.isArray(thing)) {
-        thing.forEach(t => this.add(t));
+        thing.forEach(t => this.add(t, groupKey));
       }
       else {
           console.log("couldnt add", thing);
       }
       return this;
+    }
+
+    tableBy(key = 'id') {
+      //console.log('TABLEBY')
+      const tests = key === 'issues' ? this.getTestsSplitByIssue() : this.getTests();
+      //console.log('TESTSSPLITBYISSUE', tests);
+      this.tables = [];
+      this.add(tests, key);
     }
 
     getTests() {
@@ -59,7 +70,7 @@ class TableMap {
         else {
           for (let i = 0; i < row.issues.length; ++i) {
             const rowCopy = Object.assign({}, row);
-            rowCopy.issues = row.issues[i]; 
+            rowCopy.issues = [row.issues[i]]; 
             dataCopy.push(new Test({...rowCopy}));
           }
         }

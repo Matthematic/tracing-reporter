@@ -21,6 +21,7 @@ class Table {
     constructor(id) {
       this.id = id;
       this.tests = [];
+      this.count = this.tests.length;
     }
 
     // intended for testing
@@ -46,6 +47,7 @@ class Table {
       else {
         this.tests.push(tests);
       }
+      this.count = this.tests.length;
       return this;
     }
 

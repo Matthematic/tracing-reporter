@@ -22,5 +22,6 @@ module.exports = (api) => {
     "sourceMaps": "inline",
     presets,
     plugins,
+    exclude: /node_modules\/(?!node-fetch)/,
   };
 };
