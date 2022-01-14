@@ -39,7 +39,7 @@
     "test:lint": "npm run lint",
     "test:wdio": "terra wdio",
     "test:wdio:local": "terra wdio --locales en --formFactors huge --browsers chrome --gridUrl 'grid314.test.devcernerpowerchart.com'",
-    "pack": "TERRA_DEV_SITE_PUBLIC_PATH='/medication-administration/tracing-reporter-js/' NODE_ENV=production webpack -p",
+    "pack": "TERRA_DEV_SITE_PUBLIC_PATH='/tracing-reporter/' NODE_ENV=production webpack -p",
     "prepare": "npm run compile",
     "demo": "npm run compile && node demos/demo-runner.js",
     "start": "webpack-dev-server",
