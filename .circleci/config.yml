@@ -14,12 +14,15 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+      - run: 
+          name: "Install"
+          command: "npm i"
       - run:
           name: "Lint"
-          command: "npm run lint"
+          command: "npm run test:lint"
       - run:
           name: "Jest"
-          command: "npm run lint"
+          command: "npm run test:jest"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
