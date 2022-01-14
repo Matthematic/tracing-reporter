@@ -1,8 +1,0 @@
-node_modules
-lib
-aggregated-translations
-dev-site-config/build
-coverage
-package-lock.json
-.vscode
-test/jest/artifacts
