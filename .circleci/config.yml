@@ -33,8 +33,11 @@ jobs:
           name: "Jest"
           command: "npm run test:jest"
       - run:
+          name: "Start Local Server"
+          command: "npm start"
+      - run:
           name: "Wdio"
-          command: "npm run test:wdio:local"
+          command: "npm run test:wdio"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
