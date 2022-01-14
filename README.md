@@ -1,4 +1,4 @@
-# tracing-reporter-js
+# tracing-reporter
 
 ## Builds a tracing report from JsDoc-annotated tests
 

@@ -6,3 +6,5 @@ coverage
 package-lock.json
 .vscode
 test/jest/artifacts
+build/
+tests/wdio/reports

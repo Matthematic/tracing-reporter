@@ -1,5 +1,5 @@
 {
-  "tracing-reporter-js": {
+  "tracing-reporter": {
     "dependencies": ["./lib/index.js"]
   }
 }
