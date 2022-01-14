@@ -33,9 +33,6 @@ jobs:
           name: "Jest"
           command: "npm run test:jest"
       - run:
-          name: "Start Local Server"
-          command: "npm start"
-      - run:
           name: "Wdio"
           command: "npm run test:wdio"
 

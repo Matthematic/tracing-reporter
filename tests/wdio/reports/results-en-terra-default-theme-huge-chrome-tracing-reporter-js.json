@@ -1,5 +1,5 @@
 {
-  "packageName": "tracing-reporter-js",
+  "packageName": "tracing-reporter",
   "theme": "terra-default-theme",
   "locale": "en",
   "formFactor": "huge",
@@ -10,7 +10,7 @@
   },
   "specs": [
     {
-      "spec": "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/interactive-report-spec.js",
+      "spec": "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/interactive-report-spec.js",
       "start": "2021-11-03T20:59:18.264Z",
       "end": "2021-11-03T20:59:36.244Z",
       "suites": [
@@ -29,7 +29,7 @@
               "end": "2021-11-03T20:59:22.315Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/filter-by-issues.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/filter-by-issues.png"
               ]
             },
             {
@@ -40,7 +40,7 @@
               "end": "2021-11-03T20:59:24.861Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-id.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-id.png"
               ]
             },
             {
@@ -51,7 +51,7 @@
               "end": "2021-11-03T20:59:27.675Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-issues.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-issues.png"
               ]
             },
             {
@@ -62,7 +62,7 @@
               "end": "2021-11-03T20:59:30.387Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-link.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-link.png"
               ]
             },
             {
@@ -73,7 +73,7 @@
               "end": "2021-11-03T20:59:33.112Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-name.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-name.png"
               ]
             },
             {
@@ -84,7 +84,7 @@
               "end": "2021-11-03T20:59:36.134Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-type.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/interactive-report-spec/sort-by-type.png"
               ]
             }
           ],
@@ -94,7 +94,7 @@
       "tests": []
     },
     {
-      "spec": "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/markdown-report-spec.js",
+      "spec": "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/markdown-report-spec.js",
       "start": "2021-11-03T20:59:40.921Z",
       "end": "2021-11-03T21:00:21.996Z",
       "suites": [
@@ -113,7 +113,7 @@
               "end": "2021-11-03T20:59:44.192Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/filter-by-issues.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/filter-by-issues.png"
               ]
             },
             {
@@ -124,7 +124,7 @@
               "end": "2021-11-03T20:59:46.713Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-id.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-id.png"
               ]
             },
             {
@@ -135,7 +135,7 @@
               "end": "2021-11-03T20:59:49.211Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-issues.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-issues.png"
               ]
             },
             {
@@ -146,7 +146,7 @@
               "end": "2021-11-03T20:59:59.533Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-link.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-link.png"
               ]
             },
             {
@@ -157,7 +157,7 @@
               "end": "2021-11-03T21:00:16.424Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-name.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-name.png"
               ]
             },
             {
@@ -168,7 +168,7 @@
               "end": "2021-11-03T21:00:21.871Z",
               "state": "passed",
               "screenshots": [
-                "/Users/mc046006/Documents/GitHub/tracing-reporter-js/tests/wdio/tracing-reporter-js/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-type.png"
+                "/Users/mc046006/Documents/GitHub/tracing-reporter/tests/wdio/tracing-reporter/__snapshots__/latest/terra-default-theme/en/chrome_huge/markdown-report-spec/sort-by-type.png"
               ]
             }
           ],
