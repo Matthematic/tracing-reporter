@@ -30,7 +30,7 @@
         "test:jest": "npm run jest --ci",
         "posttest:jest": "jest-it-up",
         "test:lint": "npm run lint",
-        "test:wdio": "start-server-and-test start-prod http://localhost:8080 npx wdio run ./wdio.conf.js",
+        "test:wdio": "start-server-and-test start-prod http://localhost:8080 'npx wdio run ./wdio.conf.js'",
         "pack": "TERRA_DEV_SITE_PUBLIC_PATH='/tracing-reporter/' NODE_ENV=production webpack -p",
         "prepare": "npm run compile",
         "demo": "npm run compile && node demos/demo-runner.js",
