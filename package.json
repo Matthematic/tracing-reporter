@@ -38,7 +38,7 @@
     "posttest:jest": "jest-it-up",
     "test:lint": "npm run lint",
     "test:wdio": "terra wdio",
-    "test:wdio:local": "terra wdio --locales en --formFactors huge --browsers chrome --gridUrl 'grid314.test.devcernerpowerchart.com'",
+    "test:wdio:local": "terra wdio --locales en --formFactors huge --browsers chrome",
     "pack": "TERRA_DEV_SITE_PUBLIC_PATH='/tracing-reporter/' NODE_ENV=production webpack -p",
     "prepare": "npm run compile",
     "demo": "npm run compile && node demos/demo-runner.js",
